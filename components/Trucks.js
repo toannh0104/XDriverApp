@@ -21,7 +21,7 @@ import {
 
 import defaultTruck from '../truckAssets/icon.png';
 
-import { GetAllTrucks, setSession } from './HelperFunctions';
+import { GetAllTrucks, setSession, getSession } from './HelperFunctions';
 
 
 //import { NavigationActions } from 'react-navigation';
@@ -40,7 +40,8 @@ export default class Trucks extends Component {
 	  this.state = {
 	  	 trucks: [],
 	  	 trucksToRender: '',
-		 isLoaded: false
+		 isLoaded: false,
+		 userId:''
 	  };
 	  this.loadWorksheet = this.loadWorksheet.bind(this);
 	  this.loadMaintenance = this.loadMaintenance.bind(this);
@@ -68,6 +69,10 @@ export default class Trucks extends Component {
 			
 			this.setState({isLoaded: true});
 		})
+
+		getSession("@spt:userid").then((value) => {
+			this.setState({userId: value});
+		});
 	}
 	
 	loadWorksheet(truckId, truckName, truckModel, truckImage) {
@@ -89,7 +94,7 @@ export default class Trucks extends Component {
 		setSession("@spt:truckmodel", truckModel.toString())
 		setSession("@spt:truckimage", truckImage.toString())
 		console.log('start')
-		this.props.navigation.navigate("MaintainenceRecordDetailScreen");
+		this.props.navigation.navigate("MaintainenceRecord", {userId: this.state.userId, truckId: truckId});
 		console.log('end')
 	}
 	
@@ -110,9 +115,9 @@ export default class Trucks extends Component {
 								<View style={{flex: 1, flexDirection: 'row'}}>
 									<View>
 									{
-										!truck.image?
+										!!truck.image?
 										<Image
-											source={truck.image}
+											source={{uri: truck.image}}
 											style={{ width: 100, height: 70 }}
 										/>
 										:

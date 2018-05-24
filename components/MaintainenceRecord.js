@@ -21,6 +21,7 @@ import DatePicker from 'react-native-datepicker';
 import defaultTruck from '../truckAssets/default_truck.jpg';
 
 var ImagePicker = require('react-native-image-picker'); 
+import { setSession, getSession} from './HelperFunctions';
 
 export default class MaintainenceRecord extends Component {
 	constructor(props) {
@@ -47,8 +48,14 @@ export default class MaintainenceRecord extends Component {
 	  	insuranceExpiryDate: 'select date',
 	  	fifthWheelExpiryDate: 'select date',
 	  	hundredSpeedExpiryDate: 'select date',
-	  	parkBrakeAlarmExpiryDate: 'select date'
-	  };
+			parkBrakeAlarmExpiryDate: 'select date',
+			truckid:'',
+			truckname:'',
+			truckmodel:'',
+			truckimage:'',
+			userId: '',
+			logId:''
+	  };	
 
 	  this.onUploadRegistrationPress = this.onUploadRegistrationPress.bind(this);
 	  this.onUploadInsuranceDocumentsPress = this. onUploadInsuranceDocumentsPress.bind(this);
@@ -59,21 +66,112 @@ export default class MaintainenceRecord extends Component {
 	  this.onLastServiceDocumentsPress = this.onLastServiceDocumentsPress.bind(this);
 	  this.onSteerTyreChangePress = this.onSteerTyreChangePress.bind(this);
 	  this.onDriveTyreChangePress = this.onDriveTyreChangePress.bind(this);
-	  this.onOtherWorkDocumentsPress = this.onOtherWorkDocumentsPress.bind(this);
+		this.onOtherWorkDocumentsPress = this.onOtherWorkDocumentsPress.bind(this);
+		//this.loadLogId = this.loadLogId.bind(this);
+		this.doPost = this.doPost.bind(this);
 	}
 
 	componentWillMount() {
-		AsyncStorage.getItem("name").then((value) => {
-        	this.setState({"driverName": value});
-    	});
+		console.log("param navigation");
+		let userId = this.props.navigation.state.params.userId;
+		let truckId = this.props.navigation.state.params.truckId;
+
+		var url = api_url+"/maintenance";
+		let formData = new FormData();
+		var cDate = new Date();
+		formData.append('user_id', userId);
+		formData.append('truck_id', truckId);
+		formData.append('log_date', cDate.getDate() +"-" +(cDate.getMonth() + 1) +"-" +cDate.getFullYear());
+		fetch(url, {
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'multipart/form-data'
+				},
+				body: formData
+			}).then(res => res.json())
+			.catch(error => {console.log('Error: ', error)})
+			.then(response => {
+				var resData = response;
+				if (resData != null && resData.status == 1000) {
+					this.state.logId = resData.data;
+				}
+				else{
+					alert(resData['message']);
+				}
+		});	
+		getSession("@spt:userid").then((value) => {
+			this.setState({"userid": value});
+		});
+		
+		getSession("@spt:truckid").then((value) => {
+			this.setState({truckid: value});
+		});
+
+		getSession("@spt:name").then((value) => {
+			this.setState({"driverName": value});
+		});
+		
+		getSession("@spt:truckname").then((value) => {
+			this.setState({truckname: value});
+		});
+
+		getSession("@spt:truckmodel").then((value) => {
+			this.setState({truckmodel: value});
+		});
+		
+		getSession("@spt:truckimage").then((value) => {
+			this.setState({truckimage: value});
+		});
+	}
+	componentDidMount (){
+	}
+
+	doPost(url, formData){
+		console.log("posting....")
+		console.log(formData);
+		fetch(url, {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'multipart/form-data'
+			},
+			body: formData
+		}).then(res => res.json())
+		.catch(error => {console.log('Error: ', error)})
+		.then(response => {
+			var resData = response;
+			if (resData != null) {			
+				alert(resData['message']);
+			}
+		});	
 	}
 
 	onUploadRegistrationPress() {
-		ImagePicker.openPicker({
-		  multiple: true
-		}).then(images => {
-		  this.setState({ registrationDocuments: images });
-		});
+		var options = {
+			title: 'Select Document',
+			storageOptions: {
+				skipBackup: true,
+				path: 'images'
+			}
+		};
+		ImagePicker.showImagePicker(options, (response) => {
+			console.log('Response = ', response);
+			if (response.didCancel) {
+				console.log('User cancelled photo picker');
+			}else if (response.error) {
+				console.log('ImagePicker Error: ', response.error);
+			}
+			else if (response != null && response.uri != undefined && response.uri != '') {	
+				var url = api_url+"/maintenancetwo";
+				let formData = new FormData();
+				this.setState({isLoaded: false});
+				formData.append('log_id', this.state.logId);
+				formData.append('registration_expiry', this.state.registrationExpiryDate);
+				formData.append('registration_expiry_file', { uri: response.uri, name: response.fileName, type: response.type })
+				this.doPost(url, formData);
+			}
+		});	
 	}
 
 	onUploadInsuranceDocumentsPress() {
@@ -148,7 +246,7 @@ export default class MaintainenceRecord extends Component {
 						<View style={{flex: 1, flexDirection: 'row'}}>
 							<View>
 								<Image
-									source={defaultTruck}
+									source={{uri: this.state.truckimage}}
 									style={{ width: 80, height: 70 }}
 								/>
 							</View>
@@ -156,12 +254,12 @@ export default class MaintainenceRecord extends Component {
 							<View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }}>
 								<View style={{ flex: 1, flexDirection: 'row' }}>
 									<Text style={{ marginLeft: 20, fontSize: 16 }}>Name: </Text>
-									<Text style={{ fontSize: 16, fontWeight: 'bold' }}>Volvo</Text>
+									<Text style={{ fontSize: 16, fontWeight: 'bold' }}>{this.state.truckname}</Text>
 								</View>
 
 								<View style={{ flex: 1, flexDirection: 'row' }}>
 									<Text style={{ marginLeft: 20, fontSize: 16 }}>Number: </Text>
-									<Text style={{ fontSize: 16, fontWeight: 'bold' }}>346346244</Text>
+									<Text style={{ fontSize: 16, fontWeight: 'bold' }}>{this.state.truckid}</Text>
 								</View>
 
 								<View style={{ flex: 1, flexDirection: 'row', marginBottom: 5 }}>
@@ -472,14 +570,12 @@ export default class MaintainenceRecord extends Component {
 
 					</Card>
 
-					<Card title="Other Work">
-						
+					<Card title="Other Work">						
 			      		<FormInput 
 			      			onChangeText={(text) => this.setState({ otherWork: text })}
 			      			placeholder="additional work if any" 
 			      			value={this.state.email}
 			      		/>
-
 			      		
 			      		<Button
 			        		buttonStyle={{ marginTop: 20 }}

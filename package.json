@@ -28,7 +28,7 @@
     "react-native-elements": "^0.19.1",
     "react-native-flexi-radio-button": "^0.2.2",
     "react-native-fontawesome": "^5.7.0",
-    "react-native-image-picker": "^0.26.7",
+    "react-native-image-picker": "^0.26.10",
     "react-native-modal-dropdown": "^0.6.2",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^2.0.1"

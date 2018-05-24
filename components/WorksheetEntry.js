@@ -15,7 +15,7 @@ import {
 } from 'react-native-elements';
 
 import DatePicker from 'react-native-datepicker';
-var ImagePicker = require('react-native-image-picker'); 
+var ImagePicker = require('react-native-image-picker');
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
 	RadioGroup,
@@ -23,13 +23,13 @@ import {
 } from 'react-native-flexi-radio-button';
 
 import ModalDropdown from 'react-native-modal-dropdown';
-
+import { setSession, getSession} from './HelperFunctions';
 export default class WorksheetEntry extends Component {
 	constructor(props) {
 	  super(props);
 	
 	  this.state = {
-		userId: '',
+		userId: 0,
 		trunkId: '',
 	  	name: '',
 	  	licenseNumber: '',
@@ -41,22 +41,33 @@ export default class WorksheetEntry extends Component {
 	  	otherWorkSite: '',
 		loadDone: '',
 		comment: '',
-		doc: ''		
+		file: null	
 	  };
 	  
 	  this.fileUpload = this.fileUpload.bind(this);
-	  this.uploadCallback = this.uploadCallback.bind(this);
+	  this.onChange = this.onChange.bind(this)	  
 	  this.onApplyChangesPressed = this.onApplyChangesPressed.bind(this);
+	}
+	
+	componentWillMount() {
+		getSession("@spt:userid").then((value) => {
+			this.setState({userId: value});
+		});
+		
+		getSession("@spt:truckid").then((value) => {
+			this.setState({trunkId: value});
+		});
 	}
 	
 	onSelect(index, value){
 	  this.setState({
 		shiftDuration: value
 	  })
-	}
-	
-	uploadCallback(){}
-	
+	}	
+	onChange(){
+		this.setState({file:e.target.files[0]})
+	}	
+		
 	fileUpload()
 	{
 		var options = {
@@ -68,11 +79,14 @@ export default class WorksheetEntry extends Component {
 		  };
 		  
 		  ImagePicker.showImagePicker(options, (response) => {
-			if (response.error) {
-			  alert(response.error);
+			console.log('Response = ', response);
+			if (response.didCancel) {
+				console.log('User cancelled photo picker');
+			}else if (response.error) {
+				console.log('ImagePicker Error: ', response.error);
 			}
 			else if (response != null && response.uri != undefined && response.uri != '') {
-				console.log(response);
+				this.state.file = response;
 			}
 		  });
 		  
@@ -88,20 +102,20 @@ export default class WorksheetEntry extends Component {
 		  	otherWorkSite: this.state.otherWorkSite,
 		  	loadDone: this.state.loadDone,
 		  	comment: this.state.comment,
-		  	doc: this.state.doc
+		  	file: this.state.file
 		}
 		
 		var url = api_url+"/worksheet"
 		let formData = new FormData();
-			formData.append('name', payload.name);
-			formData.append('email', payload.email);
-			formData.append('password', payload.password);
-			formData.append('mobile', payload.mobile);
-			formData.append('address', payload.address);
-			formData.append('license_number', payload.license_number);
-			formData.append('license_expiry', payload.license_expiry);
-			formData.append('commence_date', payload.commence_date);
-			
+			formData.append('user_id', payload.userId);
+			formData.append('truck_id', payload.trunkId);
+			formData.append('log_date', payload.date);
+			formData.append('shift_duration', payload.shiftDuration);
+			formData.append('worksite_id', payload.workSite);
+			formData.append('worksite_others', payload.otherWorkSite);
+			formData.append('loads_done', payload.loadDone);
+			formData.append('loads_comment', payload.comment);
+			formData.append('document', payload.file);
 			fetch(url, {
 	  		method: 'POST',
 	  		headers: {
@@ -112,11 +126,14 @@ export default class WorksheetEntry extends Component {
 		  	}).then(res => res.json())
 		  	.catch(error => {console.log('Error: ', error)})
 		  	.then(response => {
+				  console.log("fuck u");
 		  		var resData = response;
 				if (resData != null) {
 					alert(resData['message']);
 					if (resData['status'] == 1000) {
 						
+					}else{
+						alert("deo dc");
 					}
 				}
 				else{
