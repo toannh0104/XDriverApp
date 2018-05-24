@@ -77,7 +77,7 @@ export default class Trucks extends Component {
 		setSession("@spt:truckmodel", truckModel.toString())
 		setSession("@spt:truckimage", truckImage.toString())
 		console.log('start')
-		this.props.navigation.navigate("WorksheetEntry");
+		this.props.navigation.navigate("Worksheet");
 		console.log('end')
 	}
 	
