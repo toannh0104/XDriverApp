@@ -72,41 +72,42 @@ export default class MaintainenceRecord extends Component {
 	}
 
 	componentWillMount() {
-		getSession("@spt:logid").then((value) => {
-			console.log("logid: "+value);
-			if(value == null){
-				let userId = this.props.navigation.state.params.userId;
-				let truckId = this.props.navigation.state.params.truckId;
-				
-				var url = api_url+"/maintenance";
-				let formData = new FormData();
-				var cDate = new Date();
-				formData.append('user_id', userId);
-				formData.append('truck_id', truckId);
-				formData.append('log_date', (cDate.getDate() -1) +"-" +(cDate.getMonth() + 1) +"-" +cDate.getFullYear());
-				fetch(url, {
-						method: 'POST',
-						headers: {
-							'Accept': 'application/json',
-							'Content-Type': 'multipart/form-data'
-						},
-						body: formData
-					}).then(res => res.json())
-					.catch(error => {console.log('Error: ', error)})
-					.then(response => {
-						var resData = response;
-						if (resData != null && resData.status == 1000) {
-							this.state.logId = resData.data;
-							setSession("@spt:logid", resData.data);
-						}
-						else{
-							alert(resData['message']);
-							this.props.navigation.navigate("Trunks");
-						}
-				});	
-			}
-		});
-
+		if(this.state.logId == ""){			
+			getSession("@spt:logid").then((value) => {
+				console.log("logid: "+value);
+				if(value == null){
+					let userId = this.props.navigation.state.params.userId;
+					let truckId = this.props.navigation.state.params.truckId;
+					
+					var url = api_url+"/maintenance";
+					let formData = new FormData();
+					var cDate = new Date();
+					formData.append('user_id', userId);
+					formData.append('truck_id', truckId);
+					formData.append('log_date', (cDate.getDate() -3) +"-" +(cDate.getMonth() + 1) +"-" +cDate.getFullYear());
+					fetch(url, {
+							method: 'POST',
+							headers: {
+								'Accept': 'application/json',
+								'Content-Type': 'multipart/form-data'
+							},
+							body: formData
+						}).then(res => res.json())
+						.catch(error => {console.log('Error: ', error)})
+						.then(response => {
+							var resData = response;
+							if (resData != null && resData.status == 1000) {
+								this.setState({logId : resData.data});
+								setSession("@spt:logid", resData.data);
+							}
+							else{
+								alert(resData['message']);
+								this.props.navigation.navigate("Trunks");
+							}
+					});	
+				}
+			});
+		}
 		getSession("@spt:userid").then((value) => {
 			this.setState({"userid": value});
 		});

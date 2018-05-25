@@ -4,7 +4,7 @@ import {
   StyleSheet,
   AsyncStorage,
   ActivityIndicator,
-  Text
+  Text,Image
  } from "react-native";
 
 import {
@@ -22,6 +22,7 @@ import {
 } from './HelperFunctions';
 
 import { NavigationActions } from 'react-navigation';
+import logoTruck from '../truckAssets/lg.png';
 
 export default class SignIn extends Component {
   constructor(props) {
@@ -126,10 +127,18 @@ export default class SignIn extends Component {
     var { navigation } = this.props.navigation;
 
     return(
-      <View style={styles.container}>
+      <View style={styles.container} >
+		  <View style={styles.ximage}>
+			  <Image
+				style={styles.image}
+				resizeMode="cover"
+				source={logoTruck}
+			  />
+		  </View>
         <Card
           title="Sign In" 
           containerStyle={styles.signInCard}>
+		  
           <FormLabel>Email</FormLabel>
           <FormInput 
             onChangeText={(text) => this.setState({ email: text})}
@@ -174,9 +183,22 @@ export default class SignIn extends Component {
 
 const styles = StyleSheet.create({
   container: {
+	alignItems: 'stretch',
+    justifyContent: 'center',
     backgroundColor: '#FF7F00',
-    flex: 6
+    flex: 2
   },
+  ximage: {
+    flexGrow:1,
+    alignItems: 'center',
+    justifyContent:'center'
+  },
+  image: {
+    flexGrow:1,
+    alignItems: 'center',
+    justifyContent:'center',width: 150, height:70
+  },
+  
   loader: {
 	position: 'absolute',
     left: 0,
@@ -188,6 +210,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   signInCard: {
-    marginTop: 30
+    marginTop: 10,
+	alignItems: 'stretch',
+    justifyContent: 'center',
   }
 });

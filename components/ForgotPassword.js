@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 import {
 	View,
 	ScrollView,
-	ActivityIndicator
+	ActivityIndicator, Image
 } from 'react-native';
 
 import { StyleSheet } from 'react-native';
+import logoTruck from '../truckAssets/lg.png';
 
 import {
 	Card,
@@ -84,6 +85,15 @@ export default class SignUp extends Component {
 		var { navigation } = this.props.navigation;
 		return(
 			<View style={styles.container}>
+			
+			  <View style={styles.ximage}>
+				  <Image
+					style={styles.image}
+					resizeMode="cover"
+					source={logoTruck}
+				  />
+			  </View>
+			  
 				<Card 
 					title="Forgot Password"
 					containerStyle={styles.forgotPasswordCard}>
@@ -122,6 +132,16 @@ const styles = StyleSheet.create({
 		backgroundColor: '#FF7F00',
 		flex: 6
 	},
+	  ximage: {
+    flexGrow:1,
+    alignItems: 'center',
+    justifyContent:'center'
+  },
+  image: {
+    flexGrow:1,
+    alignItems: 'center',
+    justifyContent:'center',width: 240, height:70,resizeMode: 'cover'
+  },
 	loader: {
 		position: 'absolute',
 		left: 0,

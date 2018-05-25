@@ -6,7 +6,7 @@ import {
 	View,
 	ScrollView,
 	ActivityIndicator,
-	Text
+	Text,Image
 } from 'react-native';
 
 import { 
@@ -31,6 +31,7 @@ import {
 } from './HelperFunctions';
 
 import DatePicker from 'react-native-datepicker';
+import logoTruck from '../truckAssets/lg.png';
 
 export default class SignUp extends Component {
 	constructor(props) {
@@ -160,6 +161,15 @@ export default class SignUp extends Component {
 		return(
 			<ScrollView>
 				<View style={styles.container}>
+				
+				<View style={styles.ximage}>
+          <Image
+            style={styles.image}
+            resizeMode="cover"
+            source={logoTruck}
+          />
+		  </View>
+		  
 					<Card 
 						title="Sign Up"
 						containerStyle={styles.signUpCard}>
@@ -292,12 +302,24 @@ export default class SignUp extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: '#FF7F00',
+		backgroundColor: '#FF7F00',		
 	},
 	signUpCard: {
-		marginTop: 30,
-		marginBottom: 50
+		marginTop: 10,
+		marginBottom: 20,
+		zIndex: 1
 	},
+	  ximage: {
+		  zIndex:5,
+    flexGrow:2,
+    alignItems: 'center',
+    justifyContent:'center'
+  },
+  image: {
+    flexGrow:30,
+    alignItems: 'center',	
+    justifyContent:'center',width: 150, height:100
+  },
 	loader: {
 		position: 'absolute',
 		left: 0,

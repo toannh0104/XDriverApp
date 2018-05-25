@@ -41,7 +41,8 @@ export default class WorksheetEntry extends Component {
 	  	otherWorkSite: '',
 		loadDone: '',
 		comment: '',
-		file: null	
+		file: null,
+		worksites:[]
 	  };
 	  
 	  this.fileUpload = this.fileUpload.bind(this);
@@ -57,6 +58,23 @@ export default class WorksheetEntry extends Component {
 		getSession("@spt:truckid").then((value) => {
 			this.setState({trunkId: value});
 		});
+		
+		// Get worksites
+		var url = api_url+"/worksite";
+		fetch(url, {
+				method: 'POST',
+			}).then(res => res.json())
+			.catch(error => {console.log('Error: ', error)})
+			.then(response => {
+				var resData = response;
+				if (resData != null && resData.status == 1000) {
+					this.setState({worksites : resData.data.worksite});
+					setSession("@spt:worksites", resData.data.worksite);
+				}
+				else{
+					alert(resData['message']);
+				}
+		});	
 	}
 	
 	onSelect(index, value){
@@ -86,7 +104,7 @@ export default class WorksheetEntry extends Component {
 				console.log('ImagePicker Error: ', response.error);
 			}
 			else if (response != null && response.uri != undefined && response.uri != '') {
-				this.state.file = response;
+				this.state.file = { uri: response.uri, name: response.fileName, type: response.type };
 			}
 		  });
 		  
@@ -111,11 +129,12 @@ export default class WorksheetEntry extends Component {
 			formData.append('truck_id', payload.trunkId);
 			formData.append('log_date', payload.date);
 			formData.append('shift_duration', payload.shiftDuration);
-			formData.append('worksite_id', payload.workSite);
+			formData.append('worksite_id', this.state.worksites.filter(function(el){return el.worksite == payload.workSite})[0].id);
 			formData.append('worksite_others', payload.otherWorkSite);
 			formData.append('loads_done', payload.loadDone);
 			formData.append('loads_comment', payload.comment);
 			formData.append('document', payload.file);
+			console.log(formData);
 			fetch(url, {
 	  		method: 'POST',
 	  		headers: {
@@ -126,14 +145,13 @@ export default class WorksheetEntry extends Component {
 		  	}).then(res => res.json())
 		  	.catch(error => {console.log('Error: ', error)})
 		  	.then(response => {
-				  console.log("fuck u");
 		  		var resData = response;
 				if (resData != null) {
 					alert(resData['message']);
 					if (resData['status'] == 1000) {
 						
 					}else{
-						alert("deo dc");
+						
 					}
 				}
 				else{
@@ -143,7 +161,8 @@ export default class WorksheetEntry extends Component {
 	}
 
 	render() {
-		var workSites = ['Polar', 'Linfox Coles', 'Hume DC', 'Hulgrave', 'Don', 'Local', 'other'];
+		var workSites = this.state.worksites.map(a => a.worksite); //['Polar', 'Linfox Coles', 'Hume DC', 'Hulgrave', 'Don', 'Local', 'other'];
+		console.log(workSites);
 		return(
 			<View style={styles.container}>
 				<ScrollView>
