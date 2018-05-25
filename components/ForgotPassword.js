@@ -8,6 +8,7 @@ import {
 
 import { StyleSheet } from 'react-native';
 import logoTruck from '../truckAssets/lg.png';
+import AutoHeightImage from 'react-native-auto-height-image';
 
 import {
 	Card,
@@ -87,11 +88,10 @@ export default class SignUp extends Component {
 			<View style={styles.container}>
 			
 			  <View style={styles.ximage}>
-				  <Image
-					style={styles.image}
-					resizeMode="cover"
-					source={logoTruck}
-				  />
+				  <AutoHeightImage
+                    width={150}
+                    source={logoTruck}
+                />	
 			  </View>
 			  
 				<Card 

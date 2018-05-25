@@ -24,12 +24,15 @@
   "dependencies": {
     "react": "16.0.0",
     "react-native": "0.51.0",
+    "react-native-auto-height-image": "^1.0.0",
     "react-native-datepicker": "^1.7.1",
     "react-native-elements": "^0.19.1",
     "react-native-flexi-radio-button": "^0.2.2",
     "react-native-fontawesome": "^5.7.0",
     "react-native-image-picker": "^0.26.10",
+    "react-native-modal": "^6.0.0",
     "react-native-modal-dropdown": "^0.6.2",
+    "react-native-progress-bar-animated": "^1.0.6",
     "react-native-storage": "^0.2.2",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^2.0.1"

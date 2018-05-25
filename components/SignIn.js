@@ -13,7 +13,7 @@ import {
 	FormLabel, 
 	FormInput 
 } from "react-native-elements";
-
+import AutoHeightImage from 'react-native-auto-height-image';
 import { onSignIn } from "../auth";
 
 import { 
@@ -43,6 +43,12 @@ export default class SignIn extends Component {
 	
 	clearSession();
   }
+  
+  componentWillMount() {
+
+    }
+
+	
 
   setUserDetails(userID, userName, licenseNumber, commencementDate, licenseExpiry, mobileNumber, email) {
     
@@ -129,11 +135,12 @@ export default class SignIn extends Component {
     return(
       <View style={styles.container} >
 		  <View style={styles.ximage}>
-			  <Image
-				style={styles.image}
-				resizeMode="cover"
-				source={logoTruck}
-			  />
+		  
+		  <AutoHeightImage
+                    width={150}
+                    source={logoTruck}
+                />				
+			  
 		  </View>
         <Card
           title="Sign In" 

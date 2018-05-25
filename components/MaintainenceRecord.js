@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 
+
 import {
 	View,
 	ScrollView,
 	StyleSheet,
 	Text,
 	Image,
-	AsyncStorage
+	AsyncStorage, Dimensions, TouchableOpacity
 } from 'react-native';
+
+import Modal from "react-native-modal";
 
 import {
 	Card,
@@ -19,6 +22,8 @@ import {
 import DatePicker from 'react-native-datepicker';
 
 import defaultTruck from '../truckAssets/default_truck.jpg';
+import loadingImg from '../truckAssets/loading.gif';
+import logoTruck from '../truckAssets/lg.png';
 
 var ImagePicker = require('react-native-image-picker'); 
 import { setSession, getSession} from './HelperFunctions';
@@ -56,7 +61,13 @@ export default class MaintainenceRecord extends Component {
 			truckmodel:'',
 			truckimage:'',
 			userId: '',
-			logId:''
+			logId:'',
+			progress: 20,
+    progressWithOnComplete: 0,
+    progressCustomized: 0,
+	    isModalVisible: false
+
+
 	  };	
 
 	  this.onUploadRegistrationPress = this.onUploadRegistrationPress.bind(this);
@@ -70,44 +81,53 @@ export default class MaintainenceRecord extends Component {
 		this.onOtherWorkDocumentsPress = this.onOtherWorkDocumentsPress.bind(this);
 		this.doPost = this.doPost.bind(this);
 	}
+	
+  _toggleModal = () => this.setState({ isModalVisible: !this.state.isModalVisible });
+	
+	  onDateChange(date) {
+			this.setState({
+			  date: date
+			});			
+			
+		let userId = this.props.navigation.state.params.userId;
+		let truckId = this.props.navigation.state.params.truckId;
+		let cdate = date;
+		let logidkey = "@spt:logid"+userId+','+truckId+','+cdate;
+		/*getSession(logidkey).then((value) => {
+			console.log("get from sessioin");
+		});*/
+		
+		var url = api_url+"/maintenance";
+		let formData = new FormData();
+		formData.append('user_id', userId);
+		formData.append('truck_id', truckId);
+		formData.append('log_date', date);
+		fetch(url, {
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'multipart/form-data'
+				},
+				body: formData
+			}).then(res => res.json())
+			.catch(error => {console.log('Error: ', error)})
+			.then(response => {
+				var resData = response;
+				if (resData != null && resData.status == 1000) {
+					this.setState({logId : resData.data});
+					setSession(logidkey, resData.data);
+				}
+				else{
+					alert(resData['message']);
+					this.props.navigation.navigate("Trucks");
+				}
+		});	
+		
+	  }
+	  
 
 	componentWillMount() {
-		if(this.state.logId == ""){			
-			getSession("@spt:logid").then((value) => {
-				console.log("logid: "+value);
-				if(value == null){
-					let userId = this.props.navigation.state.params.userId;
-					let truckId = this.props.navigation.state.params.truckId;
-					
-					var url = api_url+"/maintenance";
-					let formData = new FormData();
-					var cDate = new Date();
-					formData.append('user_id', userId);
-					formData.append('truck_id', truckId);
-					formData.append('log_date', (cDate.getDate() -3) +"-" +(cDate.getMonth() + 1) +"-" +cDate.getFullYear());
-					fetch(url, {
-							method: 'POST',
-							headers: {
-								'Accept': 'application/json',
-								'Content-Type': 'multipart/form-data'
-							},
-							body: formData
-						}).then(res => res.json())
-						.catch(error => {console.log('Error: ', error)})
-						.then(response => {
-							var resData = response;
-							if (resData != null && resData.status == 1000) {
-								this.setState({logId : resData.data});
-								setSession("@spt:logid", resData.data);
-							}
-							else{
-								alert(resData['message']);
-								this.props.navigation.navigate("Trunks");
-							}
-					});	
-				}
-			});
-		}
+		
 		getSession("@spt:userid").then((value) => {
 			this.setState({"userid": value});
 		});
@@ -360,11 +380,18 @@ export default class MaintainenceRecord extends Component {
 	}
 
 	render() {
+
 		return(
 			<View style={styles.container}>
+			
+				
+			  
 				<ScrollView>
 					<Card title="Truck Info">
 						<View style={{flex: 1, flexDirection: 'row'}}>
+						
+	
+						
 							<View>
 								<Image
 									source={{uri: this.state.truckimage}}
@@ -412,7 +439,7 @@ export default class MaintainenceRecord extends Component {
 			                                borderTopWidth: 0,
 								          }
 								        }}
-								        onDateChange={(date) => {this.setState({date: date})}}
+								        onDateChange={(date) => this.onDateChange(date)}
 								      />
 								</View>
 								

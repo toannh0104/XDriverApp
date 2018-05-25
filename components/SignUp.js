@@ -8,6 +8,7 @@ import {
 	ActivityIndicator,
 	Text,Image
 } from 'react-native';
+import AutoHeightImage from 'react-native-auto-height-image';
 
 import { 
 	StyleSheet,
@@ -163,11 +164,10 @@ export default class SignUp extends Component {
 				<View style={styles.container}>
 				
 				<View style={styles.ximage}>
-          <Image
-            style={styles.image}
-            resizeMode="cover"
-            source={logoTruck}
-          />
+          <AutoHeightImage
+                    width={150}
+                    source={logoTruck}
+                />	
 		  </View>
 		  
 					<Card 
