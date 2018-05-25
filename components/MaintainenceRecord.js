@@ -36,8 +36,10 @@ export default class MaintainenceRecord extends Component {
 	  	lastServiceDocuments: [],
 	  	lastServiceKM: '',
 	  	lastServiceDate: 'select date',
-	  	steerTyreChangeKM: '',
-	  	driveTyreChangeKM: '',
+			steerTyreChangeKM: '',
+			steerTyreChangeComment: '',
+			driveTyreChangeKM: '',
+			driveTyreChangeComment: '',
 	  	steerTyreDocuments: [],
 	  	driveTyreDocuments: [],
 	  	otherWork: '',
@@ -64,42 +66,47 @@ export default class MaintainenceRecord extends Component {
 
 	  this.onParkBrakeAlarmDocumentsUploadPress = this.onParkBrakeAlarmDocumentsUploadPress.bind(this);
 	  this.onLastServiceDocumentsPress = this.onLastServiceDocumentsPress.bind(this);
-	  this.onSteerTyreChangePress = this.onSteerTyreChangePress.bind(this);
 	  this.onDriveTyreChangePress = this.onDriveTyreChangePress.bind(this);
 		this.onOtherWorkDocumentsPress = this.onOtherWorkDocumentsPress.bind(this);
-		//this.loadLogId = this.loadLogId.bind(this);
 		this.doPost = this.doPost.bind(this);
 	}
 
 	componentWillMount() {
-		console.log("param navigation");
-		let userId = this.props.navigation.state.params.userId;
-		let truckId = this.props.navigation.state.params.truckId;
+		getSession("@spt:logid").then((value) => {
+			console.log("logid: "+value);
+			if(value == null){
+				let userId = this.props.navigation.state.params.userId;
+				let truckId = this.props.navigation.state.params.truckId;
+				
+				var url = api_url+"/maintenance";
+				let formData = new FormData();
+				var cDate = new Date();
+				formData.append('user_id', userId);
+				formData.append('truck_id', truckId);
+				formData.append('log_date', (cDate.getDate() -1) +"-" +(cDate.getMonth() + 1) +"-" +cDate.getFullYear());
+				fetch(url, {
+						method: 'POST',
+						headers: {
+							'Accept': 'application/json',
+							'Content-Type': 'multipart/form-data'
+						},
+						body: formData
+					}).then(res => res.json())
+					.catch(error => {console.log('Error: ', error)})
+					.then(response => {
+						var resData = response;
+						if (resData != null && resData.status == 1000) {
+							this.state.logId = resData.data;
+							setSession("@spt:logid", resData.data);
+						}
+						else{
+							alert(resData['message']);
+							this.props.navigation.navigate("Trunks");
+						}
+				});	
+			}
+		});
 
-		var url = api_url+"/maintenance";
-		let formData = new FormData();
-		var cDate = new Date();
-		formData.append('user_id', userId);
-		formData.append('truck_id', truckId);
-		formData.append('log_date', cDate.getDate() +"-" +(cDate.getMonth() + 1) +"-" +cDate.getFullYear());
-		fetch(url, {
-				method: 'POST',
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'multipart/form-data'
-				},
-				body: formData
-			}).then(res => res.json())
-			.catch(error => {console.log('Error: ', error)})
-			.then(response => {
-				var resData = response;
-				if (resData != null && resData.status == 1000) {
-					this.state.logId = resData.data;
-				}
-				else{
-					alert(resData['message']);
-				}
-		});	
 		getSession("@spt:userid").then((value) => {
 			this.setState({"userid": value});
 		});
@@ -175,67 +182,180 @@ export default class MaintainenceRecord extends Component {
 	}
 
 	onUploadInsuranceDocumentsPress() {
-		ImagePicker.openPicker({
-		  multiple: true
-		}).then(images => {
-		  this.setState({ insuranceDocuments: images });
-		});	
+		var options = {
+			title: 'Select Document',
+			storageOptions: {
+				skipBackup: true,
+				path: 'images'
+			}
+		};
+		ImagePicker.showImagePicker(options, (response) => {
+			console.log('Response = ', response);
+			if (response.didCancel) {
+				console.log('User cancelled photo picker');
+			}else if (response.error) {
+				console.log('ImagePicker Error: ', response.error);
+			}
+			else if (response != null && response.uri != undefined && response.uri != '') {	
+				var url = api_url+"/maintenancethree";
+				let formData = new FormData();
+				this.setState({isLoaded: false});
+				formData.append('log_id', this.state.logId);
+				formData.append('insurance_expiry', this.state.registrationExpiryDate);
+				formData.append('insurance_expiry_file', { uri: response.uri, name: response.fileName, type: response.type })
+				this.doPost(url, formData);
+			}
+		});
 	}
 
 	onfifthWheelDocumentsUploadPress() {
-		ImagePicker.openPicker({
-		  multiple: true
-		}).then(images => {
-		  this.setState({ fifthWheelDocuments: images });
-		});	
+		var options = {
+			title: 'Select Document',
+			storageOptions: {
+				skipBackup: true,
+				path: 'images'
+			}
+		};
+		ImagePicker.showImagePicker(options, (response) => {
+			console.log('Response = ', response);
+			if (response.didCancel) {
+				console.log('User cancelled photo picker');
+			}else if (response.error) {
+				console.log('ImagePicker Error: ', response.error);
+			}
+			else if (response != null && response.uri != undefined && response.uri != '') {	
+				var url = api_url+"/maintenancefour";
+				let formData = new FormData();
+				this.setState({isLoaded: false});
+				formData.append('log_id', this.state.logId);
+				formData.append('fifth_wheel_expiry', this.state.fifthWheelExpiryDate);
+				formData.append('fifth_wheel_expiry_file', { uri: response.uri, name: response.fileName, type: response.type })
+				this.doPost(url, formData);
+			}
+		});
 	}
 
 	on100SpeedDocumentsUploadPress() {
-		ImagePicker.openPicker({
-		  multiple: true
-		}).then(images => {
-		  this.setState({ hundredSpeedDocuments: images });
-		});	
+		var options = {
+			title: 'Select Document',
+			storageOptions: {
+				skipBackup: true,
+				path: 'images'
+			}
+		};
+		ImagePicker.showImagePicker(options, (response) => {
+			console.log('Response = ', response);
+			if (response.didCancel) {
+				console.log('User cancelled photo picker');
+			}else if (response.error) {
+				console.log('ImagePicker Error: ', response.error);
+			}
+			else if (response != null && response.uri != undefined && response.uri != '') {	
+				var url = api_url+"/maintenancefive";
+				let formData = new FormData();
+				this.setState({isLoaded: false});
+				formData.append('log_id', this.state.logId);
+				formData.append('speed_expiry', this.state.fifthWheelExpiryDate);
+				formData.append('speed_expiry_file', { uri: response.uri, name: response.fileName, type: response.type })
+				this.doPost(url, formData);
+			}
+		});
 	}
 
 	onParkBrakeAlarmDocumentsUploadPress() {
-		ImagePicker.openPicker({
-		  multiple: true
-		}).then(images => {
-		  this.setState({ parkBrakeAlarmDocuments: images });
-		});	
+		var options = {
+			title: 'Select Document',
+			storageOptions: {
+				skipBackup: true,
+				path: 'images'
+			}
+		};
+		ImagePicker.showImagePicker(options, (response) => {
+			console.log('Response = ', response);
+			if (response.didCancel) {
+				console.log('User cancelled photo picker');
+			}else if (response.error) {
+				console.log('ImagePicker Error: ', response.error);
+			}
+			else if (response != null && response.uri != undefined && response.uri != '') {	
+				var url = api_url+"/maintenancesix";
+				let formData = new FormData();
+				this.setState({isLoaded: false});
+				formData.append('log_id', this.state.logId);
+				formData.append('page_break_alarm_implements_date', this.state.fifthWheelExpiryDate);
+				formData.append('page_break_alarm_implements_file', { uri: response.uri, name: response.fileName, type: response.type })
+				this.doPost(url, formData);
+			}
+		});
 	}
 
 	onLastServiceDocumentsPress() {
-		ImagePicker.openPicker({
-		  multiple: true
-		}).then(images => {
-		  this.setState({ lastServiceDocuments: images });
-		});	
+		var options = {
+			title: 'Select Document',
+			storageOptions: {
+				skipBackup: true,
+				path: 'images'
+			}
+		};
+		ImagePicker.showImagePicker(options, (response) => {
+			console.log('Response = ', response);
+			if (response.didCancel) {
+				console.log('User cancelled photo picker');
+			}else if (response.error) {
+				console.log('ImagePicker Error: ', response.error);
+			}
+			else if (response != null && response.uri != undefined && response.uri != '') {	
+				var url = api_url+"/maintenanceseven";
+				let formData = new FormData();
+				this.setState({isLoaded: false});
+				formData.append('log_id', this.state.logId);
+				formData.append('previous_service_km_date', this.state.lastServiceDate);
+				formData.append('previous_service_km', this.state.lastServiceKM);				
+				formData.append('previous_service_km_file', { uri: response.uri, name: response.fileName, type: response.type })
+				this.doPost(url, formData);
+			}
+		});
 	}
 
-	onSteerTyreChangePress() {
-		ImagePicker.openPicker({
-		  multiple: true
-		}).then(images => {
-		  this.setState({ steerTyreDocuments: images });
-		});	
-	}
+	
 
 	onDriveTyreChangePress() {
-		ImagePicker.openPicker({
-		  multiple: true
-		}).then(images => {
-		  this.setState({ driveTyreDocuments: images });
-		});	
+		var url = api_url+"/maintenanceeight";
+		let formData = new FormData();
+		this.setState({isLoaded: false});
+		formData.append('log_id', this.state.logId);
+		formData.append('steer_tyre_change_km', this.state.steerTyreChangeKM);
+		formData.append('steer_tyre_change_km_comment', this.state.steerTyreChangeComment);
+		formData.append('drive_tyre_change_km', this.state.steerTyreChangeKM);
+		formData.append('drive_tyre_change_km_comment', this.state.steerTyreChangeComment);
+		this.doPost(url, formData);
 	}
 
 	onOtherWorkDocumentsPress() {
-		ImagePicker.openPicker({
-		  multiple: true
-		}).then(images => {
-		  this.setState({ otherWorkDocuments: images });
-		});	
+		var options = {
+			title: 'Select Document',
+			storageOptions: {
+				skipBackup: true,
+				path: 'images'
+			}
+		};
+		ImagePicker.showImagePicker(options, (response) => {
+			console.log('Response = ', response);
+			if (response.didCancel) {
+				console.log('User cancelled photo picker');
+			}else if (response.error) {
+				console.log('ImagePicker Error: ', response.error);
+			}
+			else if (response != null && response.uri != undefined && response.uri != '') {	
+				var url = api_url+"/maintenancenine";
+				let formData = new FormData();
+				this.setState({isLoaded: false});
+				formData.append('log_id', this.state.logId);
+				formData.append('other_work', this.state.otherWork);
+				formData.append('other_work_file', { uri: response.uri, name: response.fileName, type: response.type })
+				this.doPost(url, formData);
+			}
+		});
 	}
 
 	render() {
@@ -534,37 +654,37 @@ export default class MaintainenceRecord extends Component {
 
 					<Card title="Steer Tyre Change KM">
 
-						<FormLabel style={styles.formLabelStyle}>Enter distance(km): </FormLabel>
+						<FormLabel style={styles.formLabelStyle}>Enter steer tyre change(km): </FormLabel>
 			      		<FormInput 
 			      			onChangeText={(text) => this.setState({ steerTyreChangeKM: text })}
 			      			placeholder="distance"
 			      			keyboardType="numeric"
 			      			value={this.state.steerTyreChangeKM} 
 			      		/>
-						
-			      		<Button
-			        		buttonStyle={{ marginTop: 20 }}
-			        		backgroundColor="#FF7F00"
-			        		title="Upload a file"
-			        		onPress={this.onSteerTyreChangePress}
-						/>
-
-					</Card>
-
-					<Card title="Drive Tyre Change KM">
-
-						<FormLabel style={styles.formLabelStyle}>Enter distance(km): </FormLabel>
+						<FormLabel style={styles.formLabelStyle}>Enter steer tyre comment: </FormLabel>
+			      		<FormInput 
+			      			onChangeText={(text) => this.setState({ steerTyreChangeComment: text })}
+			      			placeholder="comment"
+			      			value={this.state.steerTyreChangeComment} 
+			      		/>
+			     <FormLabel style={styles.formLabelStyle}>Enter drive tyre change(km): </FormLabel>
 			      		<FormInput 
 			      			onChangeText={(text) => this.setState({ driveTyreChangeKM: text })}
 			      			placeholder="distance"
 			      			keyboardType="numeric"
 			      			value={this.state.driveTyreChangeKM} 
 			      		/>
-						
-			      		<Button
+						<FormLabel style={styles.formLabelStyle}>Enter drive tyre comment: </FormLabel>
+			      		<FormInput 
+			      			onChangeText={(text) => this.setState({ driveTyreChangeComment: text })}
+			      			placeholder="comment"
+			      			value={this.state.driveTyreChangeComment} 
+			      		/>
+
+						<Button
 			        		buttonStyle={{ marginTop: 20 }}
 			        		backgroundColor="#FF7F00"
-			        		title="Upload a file"
+			        		title="Save"
 			        		onPress={this.onDriveTyreChangePress}
 						/>
 
