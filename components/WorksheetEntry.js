@@ -42,7 +42,9 @@ export default class WorksheetEntry extends Component {
 		loadDone: '',
 		comment: '',
 		file: null,
-		worksites:[]
+		worksites:[],
+		isModalVisible: false
+		
 	  };
 	  
 	  this.fileUpload = this.fileUpload.bind(this);
@@ -111,6 +113,8 @@ export default class WorksheetEntry extends Component {
 	}
 
 	onApplyChangesPressed() {
+		this.setState({isModalVisible: true});
+		
 		var payload = {
 			userId: this.state.userId,
 		  	trunkId: this.state.trunkId,
@@ -145,6 +149,8 @@ export default class WorksheetEntry extends Component {
 		  	}).then(res => res.json())
 		  	.catch(error => {console.log('Error: ', error)})
 		  	.then(response => {
+				this.setState({isModalVisible: false});
+				
 		  		var resData = response;
 				if (resData != null) {
 					alert(resData['message']);
@@ -167,6 +173,20 @@ export default class WorksheetEntry extends Component {
 			<View style={styles.container}>
 				<ScrollView>
 					<Card containerStyle={styles.formCard}>
+
+
+				<View style={{flex: 1, flexDirection: 'row'}}>						
+				<Modal transparent={true} visible = {this.state.isModalVisible} >
+					<View style={styles.modalBackground}>
+							<View style={styles.activityIndicatorWrapper}>
+							<ActivityIndicator visible={this.state.isModalVisible}
+								animating={this.state.isModalVisible} />
+							</View>
+						</View>
+					</Modal>						
+				</View>
+
+
 						<FormLabel>Date</FormLabel>
 			      		<DatePicker
 					        style={{  }}
@@ -267,5 +287,21 @@ const styles = StyleSheet.create({
 	},	
   	uploadFileButton: {
   		width: 200
-  	}
+  	},
+	  modalBackground: {
+		  flex: 1,
+		  alignItems: 'center',
+		  flexDirection: 'column',
+		  justifyContent: 'space-around',
+		  backgroundColor: '#00000040'
+		},
+		activityIndicatorWrapper: {
+		  backgroundColor: '#FFFFFF',
+		  height: 100,
+		  width: 100,
+		  borderRadius: 10,
+		  display: 'flex',
+		  alignItems: 'center',
+		  justifyContent: 'space-around'
+		}
 });

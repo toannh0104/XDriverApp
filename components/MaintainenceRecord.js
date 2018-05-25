@@ -7,10 +7,10 @@ import {
 	StyleSheet,
 	Text,
 	Image,
-	AsyncStorage, Dimensions, TouchableOpacity
+	AsyncStorage, Dimensions, TouchableOpacity, ActivityIndicator, Alert, Modal
 } from 'react-native';
 
-import Modal from "react-native-modal";
+//import Modal from "react-native-modal";
 
 import {
 	Card,
@@ -82,8 +82,7 @@ export default class MaintainenceRecord extends Component {
 		this.doPost = this.doPost.bind(this);
 	}
 	
-  _toggleModal = () => this.setState({ isModalVisible: !this.state.isModalVisible });
-	
+
 	  onDateChange(date) {
 			this.setState({
 			  date: date
@@ -156,6 +155,7 @@ export default class MaintainenceRecord extends Component {
 	}
 
 	doPost(url, formData){
+		this.setState({isModalVisible: true});
 		console.log("posting....")
 		console.log(formData);
 		fetch(url, {
@@ -168,6 +168,7 @@ export default class MaintainenceRecord extends Component {
 		}).then(res => res.json())
 		.catch(error => {console.log('Error: ', error)})
 		.then(response => {
+			this.setState({isModalVisible: false});
 			var resData = response;
 			if (resData != null) {			
 				alert(resData['message']);
@@ -388,11 +389,20 @@ export default class MaintainenceRecord extends Component {
 			  
 				<ScrollView>
 					<Card title="Truck Info">
-						<View style={{flex: 1, flexDirection: 'row'}}>
-						
-	
-						
-							<View>
+<View style={{flex: 1, flexDirection: 'row'}}>						
+	<Modal transparent={true} visible = {this.state.isModalVisible} >
+		<View style={styles.modalBackground}>
+				<View style={styles.activityIndicatorWrapper}>
+				<ActivityIndicator visible={this.state.isModalVisible}
+					animating={this.state.isModalVisible} />
+				</View>
+			</View>
+		</Modal>						
+<View>
+
+
+
+
 								<Image
 									source={{uri: this.state.truckimage}}
 									style={{ width: 80, height: 70 }}
@@ -749,4 +759,20 @@ const styles = StyleSheet.create({
 	infoCard: {
 		marginTop: 20
 	},
+	modalBackground: {
+		flex: 1,
+		alignItems: 'center',
+		flexDirection: 'column',
+		justifyContent: 'space-around',
+		backgroundColor: '#00000040'
+	  },
+	  activityIndicatorWrapper: {
+		backgroundColor: '#FFFFFF',
+		height: 100,
+		width: 100,
+		borderRadius: 10,
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'space-around'
+	  }
 });
