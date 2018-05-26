@@ -4,7 +4,7 @@ import {
 	View,
 	StyleSheet,
 	ScrollView,
-	Text
+	Text,Modal, ActivityIndicator
 } from 'react-native';
 
 import {
