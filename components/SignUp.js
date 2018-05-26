@@ -165,7 +165,7 @@ export default class SignUp extends Component {
 				
 				<View style={styles.ximage}>
           <AutoHeightImage
-                    width={150}
+                    width={250}
                     source={logoTruck}
                 />	
 		  </View>

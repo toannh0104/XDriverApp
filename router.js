@@ -101,7 +101,7 @@ export const TrucksStack = createStackNavigator({
 	MaintainenceRecord: {
 		screen: MaintainenceRecord,
 		navigationOptions: {
-			title: "Maintainence Record"
+			title: "Incident Log"
 		},
 	}
 },

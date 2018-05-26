@@ -137,7 +137,7 @@ export default class SignIn extends Component {
 		  <View style={styles.ximage}>
 		  
 		  <AutoHeightImage
-                    width={150}
+                    width={250}
                     source={logoTruck}
                 />				
 			  
@@ -149,7 +149,7 @@ export default class SignIn extends Component {
           <FormLabel>Email</FormLabel>
           <FormInput 
             onChangeText={(text) => this.setState({ email: text})}
-			  autoCapitalize = 'none'
+			      autoCapitalize = 'none'
             placeholder="Email address" />
 
           <FormLabel>Password</FormLabel>

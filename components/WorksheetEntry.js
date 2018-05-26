@@ -153,22 +153,30 @@ export default class WorksheetEntry extends Component {
 				
 		  		var resData = response;
 				if (resData != null) {
-					alert(resData['message']);
-					if (resData['status'] == 1000) {
-						
-					}else{
-						
-					}
+					alert("title", resData['message']);					
 				}
 				else{
 					alert("An error occured while post data. Please try again later.");
-				}			
+				}		
+				this.props.navigation.navigate("Trucks");	
 		  	});
 	}
 
+	onWorksiteSelected(site){
+		var workSites = this.state.worksites.map(a => a.worksite); 	
+		this.setState({ workSite: workSites[site] })
+		console.log(site);
+		if(site == 5){
+			this.setState({isDisplayOtherWorksite: true});
+		}else{
+			this.setState({isDisplayOtherWorksite: false});
+		}
+		
+	}
+
 	render() {
-		var workSites = this.state.worksites.map(a => a.worksite); //['Polar', 'Linfox Coles', 'Hume DC', 'Hulgrave', 'Don', 'Local', 'other'];
-		console.log(workSites);
+		var workSites = this.state.worksites.map(a => a.worksite); 	
+		var loadDones = ["LOCAL", "Country"];
 		return(
 			<View style={styles.container}>
 				<ScrollView>
@@ -235,23 +243,31 @@ export default class WorksheetEntry extends Component {
 					      <ModalDropdown
 					      	textStyle={{ marginLeft: 20, fontSize: 16, color: '#FF7F00' }}
 					      	options={workSites}
-					      	onSelect={(site) => this.setState({ workSite: workSites[site] })}
+							  onSelect={(site) => this.onWorksiteSelected(site)}					  
+							  
 					      />
-
-					      <FormLabel>Other</FormLabel>
-					      <FormInput 
-			      			onChangeText={(text) => this.setState({ otherWorkSite: text })}
-			      			placeholder="Enter work site name"
-			      			value={this.state.otherWorkSite}
-			      			/>
+						  {						    
+							this.state.isDisplayOtherWorksite ? 
+							<FormInput 
+							onChangeText={(text) => this.setState({ otherWorkSite: text })}
+							placeholder="Enter work site name"
+							value={this.state.otherWorkSite} 
+							visible={false}
+							/>
+							: null
+						}		
 							
 							<FormLabel style={styles.formLabelStyle}>Loads done</FormLabel>
-							<FormInput 
-								onChangeText={(text) => this.setState({ loadDone: text })}
-								placeholder="loads_done"
-								value={this.state.loadDone}
-							/>
 							
+						<ModalDropdown
+						textStyle={{ marginLeft: 20, fontSize: 16, color: '#FF7F00' }}
+						options={loadDones}
+							onSelect={(loadDone) => this.setState({loadDone: loadDone})}			  
+							adjustFrame={(style) => {
+								style.height = 70;
+								return style;
+							  }}
+						/>							
 							<FormLabel style={styles.formLabelStyle}>Loads comment</FormLabel>
 							<FormInput 
 								onChangeText={(text) => this.setState({ comment: text })}
@@ -259,9 +275,9 @@ export default class WorksheetEntry extends Component {
 								value={this.state.comment}
 							/>
 							
-							<FormLabel style={{ marginBottom: 10 }}>Upload document</FormLabel>
+							<FormLabel style={{ marginBottom: 10 }}>Attach RunSheet</FormLabel>
 							<Ionicons.Button name="md-attach" backgroundColor="#FF7F00" style={styles.uploadFileButton}>
-								<Text onPress={this.fileUpload}>Upload document</Text>
+								<Text onPress={this.fileUpload}>Upload Runsheet</Text>
 							</Ionicons.Button>
 
 			      			<Button
