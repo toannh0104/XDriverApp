@@ -1,29 +1,15 @@
 import React, { Component } from 'react';
 
-import {
-	View,
-	StyleSheet,
-	ScrollView,
-	Text,Modal, ActivityIndicator
-} from 'react-native';
-
-import {
-	Card,
-	Button,
-	FormInput,
-	FormLabel
-} from 'react-native-elements';
-
+import {View, StyleSheet, ScrollView, Text, Modal, ActivityIndicator} from 'react-native';
+import { Dropdown } from 'react-native-material-dropdown';
+import {Card, Button, FormInput, FormLabel} from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
 var ImagePicker = require('react-native-image-picker');
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {
-	RadioGroup,
-	RadioButton
-} from 'react-native-flexi-radio-button';
-
-import ModalDropdown from 'react-native-modal-dropdown';
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import { setSession, getSession} from './HelperFunctions';
+
+
 export default class WorksheetEntry extends Component {
 	constructor(props) {
 	  super(props);
@@ -36,7 +22,7 @@ export default class WorksheetEntry extends Component {
 	  	registrationNumber: '',
 	  	date: '',
 	  	worksheetDate: 'select date',
-	  	shiftDuration: '',
+	  	shiftDuration: 'am',
 	  	workSite: '',
 	  	otherWorkSite: '',
 		loadDone: '',
@@ -52,6 +38,7 @@ export default class WorksheetEntry extends Component {
 	  this.onApplyChangesPressed = this.onApplyChangesPressed.bind(this);
 	}
 	
+	onCloseModal(){}
 	componentWillMount() {
 		getSession("@spt:userid").then((value) => {
 			this.setState({userId: value});
@@ -163,6 +150,7 @@ export default class WorksheetEntry extends Component {
 	}
 
 	onWorksiteSelected(site){
+		console.log("site: "+site);
 		var workSites = this.state.worksites.map(a => a.worksite); 	
 		this.setState({ workSite: workSites[site] })
 		console.log(site);
@@ -175,8 +163,11 @@ export default class WorksheetEntry extends Component {
 	}
 
 	render() {
-		var workSites = this.state.worksites.map(a => a.worksite); 	
-		var loadDones = ["LOCAL", "Country"];
+		var workSites = this.state.worksites.map(a => a.worksite);
+		workSites = workSites.map(value => {return {"value": value} })
+		console.log(workSites);
+		var loadDones = [{label: 'LOCAL', value: "LOCAL"}, {label: 'Country', value: "Country"}];
+		var radio_props = [{label: 'am', value: 'am'}, {label: 'pm', value: 'pm'}];
 		return(
 			<View style={styles.container}>
 				<ScrollView>
@@ -184,7 +175,7 @@ export default class WorksheetEntry extends Component {
 
 
 				<View style={{flex: 1, flexDirection: 'row'}}>						
-				<Modal transparent={true} visible = {this.state.isModalVisible} >
+				<Modal transparent={true} visible = {this.state.isModalVisible} onRequestClose={this.onCloseModal} >
 					<View style={styles.modalBackground}>
 							<View style={styles.activityIndicatorWrapper}>
 							<ActivityIndicator visible={this.state.isModalVisible}
@@ -193,8 +184,6 @@ export default class WorksheetEntry extends Component {
 						</View>
 					</Modal>						
 				</View>
-
-
 						<FormLabel>Date</FormLabel>
 			      		<DatePicker
 					        style={{  }}
@@ -223,7 +212,25 @@ export default class WorksheetEntry extends Component {
 					      />						
 
 			      		<FormLabel>Shift Duration</FormLabel>
-			      		<RadioGroup
+
+						  <RadioForm
+								radio_props={radio_props}
+								initial={0}
+								borderWidth={1}
+								initial={0}
+								formHorizontal={true}
+								labelHorizontal={true}
+								buttonInnerColor={'#e74c3c'}
+								buttonOuterColor='#2196f3'
+								buttonSize={6}
+								buttonOuterSize={14}
+								buttonStyle={{}}
+								buttonWrapStyle={{marginLeft: 10}}
+								style={{paddingLeft: 20, paddingTop: 10,  marginBottom : 0}}
+								onPress={(value) => {this.setState({shiftDuration:value})}}
+								/>
+
+			      		{/* <RadioGroup
 					        onSelect = {(index, value) => this.onSelect(index, value)}
 				     	>
 					        <RadioButton 
@@ -237,15 +244,22 @@ export default class WorksheetEntry extends Component {
 					        	value={'pm'}>
 					          <Text>PM</Text>
 					        </RadioButton>
-					      </RadioGroup>
-
-					      <FormLabel>Work Site</FormLabel>
-					      <ModalDropdown
+						  </RadioGroup> */}
+						  <FormLabel>Work Site</FormLabel>
+					<View style={{paddingLeft:20, paddingTop: 0}} >					      
+						  <Dropdown
+								label='Select worksite'
+								data={workSites} 
+								//onChangeText={this.onChangeText}
+								onChangeText={(idx, value) => this.onWorksiteSelected(value)}
+							/>
+					</View>
+					      {/* <ModalDropdown
 					      	textStyle={{ marginLeft: 20, fontSize: 16, color: '#FF7F00' }}
 					      	options={workSites}
 							  onSelect={(site) => this.onWorksiteSelected(site)}					  
 							  
-					      />
+					      /> */}
 						  {						    
 							this.state.isDisplayOtherWorksite ? 
 							<FormInput 
@@ -258,8 +272,31 @@ export default class WorksheetEntry extends Component {
 						}		
 							
 							<FormLabel style={styles.formLabelStyle}>Loads done</FormLabel>
-							
-						<ModalDropdown
+						<View style={{paddingLeft:0, paddingTop: 0}} >
+							<RadioForm
+								radio_props={loadDones}
+								initial={0}
+								borderWidth={1}
+								initial={0}
+								formHorizontal={true}
+								labelHorizontal={true}
+								buttonInnerColor={'#e74c3c'}
+								buttonOuterColor='#2196f3'
+								buttonSize={6}
+								buttonOuterSize={14}
+								buttonStyle={{}}
+								buttonWrapStyle={{marginLeft: 10}}
+								style={{paddingLeft: 20, paddingTop: 10,  marginBottom : 0}}
+								onPress={(value) => {this.setState({loadDone:value})}}
+								/>
+							{/* <Dropdown
+								label='Loads Done'
+								data={loadDones} 
+								style={{color:'red'}}
+								onSelect={(loadDone) => this.setState({loadDone: loadDone})}	
+							/> */}
+						</View>
+						{/* <ModalDropdown
 						textStyle={{ marginLeft: 20, fontSize: 16, color: '#FF7F00' }}
 						options={loadDones}
 							onSelect={(loadDone) => this.setState({loadDone: loadDone})}			  
@@ -267,7 +304,7 @@ export default class WorksheetEntry extends Component {
 								style.height = 70;
 								return style;
 							  }}
-						/>							
+						/>							 */}
 							<FormLabel style={styles.formLabelStyle}>Loads comment</FormLabel>
 							<FormInput 
 								onChangeText={(text) => this.setState({ comment: text })}
