@@ -32,52 +32,22 @@ export default class MaintainenceRecord extends Component {
 	constructor(props) {
 	  super(props);
 	
-	  this.state = {
-	  	registrationDocuments: [],
-	  	insuranceDocuments: [],
-	  	fifthWheelDocuments: [],
-	  	hundredSpeedDocuments: [],
-	  	parkBrakeAlarmDocuments: [],
-	  	lastServiceDocuments: [],
-	  	lastServiceKM: '',
-	  	lastServiceDate: 'select date',
-			steerTyreChangeKM: '',
-			steerTyreChangeComment: '',
-			driveTyreChangeKM: '',
-			driveTyreChangeComment: '',
-	  	steerTyreDocuments: [],
-	  	driveTyreDocuments: [],
+	  this.state = {	  
 	  	otherWork: '',
 	  	otherWorkDocuments: [],
 	  	myDate: 'select date',
 	  	driverName: '',
-	  	registrationExpiryDate: 'select date',
-	  	insuranceExpiryDate: 'select date',
-	  	fifthWheelExpiryDate: 'select date',
-	  	hundredSpeedExpiryDate: 'select date',
-			parkBrakeAlarmExpiryDate: 'select date',
-			truckid:'',
-			truckname:'',
-			truckmodel:'',
-			truckimage:'',
-			userId: '',
-			logId:'',
-			progress: 20,
-    progressWithOnComplete: 0,
-    progressCustomized: 0,
+		truckid:'',
+		truckname:'',
+		truckmodel:'',
+		truckimage:'',
+		userId: '',
+		logId:'',
+		progress: 20,
+		progressWithOnComplete: 0,
+		progressCustomized: 0,
 	    isModalVisible: false
-
-
 	  };	
-
-	  this.onUploadRegistrationPress = this.onUploadRegistrationPress.bind(this);
-	  this.onUploadInsuranceDocumentsPress = this. onUploadInsuranceDocumentsPress.bind(this);
-	  this.onfifthWheelDocumentsUploadPress = this.onfifthWheelDocumentsUploadPress.bind(this);
-	  this.on100SpeedDocumentsUploadPress = this.on100SpeedDocumentsUploadPress.bind(this);
-
-	  this.onParkBrakeAlarmDocumentsUploadPress = this.onParkBrakeAlarmDocumentsUploadPress.bind(this);
-	  this.onLastServiceDocumentsPress = this.onLastServiceDocumentsPress.bind(this);
-	  this.onDriveTyreChangePress = this.onDriveTyreChangePress.bind(this);
 		this.onOtherWorkDocumentsPress = this.onOtherWorkDocumentsPress.bind(this);
 		this.doPost = this.doPost.bind(this);
 	}
@@ -176,180 +146,13 @@ export default class MaintainenceRecord extends Component {
 		});	
 	}
 
-	onUploadRegistrationPress() {
-		var options = {
-			title: 'Select Document',
-			storageOptions: {
-				skipBackup: true,
-				path: 'images'
-			}
-		};
-		ImagePicker.showImagePicker(options, (response) => {
-			console.log('Response = ', response);
-			if (response.didCancel) {
-				console.log('User cancelled photo picker');
-			}else if (response.error) {
-				console.log('ImagePicker Error: ', response.error);
-			}
-			else if (response != null && response.uri != undefined && response.uri != '') {	
-				var url = api_url+"/maintenancetwo";
-				let formData = new FormData();
-				this.setState({isLoaded: false});
-				formData.append('log_id', this.state.logId);
-				formData.append('registration_expiry', this.state.registrationExpiryDate);
-				formData.append('registration_expiry_file', { uri: response.uri, name: response.fileName, type: response.type })
-				this.doPost(url, formData);
-			}
-		});	
-	}
-
-	onUploadInsuranceDocumentsPress() {
-		var options = {
-			title: 'Select Document',
-			storageOptions: {
-				skipBackup: true,
-				path: 'images'
-			}
-		};
-		ImagePicker.showImagePicker(options, (response) => {
-			console.log('Response = ', response);
-			if (response.didCancel) {
-				console.log('User cancelled photo picker');
-			}else if (response.error) {
-				console.log('ImagePicker Error: ', response.error);
-			}
-			else if (response != null && response.uri != undefined && response.uri != '') {	
-				var url = api_url+"/maintenancethree";
-				let formData = new FormData();
-				this.setState({isLoaded: false});
-				formData.append('log_id', this.state.logId);
-				formData.append('insurance_expiry', this.state.registrationExpiryDate);
-				formData.append('insurance_expiry_file', { uri: response.uri, name: response.fileName, type: response.type })
-				this.doPost(url, formData);
-			}
-		});
-	}
-
-	onfifthWheelDocumentsUploadPress() {
-		var options = {
-			title: 'Select Document',
-			storageOptions: {
-				skipBackup: true,
-				path: 'images'
-			}
-		};
-		ImagePicker.showImagePicker(options, (response) => {
-			console.log('Response = ', response);
-			if (response.didCancel) {
-				console.log('User cancelled photo picker');
-			}else if (response.error) {
-				console.log('ImagePicker Error: ', response.error);
-			}
-			else if (response != null && response.uri != undefined && response.uri != '') {	
-				var url = api_url+"/maintenancefour";
-				let formData = new FormData();
-				this.setState({isLoaded: false});
-				formData.append('log_id', this.state.logId);
-				formData.append('fifth_wheel_expiry', this.state.fifthWheelExpiryDate);
-				formData.append('fifth_wheel_expiry_file', { uri: response.uri, name: response.fileName, type: response.type })
-				this.doPost(url, formData);
-			}
-		});
-	}
-
-	on100SpeedDocumentsUploadPress() {
-		var options = {
-			title: 'Select Document',
-			storageOptions: {
-				skipBackup: true,
-				path: 'images'
-			}
-		};
-		ImagePicker.showImagePicker(options, (response) => {
-			console.log('Response = ', response);
-			if (response.didCancel) {
-				console.log('User cancelled photo picker');
-			}else if (response.error) {
-				console.log('ImagePicker Error: ', response.error);
-			}
-			else if (response != null && response.uri != undefined && response.uri != '') {	
-				var url = api_url+"/maintenancefive";
-				let formData = new FormData();
-				this.setState({isLoaded: false});
-				formData.append('log_id', this.state.logId);
-				formData.append('speed_expiry', this.state.fifthWheelExpiryDate);
-				formData.append('speed_expiry_file', { uri: response.uri, name: response.fileName, type: response.type })
-				this.doPost(url, formData);
-			}
-		});
-	}
-
-	onParkBrakeAlarmDocumentsUploadPress() {
-		var options = {
-			title: 'Select Document',
-			storageOptions: {
-				skipBackup: true,
-				path: 'images'
-			}
-		};
-		ImagePicker.showImagePicker(options, (response) => {
-			console.log('Response = ', response);
-			if (response.didCancel) {
-				console.log('User cancelled photo picker');
-			}else if (response.error) {
-				console.log('ImagePicker Error: ', response.error);
-			}
-			else if (response != null && response.uri != undefined && response.uri != '') {	
-				var url = api_url+"/maintenancesix";
-				let formData = new FormData();
-				this.setState({isLoaded: false});
-				formData.append('log_id', this.state.logId);
-				formData.append('page_break_alarm_implements_date', this.state.fifthWheelExpiryDate);
-				formData.append('page_break_alarm_implements_file', { uri: response.uri, name: response.fileName, type: response.type })
-				this.doPost(url, formData);
-			}
-		});
-	}
-
-	onLastServiceDocumentsPress() {
-		var options = {
-			title: 'Select Document',
-			storageOptions: {
-				skipBackup: true,
-				path: 'images'
-			}
-		};
-		ImagePicker.showImagePicker(options, (response) => {
-			console.log('Response = ', response);
-			if (response.didCancel) {
-				console.log('User cancelled photo picker');
-			}else if (response.error) {
-				console.log('ImagePicker Error: ', response.error);
-			}
-			else if (response != null && response.uri != undefined && response.uri != '') {	
-				var url = api_url+"/maintenanceseven";
-				let formData = new FormData();
-				this.setState({isLoaded: false});
-				formData.append('log_id', this.state.logId);
-				formData.append('previous_service_km_date', this.state.lastServiceDate);
-				formData.append('previous_service_km', this.state.lastServiceKM);				
-				formData.append('previous_service_km_file', { uri: response.uri, name: response.fileName, type: response.type })
-				this.doPost(url, formData);
-			}
-		});
-	}
-
-	
-
-	onDriveTyreChangePress() {
-		var url = api_url+"/maintenanceeight";
+	doSave(){
+		var url = api_url+"/maintenancenine";
 		let formData = new FormData();
 		this.setState({isLoaded: false});
 		formData.append('log_id', this.state.logId);
-		formData.append('steer_tyre_change_km', this.state.steerTyreChangeKM);
-		formData.append('steer_tyre_change_km_comment', this.state.steerTyreChangeComment);
-		formData.append('drive_tyre_change_km', this.state.steerTyreChangeKM);
-		formData.append('drive_tyre_change_km_comment', this.state.steerTyreChangeComment);
+		formData.append('other_work', this.state.otherWork);
+		formData.append('other_work_file', this.state.otherWorkDocuments);
 		this.doPost(url, formData);
 	}
 
@@ -369,13 +172,7 @@ export default class MaintainenceRecord extends Component {
 				console.log('ImagePicker Error: ', response.error);
 			}
 			else if (response != null && response.uri != undefined && response.uri != '') {	
-				var url = api_url+"/maintenancenine";
-				let formData = new FormData();
-				this.setState({isLoaded: false});
-				formData.append('log_id', this.state.logId);
-				formData.append('other_work', this.state.otherWork);
-				formData.append('other_work_file', { uri: response.uri, name: response.fileName, type: response.type })
-				this.doPost(url, formData);
+				this.setState({otherWorkDocuments : { uri: response.uri, name: response.fileName, type: response.type }});				
 			}
 		});
 	}
@@ -474,7 +271,7 @@ export default class MaintainenceRecord extends Component {
 			        			buttonStyle={{ marginTop: 20 }}
 			        			backgroundColor="#000000"
 			        			title="Save"
-			        			
+			        			onPress={() => this.doSave()}
 							/>
 					</Card>
 				</ScrollView>

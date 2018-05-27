@@ -140,7 +140,7 @@ export default class Trucks extends Component {
 										</View>
 										<View style={{ flex: 1, flexDirection: 'row' }}>
 											<TouchableOpacity onPress={() => this.loadMaintenance(truck.id, truck.truck_name, truck.truck_number, truck.image) } style={styles.editButton}>
-												<Text style={{ color: 'white' }}>Updates</Text>
+												<Text style={{ color: 'white' }}>Comments</Text>
 											</TouchableOpacity>
 										</View>
 									</View>

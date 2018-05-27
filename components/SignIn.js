@@ -137,7 +137,7 @@ export default class SignIn extends Component {
 		  <View style={styles.ximage}>
 		  
 		  <AutoHeightImage
-                    width={250}
+                    width={280}
                     source={logoTruck}
                 />				
 			  
@@ -190,20 +190,16 @@ export default class SignIn extends Component {
 
 const styles = StyleSheet.create({
   container: {
-	alignItems: 'stretch',
+	  alignItems: 'stretch',
     justifyContent: 'center',
     backgroundColor: '#FF7F00',
-    flex: 2
+    flex: 1
   },
   ximage: {
     flexGrow:1,
     alignItems: 'center',
-    justifyContent:'center'
-  },
-  image: {
-    flexGrow:1,
-    alignItems: 'center',
-    justifyContent:'center',width: 150, height:70
+    justifyContent:'center',
+    height :10
   },
   
   loader: {
@@ -213,12 +209,12 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     alignItems: 'center',
-	backgroundColor:'rgba(0,0,0,.6)',
+	  backgroundColor:'rgba(0,0,0,.6)',
     justifyContent: 'center'
   },
   signInCard: {
-    marginTop: 10,
-	alignItems: 'stretch',
-    justifyContent: 'center',
+    marginTop: 0,
+	 // alignItems: 'stretch',
+   // justifyContent: 'center',
   }
 });

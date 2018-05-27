@@ -153,7 +153,7 @@ export default class WorksheetEntry extends Component {
 				
 		  		var resData = response;
 				if (resData != null) {
-					alert("title", resData['message']);					
+					alert(resData['message']);					
 				}
 				else{
 					alert("An error occured while post data. Please try again later.");
@@ -283,7 +283,7 @@ export default class WorksheetEntry extends Component {
 			      			<Button
 			        			buttonStyle={{ marginTop: 20 }}
 			        			backgroundColor="#000000"
-			        			title="Apply Changes"
+			        			title="Submit Worksheet"
 			        			onPress={this.onApplyChangesPressed}
 							/>
 					</Card>

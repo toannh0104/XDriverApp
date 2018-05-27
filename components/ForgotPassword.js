@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import {
 	View,
 	ScrollView,
-	ActivityIndicator, Image
+	ActivityIndicator, Image, Text
 } from 'react-native';
 
 import { StyleSheet } from 'react-native';
@@ -85,18 +85,20 @@ export default class SignUp extends Component {
 	render() {
 		var { navigation } = this.props.navigation;
 		return(
+				 
 			<View style={styles.container}>
-			
-			  <View style={styles.ximage}>
-				  <AutoHeightImage
-                    width={250}
-                    source={logoTruck}
-                />	
-			  </View>
+			<View style={styles.ximage}>
+				<AutoHeightImage
+							width={280}
+							source={logoTruck}
+						/>							  
+		  </View>
+	
 			  
 				<Card 
 					title="Forgot Password"
 					containerStyle={styles.forgotPasswordCard}>
+					
 		      		<FormLabel>Email</FormLabel>
 		      		<FormInput 
 		      			onChangeText={(text) => this.setState({ email: text })}
@@ -122,7 +124,7 @@ export default class SignUp extends Component {
 							: null
 					  }
 				</Card>
-			</View>
+			</View>			
 		)
 	}
 }
@@ -130,18 +132,16 @@ export default class SignUp extends Component {
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: '#FF7F00',
-		flex: 6
+		flex: 1,
+		paddingBottom:150
 	},
 	  ximage: {
-    flexGrow:1,
-    alignItems: 'center',
-    justifyContent:'center'
-  },
-  image: {
-    flexGrow:1,
-    alignItems: 'center',
-    justifyContent:'center',width: 240, height:70,resizeMode: 'cover'
-  },
+		flexGrow:1,
+		alignItems: 'center',
+		justifyContent:'center',
+		height:10
+	},
+
 	loader: {
 		position: 'absolute',
 		left: 0,
@@ -153,6 +153,6 @@ const styles = StyleSheet.create({
 		justifyContent: 'center'
 	  },
 	forgotPasswordCard: {
-		marginTop: 30
+		marginTop: 0
 	}
 });

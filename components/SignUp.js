@@ -305,21 +305,16 @@ const styles = StyleSheet.create({
 		backgroundColor: '#FF7F00',		
 	},
 	signUpCard: {
-		marginTop: 10,
-		marginBottom: 20,
+		marginTop: 0,
 		zIndex: 1
 	},
 	  ximage: {
 		  zIndex:5,
     flexGrow:2,
     alignItems: 'center',
-    justifyContent:'center'
+    justifyContent:'center',height:100
   },
-  image: {
-    flexGrow:30,
-    alignItems: 'center',	
-    justifyContent:'center',width: 150, height:100
-  },
+
 	loader: {
 		position: 'absolute',
 		left: 0,
@@ -331,7 +326,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center'
 	  },
 	formLabelStyle: {
-		marginBottom: 10
+		marginBottom: 0
 	},
 	dateStyle: {
 
