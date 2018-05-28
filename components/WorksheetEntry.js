@@ -9,23 +9,24 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import { setSession, getSession} from './HelperFunctions';
 
-
 export default class WorksheetEntry extends Component {
 	constructor(props) {
 	  super(props);
+	  
 	
+	var date = new Date();
 	  this.state = {
 		userId: 0,
 		trunkId: '',
 	  	name: '',
 	  	licenseNumber: '',
 	  	registrationNumber: '',
-	  	date: new Date(),
+	  	date: date.getDate() + "-"+(date.getMonth()+ 1) + "-"+date.getFullYear(),
 	  	worksheetDate: 'select date',
 	  	shiftDuration: 'am',
 	  	workSite: '',
 	  	otherWorkSite: '',
-		loadDone: '',
+		loadDone: 0,
 		comment: '',
 		file: null,
 		worksites:[],
@@ -100,6 +101,12 @@ export default class WorksheetEntry extends Component {
 	}
 
 	onApplyChangesPressed() {
+		
+		if(this.state.workSite == "" || this.state.workSite == null){
+			alert("Select work site!"); 
+			return;
+		}
+		
 		this.setState({isModalVisible: true});
 		
 		var payload = {
@@ -133,8 +140,14 @@ export default class WorksheetEntry extends Component {
 			  'Content-Type': 'multipart/form-data'
             },
 	  		body: formData
-		  	}).then(res => res.json())
-		  	.catch(error => {console.log('Error: ', error)})
+		  	}).then(res => {
+				var x = 1;
+				return res.json();
+				
+				})
+		  	.catch(error => {
+				console.log('Error: ', error); 
+				})
 		  	.then(response => {
 				this.setState({isModalVisible: false});
 				
