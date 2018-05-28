@@ -48,7 +48,7 @@ export default class MaintainenceRecord extends Component {
 	    isModalVisible: false,
 		action:'Next',
 		comment: '',
-		date: ''
+		date: new Date()
 	  };	
 		this.onOtherWorkDocumentsPress = this.onOtherWorkDocumentsPress.bind(this);
 		this.doPost = this.doPost.bind(this);
@@ -322,16 +322,15 @@ export default class MaintainenceRecord extends Component {
 						</View>
 					</Card>									
 
-					<Card title="Report an Incident">						
-			      		<FormInput 
-			      			onChangeText={(text) => this.setState({ comment: text })}
-			      			placeholder="Describe the Incident in detail" 
-			      			value={this.state.comment}
-			      		/>
-			      		{this.state.action == "Submit" ? 
+					<Card title="Report an Incident">		      		
+
+			      		{this.state.action == "Submit" ? 						
+						<View>
+						<FormLabel style={{ marginBottom: 10 }}>Upload Incident pictures</FormLabel>
 						<Ionicons.Button name="md-attach" backgroundColor="#FF7F00" style={styles.uploadFileButton}>
 							<Text onPress={this.onOtherWorkDocumentsPress}>Upload a file</Text>
 						</Ionicons.Button>
+						</View>
 						:null}
 						{this.state.action == "Submit" ? 
 							<Button
@@ -341,12 +340,19 @@ export default class MaintainenceRecord extends Component {
 			        			onPress={() => this.doSave()}
 							/>
 							: 
+							<View>
+							<FormInput 
+								onChangeText={(text) => this.setState({ comment: text })}
+								placeholder="Describe the Incident in detail" 
+								value={this.state.comment}
+							/>
 							<Button
 			        			buttonStyle={{ marginTop: 20 }}
 			        			backgroundColor="#000000"
 			        			title="Next"
 			        			onPress={() => this.doNext()}
 							/>
+							</View>
 						}						
 						
 					</Card>

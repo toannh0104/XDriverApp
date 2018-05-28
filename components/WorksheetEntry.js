@@ -20,7 +20,7 @@ export default class WorksheetEntry extends Component {
 	  	name: '',
 	  	licenseNumber: '',
 	  	registrationNumber: '',
-	  	date: '',
+	  	date: new Date(),
 	  	worksheetDate: 'select date',
 	  	shiftDuration: 'am',
 	  	workSite: '',
