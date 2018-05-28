@@ -33,7 +33,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 export default class MaintainenceRecord extends Component {
 	constructor(props) {
 	  super(props);
-	
+	  var date = new Date();
 	  this.state = {	  
 	  	otherWork: '',
 	  	otherWorkDocuments: [],
@@ -48,7 +48,7 @@ export default class MaintainenceRecord extends Component {
 	    isModalVisible: false,
 		action:'Next',
 		comment: '',
-		date: new Date()
+		date: date.getDate() + "-"+(date.getMonth()+ 1) + "-"+date.getFullYear(),
 	  };	
 		this.onOtherWorkDocumentsPress = this.onOtherWorkDocumentsPress.bind(this);
 		this.doPost = this.doPost.bind(this);
@@ -96,6 +96,7 @@ export default class MaintainenceRecord extends Component {
 		console.log(formData);		
 		fetch(url, {
 			method: 'POST',
+			timeout: 20,
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'multipart/form-data'
@@ -131,6 +132,7 @@ export default class MaintainenceRecord extends Component {
 
 		fetch(url, {
 				method: 'POST',
+				timeout: 20,
 				headers: {
 					'Accept': 'application/json',
 					'Content-Type': 'multipart/form-data'
@@ -170,6 +172,7 @@ export default class MaintainenceRecord extends Component {
 			console.log(formData);		
 			fetch(url, {
 				method: 'POST',
+				timeout: 20,
 				headers: {
 					'Accept': 'application/json',
 					'Content-Type': 'multipart/form-data'
@@ -249,31 +252,25 @@ export default class MaintainenceRecord extends Component {
 	render() {
 
 		return(
-			<View style={styles.container}>
-			
-				
-			  
+			<View style={styles.container}>			  
 				<ScrollView>
 					<Card title="Truck Info">
-<View style={{flex: 1, flexDirection: 'row'}}>						
-	<Modal transparent={true} visible = {this.state.isModalVisible} onRequestClose={this.onCloseModal} >
-		<View style={styles.modalBackground}>
-				<View style={styles.activityIndicatorWrapper}>
-				<ActivityIndicator visible={this.state.isModalVisible}
-					animating={this.state.isModalVisible} />
-				</View>
-			</View>
-		</Modal>						
-<View>
+					<View style={{flex: 1, flexDirection: 'row'}}>						
+						<Modal transparent={true} visible = {this.state.isModalVisible} onRequestClose={this.onCloseModal} >
+							<View style={styles.modalBackground}>
+									<View style={styles.activityIndicatorWrapper}>
+									<ActivityIndicator visible={this.state.isModalVisible}
+										animating={this.state.isModalVisible} />
+									</View>
+								</View>
+							</Modal>
+							<View>
 
-
-
-
-								<Image
-									source={{uri: this.state.truckimage}}
-									style={{ width: 80, height: 70 }}
-								/>
-							</View>
+						<Image
+							source={{uri: this.state.truckimage}}
+							style={{ width: 80, height: 70 }}
+						/>
+					</View>
 
 							<View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }}>
 								<View style={{ flex: 1, flexDirection: 'row' }}>

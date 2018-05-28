@@ -12,9 +12,7 @@ import { setSession, getSession} from './HelperFunctions';
 export default class WorksheetEntry extends Component {
 	constructor(props) {
 	  super(props);
-	  
-	
-	var date = new Date();
+	  var date = new Date();
 	  this.state = {
 		userId: 0,
 		trunkId: '',
@@ -53,6 +51,7 @@ export default class WorksheetEntry extends Component {
 		var url = api_url+"/worksite";
 		fetch(url, {
 				method: 'POST',
+				timeout: 20
 			}).then(res => res.json())
 			.catch(error => {console.log('Error: ', error)})
 			.then(response => {
