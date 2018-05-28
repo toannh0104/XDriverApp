@@ -167,7 +167,15 @@ export default class WorksheetEntry extends Component {
 		workSites = workSites.map(value => {return {"value": value} })
 		console.log(workSites);
 		var loadDones = [{label: 'Local', value: 1}, {label: 'Country', value: 2}];
-		var radio_props = [{label: 'am', value: 'am'}, {label: 'pm', value: 'pm'}];
+		var radio_props = [{label: 'AM', value: 'am'}, {label: 'PM', value: 'pm'}];
+		
+		 
+var radio_props1 = [
+  {label: 'param1', value: 0 },
+  {label: 'param2', value: 1 }
+];
+
+
 		return(
 			<View style={styles.container}>
 				<ScrollView>
@@ -213,7 +221,7 @@ export default class WorksheetEntry extends Component {
 
 			      		<FormLabel>Shift Duration</FormLabel>
 
-						  <RadioForm
+						<RadioForm
 								radio_props={radio_props}
 								initial={0}
 								borderWidth={1}
@@ -225,10 +233,12 @@ export default class WorksheetEntry extends Component {
 								buttonSize={6}
 								buttonOuterSize={14}
 								buttonStyle={{}}
+								labelStyle={{paddingRight:20}}
 								buttonWrapStyle={{marginLeft: 10}}
 								style={{paddingLeft: 20, paddingTop: 10,  marginBottom : 0}}
 								onPress={(value) => {this.setState({shiftDuration:value})}}
-								/>
+						/>
+								
 
 			      		{/* <RadioGroup
 					        onSelect = {(index, value) => this.onSelect(index, value)}
@@ -271,7 +281,7 @@ export default class WorksheetEntry extends Component {
 							: null
 						}		
 							
-							<FormLabel style={styles.formLabelStyle}>Loads done</FormLabel>
+							<FormLabel style={styles.formLabelStyle}>Loads Done</FormLabel>
 						<View style={{paddingLeft:0, paddingTop: 0}} >
 							<RadioForm
 								radio_props={loadDones}
@@ -284,7 +294,7 @@ export default class WorksheetEntry extends Component {
 								buttonOuterColor='#2196f3'
 								buttonSize={6}
 								buttonOuterSize={14}
-								buttonStyle={{}}
+								labelStyle={{paddingRight:20}}
 								buttonWrapStyle={{marginLeft: 10}}
 								style={{paddingLeft: 20, paddingTop: 10,  marginBottom : 0}}
 								onPress={(value) => {this.setState({loadDone:value})}}
@@ -305,10 +315,10 @@ export default class WorksheetEntry extends Component {
 								return style;
 							  }}
 						/>							 */}
-							<FormLabel style={styles.formLabelStyle}>Loads comment</FormLabel>
+							<FormLabel style={styles.formLabelStyle}>Loads Comment</FormLabel>
 							<FormInput 
 								onChangeText={(text) => this.setState({ comment: text })}
-								placeholder="comment"
+								placeholder="Comment"
 								value={this.state.comment}
 							/>
 							
@@ -356,5 +366,9 @@ const styles = StyleSheet.create({
 		  display: 'flex',
 		  alignItems: 'center',
 		  justifyContent: 'space-around'
+		},
+		formLabelStyle: {			
+			paddingLeft: 20,
+			marginLeft: 20
 		}
 });

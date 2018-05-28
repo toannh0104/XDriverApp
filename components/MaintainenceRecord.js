@@ -28,6 +28,7 @@ import logoTruck from '../truckAssets/lg.png';
 import ImagePicker from 'react-native-image-crop-picker';
 
 import { setSession, getSession} from './HelperFunctions';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default class MaintainenceRecord extends Component {
 	constructor(props) {
@@ -44,10 +45,10 @@ export default class MaintainenceRecord extends Component {
 		truckimage:'',
 		userId: '',
 		logId:'',
-		progress: 20,
-		progressWithOnComplete: 0,
-		progressCustomized: 0,
-	    isModalVisible: false
+	    isModalVisible: false,
+		action:'Next',
+		comment: '',
+		date: ''
 	  };	
 		this.onOtherWorkDocumentsPress = this.onOtherWorkDocumentsPress.bind(this);
 		this.doPost = this.doPost.bind(this);
@@ -57,44 +58,7 @@ export default class MaintainenceRecord extends Component {
 	  onDateChange(date) {
 			this.setState({
 			  date: date
-			});			
-			
-		let userId = this.props.navigation.state.params.userId;
-		let truckId = this.props.navigation.state.params.truckId;
-		let cdate = date;
-		let logidkey = "@spt:logid"+userId+','+truckId+','+cdate;
-		/*getSession(logidkey).then((value) => {
-			console.log("get from sessioin");
-		});*/
-		
-		var url = api_url+"/maintenance";
-		let formData = new FormData();
-		formData.append('user_id', userId);
-		formData.append('truck_id', truckId);
-		formData.append('log_date', date);
-		formData.append('comment', 'Initial');
-		console.log(formData);
-		fetch(url, {
-				method: 'POST',
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'multipart/form-data'
-				},
-				body: formData
-			}).then(res => res.json())
-			.catch(error => {console.log('Error: ', error)})
-			.then(response => {
-				var resData = response;
-				if (resData != null && resData.status == 1000) {
-					this.setState({logId : resData.data});
-					setSession(logidkey, resData.data);
-				}
-				else{
-					alert(resData['message']);
-					this.props.navigation.navigate("Trucks");
-				}
-		});	
-		
+			});		
 	  }
 	  
 	onCloseModal(){}
@@ -128,9 +92,8 @@ export default class MaintainenceRecord extends Component {
 	}
 
 	doPost(url, formData){
-		this.setState({isModalVisible: true});
 		console.log("posting....")
-		console.log(formData);
+		console.log(formData);		
 		fetch(url, {
 			method: 'POST',
 			headers: {
@@ -148,18 +111,96 @@ export default class MaintainenceRecord extends Component {
 			}
 		});	
 	}
+	doNext(){
+		this.setState({isModalVisible: true});
 
-	doSave(){
-		var url = api_url+"/maintenancenine";
+		let userId = this.props.navigation.state.params.userId;
+		let truckId = this.props.navigation.state.params.truckId;
+		//let logidkey = "@spt:logid"+userId+','+truckId+','+this.state.date;
+		/*getSession(logidkey).then((value) => {
+			console.log("get from sessioin");
+		});*/
+	
+		var url = api_url+"/updates";
 		let formData = new FormData();
-		this.setState({isLoaded: false});
-		formData.append('log_id', this.state.logId);
-		formData.append('other_work', this.state.otherWork);
-		formData.append('other_work_file', this.state.otherWorkDocuments);
-		this.doPost(url, formData);
+		formData.append('user_id', userId);
+		formData.append('truck_id', truckId);
+		formData.append('log_date', this.state.date);
+		formData.append('comment', this.state.comment);
+		console.log(formData);
+
+		fetch(url, {
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'multipart/form-data'
+				},
+				body: formData
+			}).then(res => res.json())
+			.catch(error => {console.log('Error: ', error)})
+			.then(response => {
+				var resData = response;
+				if (resData != null && resData.status == 1000) {
+					this.setState({logId : resData.data});
+					this.setState({action : "Submit"});					
+					//setSession(logidkey, resData.data);
+				}
+				else{
+					alert(resData['message']);
+					this.props.navigation.navigate("Trucks");
+				}
+				this.setState({isModalVisible: false});	
+		});
+		
+	}
+	doSave(){
+		this.setState({isModalVisible: true});
+		var self = this;
+		var logId = this.state.logId;
+		var message = "";
+		var x = this.state.otherWorkDocuments.length;
+		var y =1;
+		for(var i = 0; i <= this.state.otherWorkDocuments.length -1; i++){
+			var url = api_url+"/updatefile";
+			let formData = new FormData();
+			formData.append('update_id', logId);
+			formData.append('file', this.state.otherWorkDocuments[i]);		
+			
+			console.log("posting....")
+			console.log(formData);		
+			fetch(url, {
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'multipart/form-data'
+				},
+				body: formData
+			}).then(res => {return res.json()})
+			.catch(error => {				
+				console.log('Error: ', error);
+				self.setState({isModalVisible: false});
+				alert(error.message);
+			})
+			.then(response => {
+							
+				self.setState({isModalVisible: false});	
+				var resData = response;					
+				if(resData != null && resData != undefined && message == "") {
+					message = resData['message'];
+				}
+				
+				if(response !== undefined && response.status === 1001) {
+					alert(resData['message']);
+					return;
+				}
+
+				if(x === y) alert(message);
+				y++;
+			});	
+		};
 	}
 
-	onOtherWorkDocumentsPress() {
+	onOtherWorkDocumentsPress() {			
 		/*
 		var options = {
 			title: 'Select Document',
@@ -180,22 +221,30 @@ export default class MaintainenceRecord extends Component {
 				this.setState({otherWorkDocuments : { uri: response.uri, name: response.fileName, type: response.type }});				
 			}
 		});
-		*/
-		
+		*/		
 		ImagePicker.openPicker({
-		  multiple: true
+		  multiple: true,
+		  includeBase64: false,
+		  includeExif: true
 		}).then(images => {
 		  console.log(images);
-		  var files=[];
-		  images.forEach(function (item) {
-			  var path = item.path;
-			  var name = path.substring(path.lastIndexOf("/")+1, path.length)
-				files.push({uri: path, name: name, type: item.mime});
-			});
-			//console.log(files);
+		  let files = [];
+		  
+		  images.map((image, idx) => {
+			let pathParts = image.path.split('/');
+			files[idx] = {
+			  data: 'data:'+image.mime+";base64,"+ image.data,
+			  uri: image.path,
+			  type: image.mime,
+			  name: pathParts[pathParts.length - 1]
+			}
+	  });
+	  
 		  this.setState({otherWorkDocuments : files});				
 		});	
+		
 	}
+
 
 	render() {
 
@@ -273,26 +322,33 @@ export default class MaintainenceRecord extends Component {
 						</View>
 					</Card>									
 
-					<Card title="Report a Incident">						
+					<Card title="Report an Incident">						
 			      		<FormInput 
-			      			onChangeText={(text) => this.setState({ otherWork: text })}
-			      			placeholder="Describe the incident in detail" 
-			      			value={this.state.email}
+			      			onChangeText={(text) => this.setState({ comment: text })}
+			      			placeholder="Describe the Incident in detail" 
+			      			value={this.state.comment}
 			      		/>
-			      		
-			      		<Button
-			        		buttonStyle={{ marginTop: 20 }}
-			        		backgroundColor="#FF7F00"
-			        		title="Upload a file"
-			        		onPress={this.onOtherWorkDocumentsPress}
-						/>				
-						
-						<Button
+			      		{this.state.action == "Submit" ? 
+						<Ionicons.Button name="md-attach" backgroundColor="#FF7F00" style={styles.uploadFileButton}>
+							<Text onPress={this.onOtherWorkDocumentsPress}>Upload a file</Text>
+						</Ionicons.Button>
+						:null}
+						{this.state.action == "Submit" ? 
+							<Button
 			        			buttonStyle={{ marginTop: 20 }}
 			        			backgroundColor="#000000"
 			        			title="Save"
 			        			onPress={() => this.doSave()}
 							/>
+							: 
+							<Button
+			        			buttonStyle={{ marginTop: 20 }}
+			        			backgroundColor="#000000"
+			        			title="Next"
+			        			onPress={() => this.doNext()}
+							/>
+						}						
+						
 					</Card>
 				</ScrollView>
 			</View>
