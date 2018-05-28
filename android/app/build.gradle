@@ -100,18 +100,20 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
 
     defaultConfig {
         applicationId "com.sptdriverapp"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+		vectorDrawables.useSupportLibrary = true
+
     }
     splits {
         abi {
@@ -148,6 +150,7 @@ dependencies {
     compile "com.facebook.react:react-native:+"  // From node_modules
     compile project(path: ':react-native-vector-icons')
     compile project(path: ':react-native-image-picker')
+    compile project(path: ':react-native-image-crop-picker')
 }
 
 // Run this once to be able to run the application with BUCK

@@ -25,7 +25,8 @@ import defaultTruck from '../truckAssets/default_truck.jpg';
 import loadingImg from '../truckAssets/loading.gif';
 import logoTruck from '../truckAssets/lg.png';
 
-var ImagePicker = require('react-native-image-picker'); 
+import ImagePicker from 'react-native-image-crop-picker';
+
 import { setSession, getSession} from './HelperFunctions';
 
 export default class MaintainenceRecord extends Component {
@@ -71,6 +72,8 @@ export default class MaintainenceRecord extends Component {
 		formData.append('user_id', userId);
 		formData.append('truck_id', truckId);
 		formData.append('log_date', date);
+		formData.append('comment', 'Initial');
+		console.log(formData);
 		fetch(url, {
 				method: 'POST',
 				headers: {
@@ -94,7 +97,7 @@ export default class MaintainenceRecord extends Component {
 		
 	  }
 	  
-
+	onCloseModal(){}
 	componentWillMount() {
 		
 		getSession("@spt:userid").then((value) => {
@@ -157,6 +160,7 @@ export default class MaintainenceRecord extends Component {
 	}
 
 	onOtherWorkDocumentsPress() {
+		/*
 		var options = {
 			title: 'Select Document',
 			storageOptions: {
@@ -172,9 +176,25 @@ export default class MaintainenceRecord extends Component {
 				console.log('ImagePicker Error: ', response.error);
 			}
 			else if (response != null && response.uri != undefined && response.uri != '') {	
+			console.log(response.type);
 				this.setState({otherWorkDocuments : { uri: response.uri, name: response.fileName, type: response.type }});				
 			}
 		});
+		*/
+		
+		ImagePicker.openPicker({
+		  multiple: true
+		}).then(images => {
+		  console.log(images);
+		  var files=[];
+		  images.forEach(function (item) {
+			  var path = item.path;
+			  var name = path.substring(path.lastIndexOf("/")+1, path.length)
+				files.push({uri: path, name: name, type: item.mime});
+			});
+			//console.log(files);
+		  this.setState({otherWorkDocuments : files});				
+		});	
 	}
 
 	render() {
@@ -187,7 +207,7 @@ export default class MaintainenceRecord extends Component {
 				<ScrollView>
 					<Card title="Truck Info">
 <View style={{flex: 1, flexDirection: 'row'}}>						
-	<Modal transparent={true} visible = {this.state.isModalVisible} >
+	<Modal transparent={true} visible = {this.state.isModalVisible} onRequestClose={this.onCloseModal} >
 		<View style={styles.modalBackground}>
 				<View style={styles.activityIndicatorWrapper}>
 				<ActivityIndicator visible={this.state.isModalVisible}
@@ -265,8 +285,8 @@ export default class MaintainenceRecord extends Component {
 			        		backgroundColor="#FF7F00"
 			        		title="Upload a file"
 			        		onPress={this.onOtherWorkDocumentsPress}
-						/>
-
+						/>				
+						
 						<Button
 			        			buttonStyle={{ marginTop: 20 }}
 			        			backgroundColor="#000000"

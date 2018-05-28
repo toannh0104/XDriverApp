@@ -166,7 +166,7 @@ export default class WorksheetEntry extends Component {
 		var workSites = this.state.worksites.map(a => a.worksite);
 		workSites = workSites.map(value => {return {"value": value} })
 		console.log(workSites);
-		var loadDones = [{label: 'LOCAL', value: "LOCAL"}, {label: 'Country', value: "Country"}];
+		var loadDones = [{label: 'Local', value: 1}, {label: 'Country', value: 2}];
 		var radio_props = [{label: 'am', value: 'am'}, {label: 'pm', value: 'pm'}];
 		return(
 			<View style={styles.container}>
