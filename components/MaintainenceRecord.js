@@ -324,8 +324,8 @@ export default class MaintainenceRecord extends Component {
 			      		{this.state.action == "Submit" ? 						
 						<View>
 						<FormLabel style={{ marginBottom: 10 }}>Upload Incident pictures</FormLabel>
-						<Ionicons.Button name="md-attach" backgroundColor="#FF7F00" style={styles.uploadFileButton}>
-							<Text onPress={this.onOtherWorkDocumentsPress}>Upload a file</Text>
+						<Ionicons.Button name="md-attach" backgroundColor="#FF7F00" style={styles.uploadFileButton} onPress={this.onOtherWorkDocumentsPress}s>
+							<Text>Upload a file</Text>
 						</Ionicons.Button>
 						</View>
 						:null}

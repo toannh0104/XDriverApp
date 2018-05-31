@@ -335,8 +335,8 @@ var radio_props1 = [
 							/>
 							
 							<FormLabel style={{ marginBottom: 10 }}>Attach RunSheet</FormLabel>
-							<Ionicons.Button name="md-attach" backgroundColor="#FF7F00" style={styles.uploadFileButton}>
-								<Text onPress={this.fileUpload}>Upload Runsheet</Text>
+							<Ionicons.Button name="md-attach" backgroundColor="#FF7F00" style={styles.uploadFileButton} onPress={this.fileUpload}>
+								<Text>Upload Runsheet</Text>
 							</Ionicons.Button>
 
 			      			<Button
