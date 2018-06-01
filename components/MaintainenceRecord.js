@@ -96,7 +96,7 @@ export default class MaintainenceRecord extends Component {
 		console.log(formData);		
 		fetch(url, {
 			method: 'POST',
-			timeout: 20,
+			timeout: 20*1000,
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'multipart/form-data'
@@ -113,6 +113,11 @@ export default class MaintainenceRecord extends Component {
 		});	
 	}
 	doNext(){
+		if(this.state.comment == ""){
+			alert("Add a comment");
+			return;
+		}
+		
 		this.setState({isModalVisible: true});
 
 		let userId = this.props.navigation.state.params.userId;
@@ -132,7 +137,7 @@ export default class MaintainenceRecord extends Component {
 
 		fetch(url, {
 				method: 'POST',
-				timeout: 20,
+				timeout: 20*1000,
 				headers: {
 					'Accept': 'application/json',
 					'Content-Type': 'multipart/form-data'
@@ -156,11 +161,16 @@ export default class MaintainenceRecord extends Component {
 		
 	}
 	doSave(){
+		var x = this.state.otherWorkDocuments.length;
+		if(x == 0 || this.state.otherWorkDocuments == undefined){			
+			alert("Select file to upload!"); 			
+			return;
+		}
 		this.setState({isModalVisible: true});
 		var self = this;
 		var logId = this.state.logId;
 		var message = "";
-		var x = this.state.otherWorkDocuments.length;
+		
 		var y =1;
 		for(var i = 0; i <= this.state.otherWorkDocuments.length -1; i++){
 			var url = api_url+"/updatefile";
@@ -172,7 +182,7 @@ export default class MaintainenceRecord extends Component {
 			console.log(formData);		
 			fetch(url, {
 				method: 'POST',
-				timeout: 20,
+				timeout: 20*1000,
 				headers: {
 					'Accept': 'application/json',
 					'Content-Type': 'multipart/form-data'
