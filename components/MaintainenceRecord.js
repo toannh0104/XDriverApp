@@ -43,6 +43,7 @@ export default class MaintainenceRecord extends Component {
 		truckid:'',
 		truckname:'',
 		truckmodel:'',
+		truckRegNo:'',
 		truckimage:'',
 		userId: '',
 		logId:'',
@@ -83,6 +84,9 @@ export default class MaintainenceRecord extends Component {
 
 		getSession("@spt:truckmodel").then((value) => {
 			this.setState({truckmodel: value});
+		});
+		getSession("@spt:truckRegNo").then((value) => {
+			this.setState({truckRegNo: value});
 		});
 		
 		getSession("@spt:truckimage").then((value) => {
@@ -169,6 +173,11 @@ export default class MaintainenceRecord extends Component {
 			alert("Select file to upload!"); 			
 			return;
 		}
+		if(this.state.otherWorkDocuments.length == 0){
+			alert("Select a file!");
+			return;
+		}
+		
 		this.setState({isModalVisible: true});
 		var self = this;
 		var logId = this.state.logId;
@@ -268,15 +277,18 @@ export default class MaintainenceRecord extends Component {
 
 							<View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }}>
 								<View style={{ flex: 1, flexDirection: 'row' }}>
-									<Text style={{ marginLeft: 20, fontSize: 16 }}>Name: </Text>
+									<Text style={{ marginLeft: 20, fontSize: 16 }}>Make: </Text>
 									<Text style={{ fontSize: 16, fontWeight: 'bold' }}>{this.state.truckname}</Text>
 								</View>
 
 								<View style={{ flex: 1, flexDirection: 'row' }}>
-									<Text style={{ marginLeft: 20, fontSize: 16 }}>Number: </Text>
-									<Text style={{ fontSize: 16, fontWeight: 'bold' }}>{this.state.truckid}</Text>
+									<Text style={{ marginLeft: 20, fontSize: 16 }}>Model: </Text>
+									<Text style={{ fontSize: 16, fontWeight: 'bold' }}>{this.state.truckmodel}</Text>
 								</View>
-
+								<View style={{ flex: 1, flexDirection: 'row' }}>
+									<Text style={{ marginLeft: 20, fontSize: 16 }}>Reg No: </Text>
+									<Text style={{ fontSize: 16, fontWeight: 'bold' }}>{this.state.truckRegNo}</Text>
+								</View>
 								<View style={{ flex: 1, flexDirection: 'row', marginBottom: 5 }}>
 									<Text style={{ marginLeft: 20, fontSize: 16 }}>Driver Name: </Text>
 									<Text style={{ fontSize: 16, fontWeight: 'bold' }}>{this.state.driverName}</Text>

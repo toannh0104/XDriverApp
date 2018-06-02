@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {View, StyleSheet, ScrollView, Text, Modal, ActivityIndicator } from 'react-native';
+import {View, StyleSheet, ScrollView, Text, Modal, ActivityIndicator, Dimensions } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import {Card, Button, FormInput, FormLabel} from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
@@ -100,20 +100,29 @@ export default class WorksheetEntry extends Component {
 	}
 
 	onApplyChangesPressed() {
+	console.log("checking");
+		var startKm = this.state.startKm;
+		var endKm = this.state.endKm;
+		console.log("end shift");
+		if(eval(startKm) >= eval(endKm)){
+			alert("Start and End Km are not valid!");
+			return;
+		}
 		
 		if(this.state.workSite == "" || this.state.workSite == null){
 			alert("Select work site!"); 
 			return;
 		}
 		
-		var startKm = this.state.startKm;
-		var endKm = this.state.endKm;
-		
-		if(startKm < endKm){
-			alert("Start and End Km are not valid!");
+		if(this.state.comment == ''){
+			alert("Update comment!");
 			return;
 		}
 		
+		if(this.state.file == null){
+			alert("Select a file!");
+			return;
+		}
 		this.setState({isModalVisible: true});
 		
 		var payload = {
@@ -199,6 +208,7 @@ export default class WorksheetEntry extends Component {
 		  {label: 'param1', value: 0 },
 		  {label: 'param2', value: 1 }
 		];
+		var screenWidth = Dimensions.get('window').width; 
 		return(
 			<View style={styles.container}>
 				<ScrollView>
@@ -226,14 +236,28 @@ export default class WorksheetEntry extends Component {
 					        maxDate="01-12-2030"
 					        confirmBtnText="Confirm"
 					        cancelBtnText="Cancel"
-					        
+					        customStyles={{
+							  dateIcon: {
+								position: 'absolute',
+								left: 15,
+								top: 4,
+								marginLeft: 0
+							  },
+							  dateInput: {
+								height: 40,
+								marginLeft: 20,
+								borderLeftWidth: 0,
+								borderRightWidth: 0,
+								borderTopWidth: 0,
+							  }
+							}}
 					        onDateChange={(date) => {this.setState({date: date})}}
 					      />						
 
 						  
 	<View style={{flex: 1, flexDirection: 'row'}}>
 		<View>
-			  <FormLabel>Shift start time</FormLabel>
+			<FormLabel>Shift start time</FormLabel>
 			
 			<DatePicker customStyles={{
 				  dateIcon: {
@@ -247,7 +271,7 @@ export default class WorksheetEntry extends Component {
 					borderRightWidth: 0,
 					borderTopWidth: 0,
 				  }
-				}} mode={'time'} onDateChange={(date) => {this.setState({shift_start_time: date})}} />
+				}} mode={'time'} date={this.state.shift_start_time} onDateChange={(date) => {this.setState({shift_start_time: date})}} />
 		</View>					
 						  
 		<View>
@@ -265,25 +289,28 @@ export default class WorksheetEntry extends Component {
 					borderRightWidth: 0,
 					borderTopWidth: 0,
 				  }
-				}} mode={'time'} onDateChange={(date) => {this.setState({shift_end_time: date})}} />
+				}} mode={'time'} date={this.state.shift_end_time} onDateChange={(date) => {this.setState({shift_end_time: date})}} />
 		</View>				  
 	</View>
 	
-	<FormLabel style={styles.formLabelStyle}>Start Km</FormLabel>
-	<FormInput 
-		onChangeText={(text) => this.setState({ startKm: text })}
-		placeholder="Start km" keyboardType='numeric' maxLength={10}
-		value={this.state.startKm}
-	/>
-	
-	
-		<FormLabel style={styles.formLabelStyle}>End Km</FormLabel>
-	<FormInput 
-		onChangeText={(text) => this.setState({ endKm: text })}
-		placeholder="End km" keyboardType='numeric' maxLength={10}
-		value={this.state.endKm}
-	/>
-	
+	<View style={{flex: 1, flexDirection: 'row', justifyContent:'center'}}>
+		<View  style={{width:screenWidth/2, paddingLeft:25}} >
+			<FormLabel style={styles.formLabelStyle}>Start Km</FormLabel>
+			<FormInput 
+				onChangeText={(text) => this.setState({ startKm: text })}
+				placeholder="Start km" keyboardType='numeric' maxLength={10}
+				value={this.state.startKm}
+			/>
+		</View>
+		<View  style={{width:screenWidth/2, marginLeft: -10}} >
+			<FormLabel>End Km  </FormLabel>
+			<FormInput 
+			onChangeText={(text) => this.setState({ endKm: text })}
+			placeholder="End km" keyboardType='numeric' maxLength={10}
+			value={this.state.endKm}
+			/>
+		</View>
+	</View>
 	
 	
 						  <FormLabel>Work Site</FormLabel>

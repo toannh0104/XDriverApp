@@ -42,7 +42,8 @@ export default class Trucks extends Component {
 		 truckEmpty: '',
 	  	 trucksToRender: '',
 		 isLoaded: false,
-		 userId:''
+		 userId:'',
+		 renderType: 'column',
 	  };
 	  this.loadWorksheet = this.loadWorksheet.bind(this);
 	  this.loadMaintenance = this.loadMaintenance.bind(this);
@@ -69,11 +70,12 @@ export default class Trucks extends Component {
 	}
 	
 	//
-	loadMaintenance(truckId, truckName, truckModel, truckImage) {
-		
+	loadMaintenance(truckId, truckName, truckModel,truckRegNo, truckImage) {
+		console.log("load sexy");
 		setSession("@spt:truckid", truckId.toString())
 		setSession("@spt:truckname", truckName.toString())
 		setSession("@spt:truckmodel", truckModel.toString())
+		setSession("@spt:truckRegNo", truckRegNo.toString())		
 		setSession("@spt:truckimage", truckImage.toString())
 		console.log('start')
 		this.props.navigation.navigate("MaintainenceRecord", {userId: this.state.userId, truckId: truckId});
@@ -118,13 +120,17 @@ export default class Trucks extends Component {
 		console.log("redner");
 		return(
 			<View style={styles.container}>			
-						<SearchBar lightTheme placeholder='Type Here...' onChangeText={(value) => this.doSearch(value)} />
+						<SearchBar lightTheme placeholder='Search A Truck' onChangeText={(value) => this.doSearch(value)} />
 
 			{
 				!this.state.isLoaded ? <ActivityIndicator size="large" style={styles.loader}/>
 				: 
 				<ScrollView>
+				{this.state.truckEmpty !='' ?
+				<Card>
 				<Text>{this.state.truckEmpty}</Text>
+				</Card>
+				:null}
 					{trucks.map((truck, i) =>
 						
 							<Card
@@ -153,14 +159,24 @@ export default class Trucks extends Component {
 											<Text style={{ fontSize: 16, fontWeight: 'bold' }}>{truck.truck_number}</Text>
 										</View>
 										<View style={{ flex: 1, flexDirection: 'row' }}>
-											<TouchableOpacity onPress={() => this.loadWorksheet(truck.id, truck.truck_name, truck.truck_number, truck.image) } style={styles.editButton}>
-												<Text style={{ color: 'white' }}>Worksheet</Text>
-											</TouchableOpacity>
+											<Text style={{ marginLeft: 20, fontSize: 16 }}>Registration No: </Text>
+											<Text style={{ fontSize: 16, fontWeight: 'bold' }}>{truck.registration_number}</Text>
 										</View>
-										<View style={{ flex: 1, flexDirection: 'row' }}>
-											<TouchableOpacity onPress={() => this.loadMaintenance(truck.id, truck.truck_name, truck.truck_number, truck.image) } style={styles.editButton}>
-												<Text style={{ color: 'white' }}>Comments</Text>
-											</TouchableOpacity>
+										<View style={{ flex: 1, flexDirection: this.state.renderType }} 
+										onLayout={(event) => {
+										  var {x, y, width, height} = event.nativeEvent.layout;
+										  if(width > 300) this.setState({renderType:'row'});
+										}}>
+											<View>
+												<TouchableOpacity onPress={() => this.loadWorksheet(truck.id, truck.truck_name, truck.truck_number, truck.image) } style={styles.editButton}>
+													<Text style={{ color: 'white' }}>Worksheet</Text>
+												</TouchableOpacity>
+											</View>
+											<View>
+												<TouchableOpacity onPress={() => this.loadMaintenance(truck.id, truck.truck_name,truck.truck_number, truck.registration_number, truck.image) } style={styles.editButton}>
+													<Text style={{ color: 'white' }}>Comments</Text>
+												</TouchableOpacity>
+											</View>
 										</View>
 									</View>
 

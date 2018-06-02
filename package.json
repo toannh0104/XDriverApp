@@ -12,6 +12,8 @@
     "start": "node node_modules/react-native/local-cli/cli.js start --reset-cache",
 	"builda":"react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "android": "node node_modules/react-native/local-cli/cli.js bundle --platform android -- false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && node node_modules/react-native/local-cli/cli.js run-android",
+    "android": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && node node_modules/react-native/local-cli/cli.js run-android",
+    "buildandroid": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "newandroid": "node node_modules/react-native/local-cli/cli.js bundle run-android",
     "ios": "react-native run-ios",
     "test": "node node_modules/jest/bin/jest.js",

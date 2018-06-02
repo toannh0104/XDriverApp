@@ -22,7 +22,7 @@ import {
 } from './HelperFunctions';
 
 import { NavigationActions } from 'react-navigation';
-import logoTruck from '../truckAssets/lg.png';
+import logoTruck from '../truckAssets/signin.png';
 
 export default class SignIn extends Component {
   constructor(props) {
@@ -137,7 +137,7 @@ export default class SignIn extends Component {
 		   <View style={styles.ximage}>
 		  
 		  <AutoHeightImage
-                    width={280}
+                    width={300}
                     source={logoTruck}
                 />
 			  
@@ -191,7 +191,7 @@ export default class SignIn extends Component {
 const styles = StyleSheet.create({
   container: {
 	  alignItems: 'stretch',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     backgroundColor: '#FF7F00',
     flex: 1
   },
@@ -199,11 +199,7 @@ const styles = StyleSheet.create({
     flexGrow:1,
     alignItems: 'center',
     justifyContent:'center',
-    height :10,
-
-    marginTop: -110,
-	paddingTop: 0,
-	paddingBottom: 0
+    //marginTop: 50,
   },
   
   loader: {
@@ -217,9 +213,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   signInCard: {
-    marginTop: -50,
-	paddingTop: 0,
-	paddingBottom: 0
+    marginTop: 0,
+	justifyContent: 'flex-start',
 	 // alignItems: 'stretch',
    // justifyContent: 'center',
   }
