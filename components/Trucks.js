@@ -16,7 +16,7 @@ import {
 import {
 	Card,
 	List,
-	ListItem
+	ListItem, SearchBar
 } from 'react-native-elements';
 
 import defaultTruck from '../truckAssets/icon.png';
@@ -39,36 +39,18 @@ export default class Trucks extends Component {
 	  super(props);
 	  this.state = {
 	  	 trucks: [],
+		 truckEmpty: '',
 	  	 trucksToRender: '',
 		 isLoaded: false,
 		 userId:''
 	  };
 	  this.loadWorksheet = this.loadWorksheet.bind(this);
 	  this.loadMaintenance = this.loadMaintenance.bind(this);
+	  this.doSearch = this.doSearch.bind(this);
 	}
 
 	componentWillMount() {
-		var url = api_url+"/trucklist"
-		this.setState({isLoaded: false});
-		fetch(url, {
-			method: 'POST',
-			headers: {
-              'Accept': 'application/json',
-			  'Content-Type': 'multipart/form-data'
-            },
-		}).then(res => res.json())
-		.catch(error => { console.log('Error: ', error) })
-		.then(response => {
-			var resData = response;
-			if (resData['status'] == 1000) {
-				this.setState({ trucks: resData['data'] });
-			}
-			else{
-				alert("An error occured while processing your request.");
-			}
-			
-			this.setState({isLoaded: true});
-		})
+		this.doSearch();
 
 		getSession("@spt:userid").then((value) => {
 			this.setState({userId: value});
@@ -98,14 +80,51 @@ export default class Trucks extends Component {
 		console.log('end')
 	}
 	
+	doSearch(keyword){
+		
+		var url = api_url+"/trucklist"
+		this.setState({isLoaded: false});
+		var formData = new FormData();
+		formData.append('search', keyword !== undefined && keyword.length >= 3 ? keyword: "");
+	console.log("ficl ");
+		fetch(url, {
+			method: 'POST',
+			body: formData,
+			headers: {
+              'Accept': 'application/json',
+			  'Content-Type': 'multipart/form-data'
+            },
+		}).then(res => res.json())
+		.catch(error => { console.log('Error: ', error) })
+		.then(response => {
+			var resData = response;
+			if (resData['status'] == 1000) {
+				this.setState({ trucks: resData['data'] });
+				this.setState({truckEmpty: ''});
+			}else if (resData['status'] == 1002) {
+				this.setState({ trucks: [] });
+				this.setState({truckEmpty: resData['message']});
+			}
+			else{				
+				alert(resData['message']);
+			}
+			
+			this.setState({isLoaded: true});
+		})
+	}
+	
 	render() {
 		let trucks = this.state.trucks
+		console.log("redner");
 		return(
-			<View style={styles.container}>
+			<View style={styles.container}>			
+						<SearchBar lightTheme placeholder='Type Here...' onChangeText={(value) => this.doSearch(value)} />
+
 			{
 				!this.state.isLoaded ? <ActivityIndicator size="large" style={styles.loader}/>
 				: 
 				<ScrollView>
+				<Text>{this.state.truckEmpty}</Text>
 					{trucks.map((truck, i) =>
 						
 							<Card

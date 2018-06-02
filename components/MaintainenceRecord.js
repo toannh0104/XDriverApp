@@ -37,6 +37,7 @@ export default class MaintainenceRecord extends Component {
 	  this.state = {	  
 	  	otherWork: '',
 	  	otherWorkDocuments: [],
+		fileNames: [],
 	  	myDate: 'select date',
 	  	driverName: '',
 		truckid:'',
@@ -112,12 +113,13 @@ export default class MaintainenceRecord extends Component {
 			}
 		});	
 	}
-	doNext(){
+
+	doNext(){		
 		if(this.state.comment == ""){
-			alert("Add a comment");
+			alert("Comment is required!");
 			return;
 		}
-		
+
 		this.setState({isModalVisible: true});
 
 		let userId = this.props.navigation.state.params.userId;
@@ -144,9 +146,10 @@ export default class MaintainenceRecord extends Component {
 				},
 				body: formData
 			}).then(res => res.json())
-			.catch(error => {console.log('Error: ', error)})
+			.catch(error => {this.setState({isModalVisible: false});console.log('Error: ', error)})
 			.then(response => {
 				var resData = response;
+				this.setState({isModalVisible: false});	
 				if (resData != null && resData.status == 1000) {
 					this.setState({logId : resData.data});
 					this.setState({action : "Submit"});					
@@ -156,7 +159,7 @@ export default class MaintainenceRecord extends Component {
 					alert(resData['message']);
 					this.props.navigation.navigate("Trucks");
 				}
-				this.setState({isModalVisible: false});	
+				
 		});
 		
 	}
@@ -194,8 +197,7 @@ export default class MaintainenceRecord extends Component {
 				self.setState({isModalVisible: false});
 				alert(error.message);
 			})
-			.then(response => {
-							
+			.then(response => {							
 				self.setState({isModalVisible: false});	
 				var resData = response;					
 				if(resData != null && resData != undefined && message == "") {
@@ -214,27 +216,6 @@ export default class MaintainenceRecord extends Component {
 	}
 
 	onOtherWorkDocumentsPress() {			
-		/*
-		var options = {
-			title: 'Select Document',
-			storageOptions: {
-				skipBackup: true,
-				path: 'images'
-			}
-		};
-		ImagePicker.showImagePicker(options, (response) => {
-			console.log('Response = ', response);
-			if (response.didCancel) {
-				console.log('User cancelled photo picker');
-			}else if (response.error) {
-				console.log('ImagePicker Error: ', response.error);
-			}
-			else if (response != null && response.uri != undefined && response.uri != '') {	
-			console.log(response.type);
-				this.setState({otherWorkDocuments : { uri: response.uri, name: response.fileName, type: response.type }});				
-			}
-		});
-		*/		
 		ImagePicker.openPicker({
 		  multiple: true,
 		  includeBase64: false,
@@ -242,7 +223,7 @@ export default class MaintainenceRecord extends Component {
 		}).then(images => {
 		  console.log(images);
 		  let files = [];
-		  
+		  var fileNames=[];
 		  images.map((image, idx) => {
 			let pathParts = image.path.split('/');
 			files[idx] = {
@@ -251,7 +232,10 @@ export default class MaintainenceRecord extends Component {
 			  type: image.mime,
 			  name: pathParts[pathParts.length - 1]
 			}
-	  });
+			fileNames.push(image.path.substring(image.path.lastIndexOf("/")+1, image.path.length));			
+		});
+		
+		this.setState({fileNames: fileNames});
 	  
 		  this.setState({otherWorkDocuments : files});				
 		});	
@@ -334,6 +318,10 @@ export default class MaintainenceRecord extends Component {
 			      		{this.state.action == "Submit" ? 						
 						<View>
 						<FormLabel style={{ marginBottom: 10 }}>Upload Incident pictures</FormLabel>
+						{this.state.fileNames.map((fileSelected, i) =>
+							<FormLabel style={{ marginBottom: 10 }}>{fileSelected}</FormLabel>
+						)}
+						
 						<Ionicons.Button name="md-attach" backgroundColor="#FF7F00" style={styles.uploadFileButton} onPress={this.onOtherWorkDocumentsPress}s>
 							<Text>Upload a file</Text>
 						</Ionicons.Button>

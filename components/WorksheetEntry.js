@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {View, StyleSheet, ScrollView, Text, Modal, ActivityIndicator} from 'react-native';
+import {View, StyleSheet, ScrollView, Text, Modal, ActivityIndicator } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import {Card, Button, FormInput, FormLabel} from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
@@ -21,15 +21,19 @@ export default class WorksheetEntry extends Component {
 	  	registrationNumber: '',
 	  	date: date.getDate() + "-"+(date.getMonth()+ 1) + "-"+date.getFullYear(),
 	  	worksheetDate: 'select date',
-	  	shiftDuration: 'am',
+	  	shift_start_time: '',
+		showShifStartTime: false,
+		shift_end_time: '',
 	  	workSite: '',
 	  	otherWorkSite: '',
 		loadDone: 0,
 		comment: '',
 		file: null,
+		fileName: [],
 		worksites:[],
-		isModalVisible: false
-		
+		isModalVisible: false,
+		startKm:0,
+		endKm:0,
 	  };
 	  
 	  this.fileUpload = this.fileUpload.bind(this);
@@ -64,13 +68,8 @@ export default class WorksheetEntry extends Component {
 					alert(resData['message']);
 				}
 		});	
-	}
-	
-	onSelect(index, value){
-	  this.setState({
-		shiftDuration: value
-	  })
 	}	
+
 	onChange(){
 		this.setState({file:e.target.files[0]})
 	}	
@@ -93,7 +92,8 @@ export default class WorksheetEntry extends Component {
 				console.log('ImagePicker Error: ', response.error);
 			}
 			else if (response != null && response.uri != undefined && response.uri != '') {
-				this.state.file = { uri: response.uri, name: response.fileName, type: response.type };
+				this.setState({file : { uri: response.uri, name: response.fileName, type: response.type }});
+				this.setState({fileName: response.fileName});
 			}
 		  });
 		  
@@ -106,18 +106,29 @@ export default class WorksheetEntry extends Component {
 			return;
 		}
 		
+		var startKm = this.state.startKm;
+		var endKm = this.state.endKm;
+		
+		if(startKm < endKm){
+			alert("Start and End Km are not valid!");
+			return;
+		}
+		
 		this.setState({isModalVisible: true});
 		
 		var payload = {
 			userId: this.state.userId,
 		  	trunkId: this.state.trunkId,
 		  	date: this.state.date,
-			shiftDuration : this.state.shiftDuration,
+			shift_start_time : this.state.shift_start_time,
+			shift_end_time : this.state.shift_end_time,
 		  	workSite: this.state.workSite,
 		  	otherWorkSite: this.state.otherWorkSite,
 		  	loadDone: this.state.loadDone,
 		  	comment: this.state.comment,
-		  	file: this.state.file
+		  	file: this.state.file,
+			startKm: startKm,
+			endKm: endKm
 		}
 		
 		var url = api_url+"/worksheet"
@@ -125,7 +136,10 @@ export default class WorksheetEntry extends Component {
 			formData.append('user_id', payload.userId);
 			formData.append('truck_id', payload.trunkId);
 			formData.append('log_date', payload.date);
-			formData.append('shift_duration', payload.shiftDuration);
+			formData.append('shift_start_time', payload.shift_start_time);
+			formData.append('shift_end_time', payload.shift_end_time);
+			formData.append('start_km', payload.startKm);
+			formData.append('end_km', payload.endKm);			
 			formData.append('worksite_id', this.state.worksites.filter(function(el){return el.worksite == payload.workSite})[0].id);
 			formData.append('worksite_others', payload.otherWorkSite);
 			formData.append('loads_done', payload.loadDone);
@@ -180,14 +194,11 @@ export default class WorksheetEntry extends Component {
 		console.log(workSites);
 		var loadDones = [{label: 'Local', value: 1}, {label: 'Country', value: 2}];
 		var radio_props = [{label: 'AM', value: 'am'}, {label: 'PM', value: 'pm'}];
-		
-		 
-var radio_props1 = [
-  {label: 'param1', value: 0 },
-  {label: 'param2', value: 1 }
-];
-
-
+				 
+		var radio_props1 = [
+		  {label: 'param1', value: 0 },
+		  {label: 'param2', value: 1 }
+		];
 		return(
 			<View style={styles.container}>
 				<ScrollView>
@@ -215,58 +226,66 @@ var radio_props1 = [
 					        maxDate="01-12-2030"
 					        confirmBtnText="Confirm"
 					        cancelBtnText="Cancel"
-					        customStyles={{
-					          dateIcon: {
-					            height: 0,
-					            width: 0
-					          },
-					          dateInput: {
-					          	height: 40,
-					          	marginLeft: 20,
-					          	borderLeftWidth: 0,
-                                borderRightWidth: 0,
-                                borderTopWidth: 0,
-					          }
-					        }}
+					        
 					        onDateChange={(date) => {this.setState({date: date})}}
 					      />						
 
-			      		<FormLabel>Shift Duration</FormLabel>
-
-						<RadioForm
-								radio_props={radio_props}
-								initial={0}
-								borderWidth={1}
-								initial={0}
-								formHorizontal={true}
-								labelHorizontal={true}
-								buttonInnerColor={'#e74c3c'}
-								buttonOuterColor='#2196f3'
-								buttonSize={6}
-								buttonOuterSize={14}
-								buttonStyle={{}}
-								labelStyle={{paddingRight:20}}
-								buttonWrapStyle={{marginLeft: 10}}
-								style={{paddingLeft: 20, paddingTop: 10,  marginBottom : 0}}
-								onPress={(value) => {this.setState({shiftDuration:value})}}
-						/>
-								
-
-			      		{/* <RadioGroup
-					        onSelect = {(index, value) => this.onSelect(index, value)}
-				     	>
-					        <RadioButton 
-					        	style={{ marginLeft: 20 }}
-					        	value={'am'} >
-					          <Text>AM</Text>
-					        </RadioButton>
-
-					        <RadioButton 
-					        	style={{ marginLeft: 20 }}
-					        	value={'pm'}>
-					          <Text>PM</Text>
-					        </RadioButton>
-						  </RadioGroup> */}
+						  
+	<View style={{flex: 1, flexDirection: 'row'}}>
+		<View>
+			  <FormLabel>Shift start time</FormLabel>
+			
+			<DatePicker customStyles={{
+				  dateIcon: {
+					height: 0,
+					width: 0
+				  },
+				  dateInput: {
+					height: 40,
+					marginLeft: 20,
+					borderLeftWidth: 0,
+					borderRightWidth: 0,
+					borderTopWidth: 0,
+				  }
+				}} mode={'time'} onDateChange={(date) => {this.setState({shift_start_time: date})}} />
+		</View>					
+						  
+		<View>
+			  <FormLabel>Shift end time</FormLabel>
+			
+			<DatePicker customStyles={{
+				  dateIcon: {
+					height: 0,
+					width: 0
+				  },
+				  dateInput: {
+					height: 40,
+					marginLeft: 20,
+					borderLeftWidth: 0,
+					borderRightWidth: 0,
+					borderTopWidth: 0,
+				  }
+				}} mode={'time'} onDateChange={(date) => {this.setState({shift_end_time: date})}} />
+		</View>				  
+	</View>
+	
+	<FormLabel style={styles.formLabelStyle}>Start Km</FormLabel>
+	<FormInput 
+		onChangeText={(text) => this.setState({ startKm: text })}
+		placeholder="Start km" keyboardType='numeric' maxLength={10}
+		value={this.state.startKm}
+	/>
+	
+	
+		<FormLabel style={styles.formLabelStyle}>End Km</FormLabel>
+	<FormInput 
+		onChangeText={(text) => this.setState({ endKm: text })}
+		placeholder="End km" keyboardType='numeric' maxLength={10}
+		value={this.state.endKm}
+	/>
+	
+	
+	
 						  <FormLabel>Work Site</FormLabel>
 					<View style={{paddingLeft:20, paddingTop: 0}} >					      
 						  <Dropdown
@@ -276,12 +295,6 @@ var radio_props1 = [
 								onChangeText={(idx, value) => this.onWorksiteSelected(value)}
 							/>
 					</View>
-					      {/* <ModalDropdown
-					      	textStyle={{ marginLeft: 20, fontSize: 16, color: '#FF7F00' }}
-					      	options={workSites}
-							  onSelect={(site) => this.onWorksiteSelected(site)}					  
-							  
-					      /> */}
 						  {						    
 							this.state.isDisplayOtherWorksite ? 
 							<FormInput 
@@ -335,6 +348,10 @@ var radio_props1 = [
 							/>
 							
 							<FormLabel style={{ marginBottom: 10 }}>Attach RunSheet</FormLabel>
+							
+							<FormLabel style={styles.formLabelStyle}>{this.state.fileName}</FormLabel>
+							
+							
 							<Ionicons.Button name="md-attach" backgroundColor="#FF7F00" style={styles.uploadFileButton} onPress={this.fileUpload}>
 								<Text>Upload Runsheet</Text>
 							</Ionicons.Button>
