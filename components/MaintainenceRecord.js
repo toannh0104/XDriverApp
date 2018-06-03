@@ -206,7 +206,7 @@ export default class MaintainenceRecord extends Component {
 				self.setState({isModalVisible: false});
 				alert(error.message);
 			})
-			.then(response => {							
+			.then(response => {
 				self.setState({isModalVisible: false});	
 				var resData = response;					
 				if(resData != null && resData != undefined && message == "") {
@@ -220,8 +220,10 @@ export default class MaintainenceRecord extends Component {
 
 				if(x === y) alert(message);
 				y++;
+				
 			});	
 		};
+		this.props.navigation.navigate("Trucks");
 	}
 
 	onOtherWorkDocumentsPress() {			

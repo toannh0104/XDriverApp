@@ -239,7 +239,7 @@ export default class WorksheetEntry extends Component {
 					        customStyles={{
 							  dateIcon: {
 								position: 'absolute',
-								left: 15,
+								left: 10,
 								top: 4,
 								marginLeft: 0
 							  },
