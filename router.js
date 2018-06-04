@@ -23,6 +23,7 @@ import Trucks from './components/Trucks';
 
 import EditProfile from './components/EditProfile';
 import ChangePassword from './components/ChangePassword';
+import UpdateDocuments from './components/UpdateDocuments';
 import Home from './components/Home';
 
 import TruckEntrySelectionPage from './components/TruckEntrySelectionPage';
@@ -168,6 +169,12 @@ export const HomeStack = createStackNavigator({
 		screen: ChangePassword,
 		navigationOptions: {
 			title: "Change Password"
+		}
+	},
+	UpdateDocuments: {
+		screen: UpdateDocuments,
+		natigationOptions: {
+			title: "Update documents"
 		}
 	}
 },

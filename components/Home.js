@@ -34,7 +34,7 @@ export default class Home extends Component {
 	  };
 
 	  this.onEditProfilePress = this.onEditProfilePress.bind(this);
-
+	  this.onUpdateDocument = this.onUpdateDocument.bind(this);
 	  this.onSignoutPress = this.onSignoutPress.bind(this);
 	}
 
@@ -47,6 +47,9 @@ export default class Home extends Component {
     	this.props.navigation.navigate("SignedOut")
 	}
 
+	onUpdateDocument(){
+		this.props.navigation.navigate("UpdateDocuments")
+	}
 	componentWillMount() {
 		getSession("@spt:mobile").then((value) => {
 			this.setState({"mobile": value});
@@ -96,21 +99,28 @@ export default class Home extends Component {
 							<Text style={styles.userDetailLine}>Email: </Text>
 							<Text style={{ fontWeight: 'bold', fontSize: 16 }}>{this.state.email}</Text>	
 						</View>
-						<Button
-							buttonStyle={{ marginTop: 10, opacity: 50 }}
-							backgroundColor="#FF7F00"
-							title="Change Password"
-							onPress={() => this.props.navigation.navigate("ChangePassword")}
-						/>
-						<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-							<TouchableOpacity onPress={this.onEditProfilePress} style={styles.editProfileButton}>
-								<Text style={{ color: 'white' }}>Edit Profile</Text>
-							</TouchableOpacity>
-							
-							<TouchableOpacity onPress={this.onSignoutPress} style={styles.editProfileButton}>
-								<Text style={{ color: 'white' }}>Sign Out</Text>
-							</TouchableOpacity>
-						</View>
+						
+						
+						<View>
+							<View>
+								<Button onPress={this.onEditProfilePress} buttonStyle={{ marginTop: 10, opacity: 50 }} backgroundColor="#FF7F00" title="Edit Profile"></Button>
+							</View>
+							<View>
+								<Button
+									buttonStyle={{ marginTop: 10, opacity: 50 }}
+									backgroundColor="#FF7F00"
+									title="Change Password"
+									onPress={() => this.props.navigation.navigate("ChangePassword")}
+								/>
+							</View>
+							<View>
+								<Button onPress={this.onUpdateDocument} buttonStyle={{ marginTop: 10, opacity: 50 }} backgroundColor="#FF7F00" title="Update documents"></Button>
+							</View>
+							<View>
+								<Button onPress={this.onSignoutPress} buttonStyle={{ marginTop: 10, opacity: 50 }} backgroundColor="#FF7F00" title="Sign Out"></Button>
+							</View>
+						</View>												
+				
 					</Card>
 
 					<Card title="Information" containerStyle={styles.card}>
