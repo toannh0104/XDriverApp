@@ -122,12 +122,14 @@ export default class UpdateDocuments extends Component {
 				if(x === y){
 					alert(message);
 					this.setState({files: []});
-					this.setState({fileNames: []});					
+					this.setState({fileNames: []});	
+					this.props.navigation.navigate("More");
 				}
 				y++;
 				
 			});	
 		};
+		
 	}
 	
 	fileUpload()

@@ -103,7 +103,7 @@ export default class SignIn extends Component {
           }).then(res => res.json())
           .catch(error => console.log('Error: ', error))
           .then(response => {
-				resData = response;
+			var	resData = response;
 			if (resData != null) {
 			  if (resData['status'] == 1000) {
 				var userID = resData['data']['id']
