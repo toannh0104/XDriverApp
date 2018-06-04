@@ -26,7 +26,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default class FileUploadAfterSignUp extends Component {
+export default class UpdateDocuments extends Component {
 	constructor(props) {
 	  super(props);
 	
@@ -34,12 +34,12 @@ export default class FileUploadAfterSignUp extends Component {
 	  	id: 0,
 		isLoaded: true,
 		userId:'',
-		files: [],
+		files: [],	    
+		isModalVisible: false,
 		fileNames: [],
 	  };
 	  this.fileUpload = this.fileUpload.bind(this);
 	  this.uploadCallback = this.uploadCallback.bind(this);
-	  this.doSave = this.doSave(this);
 	}
 	
 	uploadCallback(response)
@@ -71,7 +71,9 @@ export default class FileUploadAfterSignUp extends Component {
 		});
 	}
 	
-	doSave(){
+	doUploadImages(){
+		console.log("saving");
+		var x = this.state.files.length;
 		if(this.state.files.length == 0){
 			alert("Select a file!");
 			return;
@@ -79,15 +81,15 @@ export default class FileUploadAfterSignUp extends Component {
 		
 		this.setState({isModalVisible: true});
 		var self = this;
-		var logId = this.state.logId;
+		var logId = this.state.userId;
 		var message = "";
 		
 		var y =1;
-		for(var i = 0; i <= this.state.files.length -1; i++){
-			var url = api_url+"/updatefile";
+		for(var i = 0; i <= x -1; i++){
+			var url = api_url+"/signupdocuments";
 			let formData = new FormData();
-			formData.append('update_id', logId);
-			formData.append('file', this.state.files[i]);		
+			formData.append('user_id', logId);
+			formData.append('document', this.state.files[i]);		
 			
 			console.log("posting....")
 			console.log(formData);		
@@ -117,7 +119,11 @@ export default class FileUploadAfterSignUp extends Component {
 					return;
 				}
 
-				if(x === y) alert(message);
+				if(x === y){
+					alert(message);
+					this.setState({files: []});
+					this.setState({fileNames: []});					
+				}
 				y++;
 				
 			});	
@@ -154,9 +160,9 @@ export default class FileUploadAfterSignUp extends Component {
 	componentDidMount() {
 		getSession("@spt:userid").then((value) => {
 			this.setState({userId: value});
-		});
+		});	
 	}
-
+	onCloseModal(){}
 	render() {
 		
 			return(
@@ -176,23 +182,21 @@ export default class FileUploadAfterSignUp extends Component {
 								</View>
 							</Modal>
 						</View>
-							
-	
+								
 						<FormLabel style={{ marginBottom: 10 }}>Upload license documents</FormLabel>
-						<Ionicons.Button name="md-attach" backgroundColor="#FF7F00" style={styles.uploadFileButton}>
-							<Text onPress={this.fileUpload}>Upload documents</Text>
+						{this.state.fileNames.map((fileSelected, i) =>
+							<FormLabel key={i} style={{ marginBottom: 10 }}>{fileSelected}</FormLabel>
+						)}
+						<Ionicons.Button name="md-attach" backgroundColor="#FF7F00" style={styles.uploadFileButton} onPress={() => this.fileUpload()}>
+							<Text>Upload documents</Text>
 						</Ionicons.Button>
 						
 						<Button
 							buttonStyle={{ marginTop: 20 }}
 							backgroundColor="#000000"
-							title="Finish Signing Up"
-							onPress={this.doSave}
+							title="Submit"
+							onPress={() => this.doUploadImages()}
 						/>
-						{
-							!this.state.isLoaded ? <ActivityIndicator size="large" style={styles.loader}/>
-								: null
-						}
 					</Card>
 					
 				</View>
@@ -220,5 +224,21 @@ const styles = StyleSheet.create({
   	},
   	uploadFileButton: {
   		width: 200
-  	}
+  	},
+	modalBackground: {
+		flex: 1,
+		alignItems: 'center',
+		flexDirection: 'column',
+		justifyContent: 'space-around',
+		backgroundColor: '#00000040'
+	  },
+	  activityIndicatorWrapper: {
+		backgroundColor: '#FFFFFF',
+		height: 100,
+		width: 100,
+		borderRadius: 10,
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'space-around'
+	  }
 });

@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { AsyncStorage } from 'react-native';
 
 export function ValidateEmail(email) {
-	if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+	//if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       return (true)
-    }
+    //
      alert("You have entered an invalid email address!")
      return (false)
 }
@@ -18,7 +18,7 @@ export function MatchPasswords(password1, password2) {
 }
 
 export function ValidateMobileNumber(mobileNumber) {
-	if (mobileNumber.length == 10) {
+	if (mobileNumber.length > 0) {
 		return true
 	}
 	alert("Enter a valid mobile number");

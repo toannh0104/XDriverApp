@@ -1,3 +1,4 @@
+"use strict";
 import React, { Component } from "react";
 import { 
   View,
@@ -50,8 +51,7 @@ export default class SignIn extends Component {
 
 	
 
-  setUserDetails(userID, userName, licenseNumber, commencementDate, licenseExpiry, mobileNumber, email) {
-    
+  setUserDetails(userID, userName, licenseNumber, commencementDate, licenseExpiry, mobileNumber, email, address, upload_files) {
     try {
 	  setSession("@spt:userid", userID.toString())
 	  setSession("@spt:name", userName.toString())
@@ -61,8 +61,10 @@ export default class SignIn extends Component {
 	  setSession("@spt:mobile", mobileNumber.toString())
 	  setSession("@spt:email", email.toString())
 	  setSession("@spt:address", address.toString())
+	  setSession("@spt:upload_files", upload_files.toString());
+	  
     } catch(error) {
-      
+      console.log(error);
     }
   }
   
@@ -101,7 +103,7 @@ export default class SignIn extends Component {
           }).then(res => res.json())
           .catch(error => console.log('Error: ', error))
           .then(response => {
-			resData = response;
+				resData = response;
 			if (resData != null) {
 			  if (resData['status'] == 1000) {
 				var userID = resData['data']['id']
@@ -112,8 +114,10 @@ export default class SignIn extends Component {
 				var mobileNumber = resData['data']['mobile']
 				var email = resData['data']['email']
 				var address = resData['data']['address']
+				var upload_files = resData['data']['upload_files'];
 				
-				this.setUserDetails(userID, userName, licenseNumber, commencementDate, licenseExpiry, mobileNumber, email, address);
+				debugger;
+				this.setUserDetails(userID, userName, licenseNumber, commencementDate, licenseExpiry, mobileNumber, email, address, upload_files);
 				
 				this.props.navigation.navigate("SignedIn");
 			  }

@@ -30,7 +30,8 @@ export default class Home extends Component {
 	  	license_number: '',
 	  	license_expiry: '',
 	  	name: '',
-	  	email: ''
+	  	email: '',
+		upload_files: 0
 	  };
 
 	  this.onEditProfilePress = this.onEditProfilePress.bind(this);
@@ -70,7 +71,11 @@ export default class Home extends Component {
 		getSession("@spt:email").then((value) => {
 			this.setState({"email": value});
 		});
-		
+				
+		getSession("@spt:upload_files").then((value) => {
+			this.setState({upload_files: value});
+			debugger;
+		});	
 	}
 
 	componentDidMount() {
@@ -113,9 +118,11 @@ export default class Home extends Component {
 									onPress={() => this.props.navigation.navigate("ChangePassword")}
 								/>
 							</View>
+							{this.state.upload_files == 1 ? 
 							<View>
 								<Button onPress={this.onUpdateDocument} buttonStyle={{ marginTop: 10, opacity: 50 }} backgroundColor="#FF7F00" title="Update documents"></Button>
 							</View>
+							: null}
 							<View>
 								<Button onPress={this.onSignoutPress} buttonStyle={{ marginTop: 10, opacity: 50 }} backgroundColor="#FF7F00" title="Sign Out"></Button>
 							</View>
@@ -125,7 +132,7 @@ export default class Home extends Component {
 
 					<Card title="Information" containerStyle={styles.card}>
 						<TouchableOpacity onPress={() => this.props.navigation.navigate("AboutUs")} style={styles.additionalInfoButtons}>
-							<Text style={{ fontSize: 16, color: '#FF7F00' }}>About Us</Text>
+							<Text style={{ fontSize: 16, color: '#FF7F00' }}>Terms Of Use</Text>
 						</TouchableOpacity>
 
 						<TouchableOpacity onPress={() => this.props.navigation.navigate("PrivacyPolicy")} style={styles.additionalInfoButtons}>
