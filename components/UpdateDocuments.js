@@ -17,12 +17,12 @@ import {
 	TouchableOpacity,
 	Image,
 	ActivityIndicator,
-	AsyncStorage,Dimensions
+	AsyncStorage,Dimensions,  Alert, Modal
 } from 'react-native';
 
 import { clearSession, setSession, getSession } from './HelperFunctions.js';
 
-var ImagePicker = require('react-native-image-picker'); 
+import ImagePicker from 'react-native-image-crop-picker';
 var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -33,9 +33,13 @@ export default class FileUploadAfterSignUp extends Component {
 	  this.state = {
 	  	id: 0,
 		isLoaded: true,
+		userId:'',
+		files: [],
+		fileNames: [],
 	  };
 	  this.fileUpload = this.fileUpload.bind(this);
 	  this.uploadCallback = this.uploadCallback.bind(this);
+	  this.doSave = this.doSave(this);
 	}
 	
 	uploadCallback(response)
@@ -43,7 +47,7 @@ export default class FileUploadAfterSignUp extends Component {
 		var url = api_url+"/signupdocuments";
 		let formData = new FormData();
 		this.setState({isLoaded: false});
-		formData.append('user_id', this.state.id);
+		formData.append('user_id', this.state.userId);
 		formData.append('document', { uri: response.uri, name: response.fileName, type: response.type })
 		fetch(url, {
 			method: 'POST',
@@ -67,34 +71,89 @@ export default class FileUploadAfterSignUp extends Component {
 		});
 	}
 	
+	doSave(){
+		if(this.state.files.length == 0){
+			alert("Select a file!");
+			return;
+		}
+		
+		this.setState({isModalVisible: true});
+		var self = this;
+		var logId = this.state.logId;
+		var message = "";
+		
+		var y =1;
+		for(var i = 0; i <= this.state.files.length -1; i++){
+			var url = api_url+"/updatefile";
+			let formData = new FormData();
+			formData.append('update_id', logId);
+			formData.append('file', this.state.files[i]);		
+			
+			console.log("posting....")
+			console.log(formData);		
+			fetch(url, {
+				method: 'POST',
+				timeout: 20*1000,
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'multipart/form-data'
+				},
+				body: formData
+			}).then(res => {return res.json()})
+			.catch(error => {				
+				console.log('Error: ', error);
+				self.setState({isModalVisible: false});
+				alert(error.message);
+			})
+			.then(response => {
+				self.setState({isModalVisible: false});	
+				var resData = response;					
+				if(resData != null && resData != undefined && message == "") {
+					message = resData['message'];
+				}
+				
+				if(response !== undefined && response.status === 1001) {
+					alert(resData['message']);
+					return;
+				}
+
+				if(x === y) alert(message);
+				y++;
+				
+			});	
+		};
+	}
+	
 	fileUpload()
 	{
-		var options = {
-			title: 'Select Documents',
-			storageOptions: {
-			  skipBackup: true,
-			  path: 'images'
-			}
-		  };
-		  
-		  ImagePicker.showImagePicker(options, (response, uploadCallback) => {
-			if (response.error) {
-			  alert(response.error);
-			}
-			else if (response != null && response.uri != undefined && response.uri != '') {
-				this.uploadCallback(response);
-			}
-		  });
+		ImagePicker.openPicker({
+		  multiple: true,
+		  includeBase64: false,
+		  includeExif: true
+		}).then(images => {
+		  console.log(images);
+		  let files = [];
+		  var fileNames=[];
+		  images.map((image, idx) => {
+				let pathParts = image.path.split('/');
+				files[idx] = {
+				  data: 'data:'+image.mime+";base64,"+ image.data,
+				  uri: image.path,
+				  type: image.mime,
+				  name: pathParts[pathParts.length - 1]
+				}
+				fileNames.push(image.path.substring(image.path.lastIndexOf("/")+1, image.path.length));			
+			});
+		
+			this.setState({fileNames: fileNames});	  
+			this.setState({files : files});				
+		});	
+		
 	}
 
 	componentDidMount() {
-		getSession('@spt:signupid').then((data) => {
-			if (data!=null) {
-                this.setState({ id: data, isLoaded: true });
-            }
-			else{
-				this.props.navigation.navigate("SignUpSuccessScreen")
-			}
+		getSession("@spt:userid").then((value) => {
+			this.setState({userId: value});
 		});
 	}
 
@@ -107,6 +166,18 @@ export default class FileUploadAfterSignUp extends Component {
 						title="Upload your documents"
 					>
 	
+						<View style={{flex: 1, flexDirection: 'row'}}>						
+							<Modal transparent={true} visible = {this.state.isModalVisible} onRequestClose={this.onCloseModal} >
+								<View style={styles.modalBackground}>
+									<View style={styles.activityIndicatorWrapper}>
+									<ActivityIndicator visible={this.state.isModalVisible}
+										animating={this.state.isModalVisible} />
+									</View>
+								</View>
+							</Modal>
+						</View>
+							
+	
 						<FormLabel style={{ marginBottom: 10 }}>Upload license documents</FormLabel>
 						<Ionicons.Button name="md-attach" backgroundColor="#FF7F00" style={styles.uploadFileButton}>
 							<Text onPress={this.fileUpload}>Upload documents</Text>
@@ -116,7 +187,7 @@ export default class FileUploadAfterSignUp extends Component {
 							buttonStyle={{ marginTop: 20 }}
 							backgroundColor="#000000"
 							title="Finish Signing Up"
-							onPress={() => this.props.navigation.navigate("SignUpSuccessScreen")}
+							onPress={this.doSave}
 						/>
 						{
 							!this.state.isLoaded ? <ActivityIndicator size="large" style={styles.loader}/>
