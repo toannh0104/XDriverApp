@@ -244,7 +244,7 @@ export default class EditProfile extends Component {
 					        mode="date"
 					        placeholder={this.state.oldCommencementDate}
 					        format="DD-MM-YYYY"
-					        minDate={new Date()}
+					        maxDate={new Date()}
 					        confirmBtnText="Confirm"
 					        cancelBtnText="Cancel"
 					        customStyles={{

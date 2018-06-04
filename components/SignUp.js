@@ -258,7 +258,7 @@ export default class SignUp extends Component {
 					        mode="date"
 					        placeholder={this.state.commencementDate}
 					        format="DD-MM-YYYY"
-					        minDate={new Date()}
+					        maxDate={new Date()}
 					        confirmBtnText="Confirm"
 					        cancelBtnText="Cancel"
 					        customStyles={{

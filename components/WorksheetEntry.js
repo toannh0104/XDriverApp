@@ -62,7 +62,7 @@ export default class WorksheetEntry extends Component {
 				var resData = response;
 				if (resData != null && resData.status == 1000) {
 					this.setState({worksites : resData.data.worksite});
-					setSession("@spt:worksites", resData.data.worksite);
+					//setSession("@spt:worksites", resData.data.worksite);
 				}
 				else{
 					alert(resData['message']);
@@ -271,7 +271,8 @@ export default class WorksheetEntry extends Component {
 					borderRightWidth: 0,
 					borderTopWidth: 0,
 				  }
-				}} mode={'time'} date={this.state.shift_start_time} onDateChange={(date) => {this.setState({shift_start_time: date})}} />
+				}} mode={'time'} confirmBtnText="Confirm"
+        cancelBtnText="Cancel" date={this.state.shift_start_time} onDateChange={(date) => {this.setState({shift_start_time: date})}} />
 		</View>					
 						  
 		<View>
@@ -289,7 +290,8 @@ export default class WorksheetEntry extends Component {
 					borderRightWidth: 0,
 					borderTopWidth: 0,
 				  }
-				}} mode={'time'} date={this.state.shift_end_time} onDateChange={(date) => {this.setState({shift_end_time: date})}} />
+				}} mode={'time'} confirmBtnText="Confirm"
+        cancelBtnText="Cancel" date={this.state.shift_end_time} onDateChange={(date) => {this.setState({shift_end_time: date})}} />
 		</View>				  
 	</View>
 	

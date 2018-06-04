@@ -134,14 +134,15 @@ export default class SignIn extends Component {
 
     return(
       <View style={styles.container} >
-		   <View style={styles.ximage}>
-		  
-		  <AutoHeightImage
-                    width={300}
-                    source={logoTruck}
-                />
-			  
+		   <View style={styles.ximage}>		  
+			  <AutoHeightImage
+						width={300}
+						source={logoTruck}
+					/>			  
 		  </View>
+		  <View style={{
+			marginTop: 10,
+		  }}>
         <Card
           title="Sign In" 
           containerStyle={styles.signInCard}>
@@ -183,6 +184,7 @@ export default class SignIn extends Component {
 				: null
 		  }
         </Card>
+		</View>
       </View>
     );
   }
@@ -191,15 +193,15 @@ export default class SignIn extends Component {
 const styles = StyleSheet.create({
   container: {
 	  alignItems: 'stretch',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     backgroundColor: '#FF7F00',
     flex: 1
   },
   ximage: {
-    flexGrow:1,
+    flexGrow:0,
     alignItems: 'center',
-    justifyContent:'center',
-    //marginTop: 50,
+    justifyContent:'flex-start',
+    marginTop: 0,
   },
   
   loader: {
@@ -213,8 +215,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   signInCard: {
-    marginTop: 0,
-	justifyContent: 'flex-start',
+    marginTop: 30,
+	justifyContent: 'center',
 	 // alignItems: 'stretch',
    // justifyContent: 'center',
   }
