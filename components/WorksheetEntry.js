@@ -171,7 +171,7 @@ export default class WorksheetEntry extends Component {
 				console.log('Error: ', error); 
 				})
 		  	.then(response => {
-				this.setState({isModalVisible: false});
+				//
 				
 		  		var resData = response;
 				if (resData != null) {
@@ -190,6 +190,7 @@ export default class WorksheetEntry extends Component {
                               )
 				}
 				else{
+                  this.setState({isModalVisible: false});
 					alert("An error occured while post data. Please try again later.");
 				}		
 				
