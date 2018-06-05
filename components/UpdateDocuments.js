@@ -108,22 +108,36 @@ export default class UpdateDocuments extends Component {
 				alert(error.message);
 			})
 			.then(response => {
-				self.setState({isModalVisible: false});	
+				//this.setState({isModalVisible: false});
 				var resData = response;					
 				if(resData != null && resData != undefined && message == "") {
 					message = resData['message'];
 				}
 				
 				if(response !== undefined && response.status === 1001) {
-					alert(resData['message']);
+					//alert(resData['message']);
+                  alert("deo dc");
 					return;
 				}
 
 				if(x === y){
-					alert(message);
+					
 					this.setState({files: []});
-					this.setState({fileNames: []});	
-					this.props.navigation.navigate("More");
+					this.setState({fileNames: []});
+                    Alert.alert(
+                      '',
+                      message,
+                      [
+                       {text: 'OK', onPress: () => {
+                        console.log('OK Pressed');
+                        this.props.navigation.navigate("More");
+                       }
+                       },
+                       ],
+                      { cancelable: false }
+                      )
+                  
+					
 				}
 				y++;
 				
@@ -173,17 +187,20 @@ export default class UpdateDocuments extends Component {
 						containerStyle={styles.uploadFileCard}
 						title="Upload your documents"
 					>
-	
-						<View style={{flex: 1, flexDirection: 'row'}}>						
-							<Modal transparent={true} visible = {this.state.isModalVisible} onRequestClose={this.onCloseModal} >
-								<View style={styles.modalBackground}>
-									<View style={styles.activityIndicatorWrapper}>
-									<ActivityIndicator visible={this.state.isModalVisible}
-										animating={this.state.isModalVisible} />
-									</View>
-								</View>
-							</Modal>
-						</View>
+                   {this.state.isModalVisible ?
+                       <View style={{flex: 1, flexDirection: 'row'}}>
+                       <Modal transparent={true} visible = {true} onRequestClose={this.onCloseModal} >
+                       <View style={styles.modalBackground}>
+                       <View style={styles.activityIndicatorWrapper}>
+                       <ActivityIndicator visible={this.state.isModalVisible}
+                       animating={this.state.isModalVisible} />
+                       </View>
+                       </View>
+                       </Modal>
+                       </View>
+                   : null
+                   }
+						
 								
 						<FormLabel style={{ marginBottom: 10 }}>Upload license documents</FormLabel>
 						{this.state.fileNames.map((fileSelected, i) =>

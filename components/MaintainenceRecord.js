@@ -207,7 +207,7 @@ export default class MaintainenceRecord extends Component {
 				alert(error.message);
 			})
 			.then(response => {
-				self.setState({isModalVisible: false});	
+				
 				var resData = response;					
 				if(resData != null && resData != undefined && message == "") {
 					message = resData['message'];
@@ -215,15 +215,29 @@ export default class MaintainenceRecord extends Component {
 				
 				if(response !== undefined && response.status === 1001) {
 					alert(resData['message']);
+                  self.setState({isModalVisible: false});
 					return;
 				}
 
-				if(x === y) alert(message);
+                  if(x === y) {
+                  Alert.alert(
+                              '',
+                              message,
+                              [
+                               {text: 'OK', onPress: () => {
+                               console.log('OK Pressed');
+                               this.props.navigation.navigate("Trucks");
+                               }
+                               },
+                               ],
+                              { cancelable: false }
+                              )
+                  }
 				y++;
 				
 			});	
 		};
-		this.props.navigation.navigate("Trucks");
+		
 	}
 
 	onOtherWorkDocumentsPress() {			

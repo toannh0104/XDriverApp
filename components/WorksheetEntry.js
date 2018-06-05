@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {View, StyleSheet, ScrollView, Text, Modal, ActivityIndicator, Dimensions } from 'react-native';
+import {View, StyleSheet, ScrollView, Text, Modal, ActivityIndicator, Dimensions, Alert } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import {Card, Button, FormInput, FormLabel} from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
@@ -175,12 +175,24 @@ export default class WorksheetEntry extends Component {
 				
 		  		var resData = response;
 				if (resData != null) {
-					alert(resData['message']);					
+					
+                  Alert.alert(
+                              '',
+                              resData['message'],
+                              [
+                               {text: 'OK', onPress: () => {
+                               console.log('OK Pressed');
+                                this.props.navigation.navigate("Trucks");
+                               }
+                               },
+                               ],
+                              { cancelable: false }
+                              )
 				}
 				else{
 					alert("An error occured while post data. Please try again later.");
 				}		
-				this.props.navigation.navigate("Trucks");	
+				
 		  	});
 	}
 
