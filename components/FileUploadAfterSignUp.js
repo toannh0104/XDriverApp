@@ -108,8 +108,8 @@ export default class FileUploadAfterSignUp extends Component {
 					>
 	
 						<FormLabel style={{ marginBottom: 10 }}>Upload license documents</FormLabel>
-						<Ionicons.Button name="md-attach" backgroundColor="#FF7F00" style={styles.uploadFileButton}>
-							<Text onPress={this.fileUpload}>Upload documents</Text>
+						<Ionicons.Button name="md-attach" backgroundColor="#FF7F00" style={styles.uploadFileButton} onPress={this.fileUpload} >
+							<Text>Upload documents</Text>
 						</Ionicons.Button>
 						
 						<Button

@@ -107,8 +107,8 @@ android {
         applicationId "com.sptdriverapp"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
