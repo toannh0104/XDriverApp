@@ -159,7 +159,7 @@ export default class Trucks extends Component {
 											<Text style={{ fontSize: 16, fontWeight: 'bold' }}>{truck.truck_number}</Text>
 										</View>
 										<View style={{ flex: 1, flexDirection: 'row' }}>
-											<Text style={{ marginLeft: 20, fontSize: 16 }}>Registration No: </Text>
+											<Text style={{ marginLeft: 20, fontSize: 16 }}>Reg No: </Text>
 											<Text style={{ fontSize: 16, fontWeight: 'bold' }}>{truck.registration_number}</Text>
 										</View>
 										<View style={{ flex: 1, flexDirection: this.state.renderType }} 
