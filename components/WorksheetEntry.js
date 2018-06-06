@@ -91,8 +91,14 @@ export default class WorksheetEntry extends Component {
 			}else if (response.error) {
 				console.log('ImagePicker Error: ', response.error);
 			}
-			else if (response != null && response.uri != undefined && response.uri != '') {
-				this.setState({file : { uri: response.uri, name: response.fileName, type: response.type }});
+			else if (response != null && response.uri != undefined && response.uri != '') {				
+				var type = response.type;
+				if(type == null){
+					var path = response.path;
+					type = "image/"+path.substring(path.lastIndexOf(".")+1, path.length);
+				}
+				
+				this.setState({file : { uri: response.uri, name: response.fileName, type: type }});
 				this.setState({fileName: response.fileName});
 			}
 		  });
