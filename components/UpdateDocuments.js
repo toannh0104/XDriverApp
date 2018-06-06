@@ -22,7 +22,7 @@ import {
 
 import { clearSession, setSession, getSession } from './HelperFunctions.js';
 
-import ImagePicker from 'react-native-image-crop-picker';
+var ImagePicker = require('react-native-image-picker');
 var {height, width} = Dimensions.get('window');
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -148,29 +148,35 @@ export default class UpdateDocuments extends Component {
 	
 	fileUpload()
 	{
-		ImagePicker.openPicker({
-		  multiple: true,
-		  includeBase64: false,
-		  includeExif: true
-		}).then(images => {
-		  console.log(images);
-		  let files = [];
-		  var fileNames=[];
-		  images.map((image, idx) => {
-				let pathParts = image.path.split('/');
-				files[idx] = {
-				  data: 'data:'+image.mime+";base64,"+ image.data,
-				  uri: image.path,
-				  type: image.mime,
-				  name: pathParts[pathParts.length - 1]
+		var options = {
+			title: 'Select Document',
+			storageOptions: {
+			  skipBackup: true,
+			  path: 'images'
+			}
+		  };
+		  
+		  ImagePicker.showImagePicker(options, (response) => {
+			console.log('Response = ', response);
+			if (response.didCancel) {
+				console.log('User cancelled photo picker');
+			}else if (response.error) {
+				console.log('ImagePicker Error: ', response.error);
+			}
+			else if (response != null && response.uri != undefined && response.uri != '') {				
+				var type = response.type;
+				let files = [];
+				var fileNames=[];
+				if(type == null){
+					var path = response.path;
+					type = "image/"+path.substring(path.lastIndexOf(".")+1, path.length);
 				}
-				fileNames.push(image.path.substring(image.path.lastIndexOf("/")+1, image.path.length));			
-			});
-		
-			this.setState({fileNames: fileNames});	  
-			this.setState({files : files});				
-		});	
-		
+				files.push({ uri: response.uri, name: response.fileName, type: type });
+				fileNames.push(response.fileName);
+				this.setState({files : files});
+				this.setState({fileNames: fileNames});
+			}
+		  });
 	}
 
 	componentDidMount() {
