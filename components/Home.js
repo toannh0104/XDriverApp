@@ -74,8 +74,7 @@ export default class Home extends Component {
 				
 		getSession("@spt:upload_files").then((value) => {
 			this.setState({upload_files: value});
-			debugger;
-		});	
+		});
 	}
 
 	componentDidMount() {

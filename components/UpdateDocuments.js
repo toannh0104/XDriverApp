@@ -60,6 +60,7 @@ export default class UpdateDocuments extends Component {
 		.catch(error => {console.log('Error: ', error)})
 		.then(response => {
 			var resData = response;
+              alert(response);
 			if (resData != null) {
 				alert(resData['message']);
 			}
@@ -114,10 +115,19 @@ export default class UpdateDocuments extends Component {
 					message = resData['message'];
 				}
 				
-				if(response !== undefined && response.status === 1001) {
-					//alert(resData['message']);
-                  alert("deo dc");
-					return;
+				if(response !== undefined && response.status === 1001) {			
+                  Alert.alert(
+                              '',
+                              resData['message'],
+                              [
+                               {text: 'OK', onPress: () => {
+                               console.log('OK Pressed');
+                               this.props.navigation.navigate("More");
+                               }
+                               },
+                               ],
+                              { cancelable: false }
+                              )
 				}
 
 				if(x === y){
@@ -150,26 +160,33 @@ export default class UpdateDocuments extends Component {
 	{
 		var options = {
 			title: 'Select Document',
+            allowsEditing: false,
+            cameraType: 'back',
+            
 			storageOptions: {
 			  skipBackup: true,
-			  path: 'images'
+			  path: 'images',
+            waitUntilSaved: true,
+            cameraRoll: true
 			}
 		  };
 		  
-		  ImagePicker.showImagePicker(options, (response) => {
+
+        ImagePicker.showImagePicker(options, (response) => {
+                                    
 			console.log('Response = ', response);
 			if (response.didCancel) {
 				console.log('User cancelled photo picker');
 			}else if (response.error) {
 				console.log('ImagePicker Error: ', response.error);
 			}
-			else if (response != null && response.uri != undefined && response.uri != '') {				
+			else if (response != null && response.uri != undefined && response.uri != '') {
 				var type = response.type;
+                                    
 				let files = [];
 				var fileNames=[];
-				if(type == null){
-					var path = response.path;
-					type = "image/"+path.substring(path.lastIndexOf(".")+1, path.length);
+				if(type == null || type == undefined){
+					type = "image/"+response.fileName.substring(response.fileName.lastIndexOf(".") + 1, response.fileName.length);
 				}
 				files.push({ uri: response.uri, name: response.fileName, type: type });
 				fileNames.push(response.fileName);

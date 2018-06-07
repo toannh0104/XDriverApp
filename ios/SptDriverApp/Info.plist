@@ -35,12 +35,15 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Acess photo lib</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Acess camera is reqired</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Acess camera is required</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Acess photo library is required</string>
+	
+	
+
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>

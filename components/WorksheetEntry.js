@@ -76,13 +76,18 @@ export default class WorksheetEntry extends Component {
 		
 	fileUpload()
 	{
-		var options = {
-			title: 'Select Document',
-			storageOptions: {
-			  skipBackup: true,
-			  path: 'images'
-			}
-		  };
+        var options = {
+            title: 'Select Document',
+            allowsEditing: false,
+            cameraType: 'back',
+            
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+                waitUntilSaved: true,
+                cameraRoll: true
+            }
+        };
 		  
 		  ImagePicker.showImagePicker(options, (response) => {
 			console.log('Response = ', response);
@@ -92,14 +97,11 @@ export default class WorksheetEntry extends Component {
 				console.log('ImagePicker Error: ', response.error);
 			}
 			else if (response != null && response.uri != undefined && response.uri != '') {				
-				var type = response.type;
-				if(type == null){
-					var path = response.path;
-					type = "image/"+path.substring(path.lastIndexOf(".")+1, path.length);
-				}
 				
-				this.setState({file : { uri: response.uri, name: response.fileName, type: type }});
-				this.setState({fileName: response.fileName});
+            type = "image/"+response.fileName.substring(response.fileName.lastIndexOf(".") + 1, response.fileName.length);
+                				
+            this.setState({file : { uri: response.uri, name: response.fileName, type: type }});
+            this.setState({fileName: response.fileName});
 			}
 		  });
 		  
@@ -169,15 +171,12 @@ export default class WorksheetEntry extends Component {
             },
 	  		body: formData
 		  	}).then(res => {
-				var x = 1;
-				return res.json();
-				
+				return res.json();				
 				})
 		  	.catch(error => {
 				console.log('Error: ', error); 
 				})
 		  	.then(response => {
-				//
 				
 		  		var resData = response;
 				if (resData != null) {
