@@ -166,8 +166,8 @@ export default class UpdateDocuments extends Component {
 			storageOptions: {
 			  skipBackup: true,
 			  path: 'images',
-            waitUntilSaved: true,
-            cameraRoll: true
+              waitUntilSaved: true,
+              cameraRoll: true
 			}
 		  };
 		  

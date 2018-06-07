@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)</string>
+	<string>SPT-DRIVER</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -41,9 +41,6 @@
 	<string>Acess camera is required</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Acess photo library is required</string>
-	
-	
-
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>

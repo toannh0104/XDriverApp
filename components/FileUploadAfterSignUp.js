@@ -40,11 +40,16 @@ export default class FileUploadAfterSignUp extends Component {
 	
 	uploadCallback(response)
 	{
+        var type = response.type;
+        if(type == null || type == undefined){
+            type = "image/"+response.fileName.substring(response.fileName.lastIndexOf(".") + 1, response.fileName.length);
+        }
+        
 		var url = api_url+"/signupdocuments";
 		let formData = new FormData();
 		this.setState({isLoaded: false});
 		formData.append('user_id', this.state.id);
-		formData.append('document', { uri: response.uri, name: response.fileName, type: response.type })
+		formData.append('document', { uri: response.uri, name: response.fileName, type: type })
 		fetch(url, {
 			method: 'POST',
 			headers: {
@@ -71,9 +76,13 @@ export default class FileUploadAfterSignUp extends Component {
 	{
 		var options = {
 			title: 'Select Documents',
+            allowsEditing: false,
+            cameraType: 'back',
 			storageOptions: {
-			  skipBackup: true,
-			  path: 'images'
+                skipBackup: true,
+                path: 'images',
+                waitUntilSaved: true,
+                cameraRoll: true
 			}
 		  };
 		  
