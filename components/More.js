@@ -84,19 +84,19 @@ export default class More extends Component {
 						<Text style={{ fontSize: 24, marginBottom: 20, fontWeight: 'bold' }}>Welcome, {this.state.name}</Text>
 						<View style={{ flex: 1, flexDirection: 'row' }}>
 							<Text style={styles.userDetailLine}>Mobile Number: </Text>
-							<Text style={{ fontWeight: 'bold', fontSize: 16 }}>{this.state.mobile}</Text>
+							<Text style={{ fontWeight: 'bold'}}>{this.state.mobile}</Text>
 						</View>
 						<View style={{ flex: 1, flexDirection: 'row' }}>
 							<Text style={styles.userDetailLine}>License Number: </Text>							
-							<Text style={{ fontWeight: 'bold', fontSize: 16 }}>{this.state.license_number}</Text>
+							<Text style={{ fontWeight: 'bold'}}>{this.state.license_number}</Text>
 						</View>
 						<View style={{ flex: 1, flexDirection: 'row' }}>
 							<Text style={styles.userDetailLine}>License Expiry: </Text>	
-							<Text style={{ fontWeight: 'bold', fontSize: 16 }}>{this.state.license_expiry}</Text>
+							<Text style={{ fontWeight: 'bold'}}>{this.state.license_expiry}</Text>
 						</View>
 						<View style={{ flex: 1, flexDirection: 'row' }}>
 							<Text style={styles.userDetailLine}>Email: </Text>
-							<Text style={{ fontWeight: 'bold', fontSize: 16 }}>{this.state.email}</Text>	
+							<Text style={{ fontWeight: 'bold'}}>{this.state.email}</Text>	
 						</View>
 
 						<View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -145,7 +145,6 @@ const styles = StyleSheet.create({
 		width: 150
 	},
 	userDetailLine: {
-		fontSize: 16,
 		marginBottom: 5
 	},
 	additionalInfoButtons: {

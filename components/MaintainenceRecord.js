@@ -293,21 +293,21 @@ export default class MaintainenceRecord extends Component {
 
 							<View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }}>
 								<View style={{ flex: 1, flexDirection: 'row' }}>
-									<Text style={{ marginLeft: 20, fontSize: 16 }}>Make: </Text>
-									<Text style={{ fontSize: 16, fontWeight: 'bold' }}>{this.state.truckname}</Text>
+									<Text style={{ marginLeft: 20, }}>Make: </Text>
+									<Text style={{ fontWeight: 'bold' }}>{this.state.truckname}</Text>
 								</View>
 
 								<View style={{ flex: 1, flexDirection: 'row' }}>
-									<Text style={{ marginLeft: 20, fontSize: 16 }}>Model: </Text>
-									<Text style={{ fontSize: 16, fontWeight: 'bold' }}>{this.state.truckmodel}</Text>
+									<Text style={{ marginLeft: 20}}>Model: </Text>
+									<Text style={{ fontWeight: 'bold' }}>{this.state.truckmodel}</Text>
 								</View>
 								<View style={{ flex: 1, flexDirection: 'row' }}>
-									<Text style={{ marginLeft: 20, fontSize: 16 }}>Reg No: </Text>
-									<Text style={{ fontSize: 16, fontWeight: 'bold' }}>{this.state.truckRegNo}</Text>
+									<Text style={{ marginLeft: 20}}>Reg No: </Text>
+									<Text style={{ fontWeight: 'bold' }}>{this.state.truckRegNo}</Text>
 								</View>
 								<View style={{ flex: 1, flexDirection: 'row', marginBottom: 5 }}>
-									<Text style={{ marginLeft: 20, fontSize: 16 }}>Driver Name: </Text>
-									<Text style={{ fontSize: 16, fontWeight: 'bold' }}>{this.state.driverName}</Text>
+									<Text style={{ marginLeft: 20}}>Driver Name: </Text>
+									<Text style={{ fontWeight: 'bold' }}>{this.state.driverName}</Text>
 								</View>
 
 								<View style={{ flex: 1, flexDirection: 'row' }}>

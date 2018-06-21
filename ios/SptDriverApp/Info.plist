@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -35,12 +35,12 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Acess photo lib</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Acess camera is required</string>
+	<string>Camera access is needed for you to capture and upload relevent work documents</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Photo library access is needed for you to select and upload relevant work documents</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Acess photo library is required</string>
+	<string>Photo library access is needed for you to select and upload relevant work documents</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>

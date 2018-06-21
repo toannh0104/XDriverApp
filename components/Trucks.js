@@ -87,8 +87,7 @@ export default class Trucks extends Component {
 		var url = api_url+"/trucklist"
 		this.setState({isLoaded: false});
 		var formData = new FormData();
-		formData.append('search', keyword !== undefined && keyword.length >= 3 ? keyword: "");
-	console.log("ficl ");
+		formData.append('search', keyword !== undefined && keyword.length >= 2 ? keyword: "");
 		fetch(url, {
 			method: 'POST',
 			body: formData,
@@ -155,20 +154,22 @@ export default class Trucks extends Component {
 
 									<View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }}>
 										<View style={{ flex: 1, flexDirection: 'row' }}>
-											<Text style={{ marginLeft: 20, fontSize: 16 }}>Model: </Text>
-											<Text style={{ fontSize: 16, fontWeight: 'bold' }}>{truck.truck_number}</Text>
+											<Text style={{ marginLeft: 20}}>Model: </Text>
+											<Text style={{ fontWeight: 'bold' }}>{truck.truck_number}</Text>
 										</View>
 										<View style={{ flex: 1, flexDirection: 'row' }}>
-											<Text style={{ marginLeft: 20, fontSize: 16 }}>Reg No: </Text>
-											<Text style={{ fontSize: 16, fontWeight: 'bold' }}>{truck.registration_number}</Text>
+											<Text style={{ marginLeft: 20}}>Reg No: </Text>
+											<Text style={{ fontWeight: 'bold' }}>{truck.registration_number}</Text>
 										</View>
 										<View style={{ flex: 1, flexDirection: this.state.renderType }} 
 										onLayout={(event) => {
 										  var {x, y, width, height} = event.nativeEvent.layout;
 										  if(width > 300) this.setState({renderType:'row'});
 										}}>
-											<View>
-												<TouchableOpacity onPress={() => this.loadWorksheet(truck.id, truck.truck_name, truck.truck_number, truck.image) } style={styles.editButton}>
+											<View style={{ flex: 1, flexDirection: this.state.renderType }} >
+												<TouchableOpacity 
+												onPress={() => this.loadWorksheet(truck.id, truck.truck_name, truck.truck_number, truck.image) }
+												  style={styles.editButton}>
 													<Text style={{ color: 'white' }}>Worksheet</Text>
 												</TouchableOpacity>
 											</View>
@@ -234,6 +235,6 @@ const styles = StyleSheet.create({
 	alignItems: 'center',
 	backgroundColor: '#FF7F00',
 	padding: 5,
-	width: 100
+	width: 110
 	}
 });
