@@ -38,6 +38,7 @@
     "react-native-modal": "^6.0.0",
     "react-native-modal-datetime-picker": "^5.1.0",
     "react-native-modal-dropdown": "^0.6.2",
+    "react-native-permissions": "^1.1.1",
     "react-native-progress-bar-animated": "^1.0.6",
     "react-native-simple-radio-button": "^2.7.1",
     "react-native-simple-time-picker": "^0.2.0",

@@ -20,6 +20,8 @@ target 'SptDriverApp' do
     'RCTWebSocket'
   ]
 
+  pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
+
 end
 
 # very important to have, unless you removed React dependencies for Libraries 

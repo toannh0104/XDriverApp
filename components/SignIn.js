@@ -1,5 +1,7 @@
 "use strict";
 import React, { Component } from "react";
+import Permissions from 'react-native-permissions'
+
 import { 
   View,
   StyleSheet,
@@ -49,6 +51,15 @@ export default class SignIn extends Component {
 
     }
 
+	componentDidMount(){
+		console.log("did mount");
+		Permissions.request('photo').then(response => {
+		  // Returns once the user has chosen to 'allow' or to 'not allow' access
+		  // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+		  this.setState({ photoPermission: response })
+		})
+		
+	}
 	
 
   setUserDetails(userID, userName, licenseNumber, commencementDate, licenseExpiry, mobileNumber, email, address, upload_files) {
