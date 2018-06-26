@@ -21,12 +21,12 @@ export default class WorksheetEntry extends Component {
 	  	registrationNumber: '',
 	  	date: date.getDate() + "-"+(date.getMonth()+ 1) + "-"+date.getFullYear(),
 	  	worksheetDate: 'select date',
-	  	shift_start_time: '',
+	  	shift_start_time: date.getHours() + ':'+ date.getMinutes(),
 		showShifStartTime: false,
-		shift_end_time: '',
+		shift_end_time: date.getHours() + ':'+ date.getMinutes(),
 	  	workSite: '',
 	  	otherWorkSite: '',
-		loadDone: 0,
+		loadDone: 1,
 		comment: '',
 		file: null,
 		fileName: [],
@@ -80,7 +80,7 @@ export default class WorksheetEntry extends Component {
             title: 'Select Document',
             allowsEditing: false,
             cameraType: 'back',
-            
+            quality: 0.5,
             storageOptions: {
                 skipBackup: true,
                 path: 'images',
@@ -203,29 +203,18 @@ export default class WorksheetEntry extends Component {
 	}
 
 	onWorksiteSelected(site){
-		console.log("site: "+site);
 		var workSites = this.state.worksites.map(a => a.worksite); 	
 		this.setState({ workSite: workSites[site] })
-		console.log(site);
 		if(site == 5){
 			this.setState({isDisplayOtherWorksite: true});
 		}else{
 			this.setState({isDisplayOtherWorksite: false});
-		}
-		
+		}		
 	}
-
 	render() {
 		var workSites = this.state.worksites.map(a => a.worksite);
 		workSites = workSites.map(value => {return {"value": value} })
-		console.log(workSites);
 		var loadDones = [{label: 'Local', value: 1}, {label: 'Country', value: 2}];
-		var radio_props = [{label: 'AM', value: 'am'}, {label: 'PM', value: 'pm'}];
-				 
-		var radio_props1 = [
-		  {label: 'param1', value: 0 },
-		  {label: 'param2', value: 1 }
-		];
 		var screenWidth = Dimensions.get('window').width; 
 		return(
 			<View style={styles.container}>
@@ -290,7 +279,9 @@ export default class WorksheetEntry extends Component {
 					borderTopWidth: 0,
 				  }
 				}} mode={'time'} confirmBtnText="Confirm"
-        cancelBtnText="Cancel" date={this.state.shift_start_time} onDateChange={(date) => {this.setState({shift_start_time: date})}} />
+		cancelBtnText="Cancel"
+		 date={this.state.shift_start_time}
+		  onDateChange={(date) => {this.setState({shift_start_time: date})}} />
 		</View>					
 						  
 		<View>
