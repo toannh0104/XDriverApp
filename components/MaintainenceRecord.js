@@ -239,10 +239,19 @@ export default class MaintainenceRecord extends Component {
 		  freeStyleCropEnabled :true,
 		  compressImageQuality: 0.8,
 		  loadingLabelText : 'Processing...'
-		}).then(images => {
-		  console.log(images);
+		}).then(image => {
+		  console.log(image);
 		  let files = [];
 		  var fileNames=[];
+		  let pathParts = image.path.split('/');
+		  files[0] = {
+			  uri: image.path,
+			  type: image.mime,
+			  name: pathParts[pathParts.length - 1]
+		  }
+		  fileNames.push(image.path.substring(image.path.lastIndexOf("/")+1, image.path.length));			
+
+		 /* 
 		  images.map((image, idx) => {
 			let pathParts = image.path.split('/');
 			files[idx] = {
@@ -253,10 +262,9 @@ export default class MaintainenceRecord extends Component {
 			}
 			fileNames.push(image.path.substring(image.path.lastIndexOf("/")+1, image.path.length));			
 		  });
-		
-		this.setState({fileNames: fileNames});
-	  
-		  this.setState({otherWorkDocuments : files});				
+		*/
+			this.setState({fileNames: fileNames});
+	    	this.setState({otherWorkDocuments : files});				
 		});	
 		
 	}
