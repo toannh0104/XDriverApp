@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
-
-
 import {
 	View,
 	ScrollView,
 	StyleSheet,
 	Text,
-	Image,
-	AsyncStorage, Dimensions, TouchableOpacity, ActivityIndicator, Alert, Modal
+	Image, ActivityIndicator, Alert, Modal
 } from 'react-native';
-
-//import Modal from "react-native-modal";
 
 import {
 	Card,
@@ -20,14 +15,9 @@ import {
 } from 'react-native-elements';
 
 import DatePicker from 'react-native-datepicker';
-
-import defaultTruck from '../truckAssets/default_truck.jpg';
-import loadingImg from '../truckAssets/loading.gif';
-import logoTruck from '../truckAssets/lg.png';
-
 import ImagePicker from 'react-native-image-crop-picker';
 
-import { setSession, getSession} from './HelperFunctions';
+import { getSession} from './HelperFunctions';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default class MaintainenceRecord extends Component {
@@ -242,9 +232,13 @@ export default class MaintainenceRecord extends Component {
 
 	onOtherWorkDocumentsPress() {			
 		ImagePicker.openPicker({
-		  multiple: true,
+		  multiple: false,
+		  cropping: true,
 		  includeBase64: false,
-		  includeExif: true
+		  includeExif: true,
+		  freeStyleCropEnabled :true,
+		  compressImageQuality: 0.8,
+		  loadingLabelText : 'Processing...'
 		}).then(images => {
 		  console.log(images);
 		  let files = [];
@@ -258,7 +252,7 @@ export default class MaintainenceRecord extends Component {
 			  name: pathParts[pathParts.length - 1]
 			}
 			fileNames.push(image.path.substring(image.path.lastIndexOf("/")+1, image.path.length));			
-		});
+		  });
 		
 		this.setState({fileNames: fileNames});
 	  

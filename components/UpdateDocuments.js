@@ -1,30 +1,9 @@
 import React, { Component } from 'react';
-
-import {
-	Card,
-	FormLabel,
-	FormInput,
-	Button
-} from 'react-native-elements';
-
+import {Card, FormLabel, Button} from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-import {
-	View,
-	ScrollView,
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-	Image,
-	ActivityIndicator,
-	AsyncStorage,Dimensions,  Alert, Modal
-} from 'react-native';
-
-import { clearSession, setSession, getSession } from './HelperFunctions.js';
-
-var ImagePicker = require('react-native-image-picker');
-var {height, width} = Dimensions.get('window');
-import Icon from 'react-native-vector-icons/FontAwesome';
+import {View, StyleSheet, Text, ActivityIndicator, Alert, Modal} from 'react-native';
+import {getSession } from './HelperFunctions.js';
+import ImagePicker from 'react-native-image-crop-picker';
 
 export default class UpdateDocuments extends Component {
 	constructor(props) {
@@ -158,6 +137,7 @@ export default class UpdateDocuments extends Component {
 	
 	fileUpload()
 	{
+		/*
 		var options = {
 			title: 'Select Document',
             allowsEditing: false,
@@ -170,8 +150,30 @@ export default class UpdateDocuments extends Component {
               cameraRoll: true
 			}
 		  };
+*/
+		  ImagePicker.openPicker({
+			multiple: true,
+			compressImageQuality: 0.8,
+			loadingLabelText : 'Processing...'
+		  }).then(images => {
+			console.log(images);
+			let files = [];
+			var fileNames=[];
+			images.map((image, idx) => {
+			  let pathParts = image.path.split('/');
+			  files[idx] = {
+				data: 'data:'+image.mime+";base64,"+ image.data,
+				uri: image.path,
+				type: image.mime,
+				name: pathParts[pathParts.length - 1]
+			  }
+			  fileNames.push(image.path.substring(image.path.lastIndexOf("/")+1, image.path.length));			
+			});		  
+			this.setState({files : files});
+			this.setState({fileNames: fileNames});			
+		  });	
 		  
-
+/*
         ImagePicker.showImagePicker(options, (response) => {
                                     
 			console.log('Response = ', response);
@@ -194,6 +196,7 @@ export default class UpdateDocuments extends Component {
 				this.setState({fileNames: fileNames});
 			}
 		  });
+		  */
 	}
 
 	componentDidMount() {
