@@ -232,26 +232,26 @@ export default class MaintainenceRecord extends Component {
 
 	onOtherWorkDocumentsPress() {			
 		ImagePicker.openPicker({
-		  multiple: false,
-		  cropping: true,
+		  multiple: true,
+		  cropping: false,
 		  includeBase64: false,
 		  includeExif: true,
-		  freeStyleCropEnabled :true,
+		  freeStyleCropEnabled :false,
 		  compressImageQuality: 0.8,
 		  loadingLabelText : 'Processing...'
-		}).then(image => {
-		  console.log(image);
+		}).then(images => {
+		  console.log(images);
 		  let files = [];
 		  var fileNames=[];
-		  let pathParts = image.path.split('/');
+		  /*let pathParts = image.path.split('/');
 		  files[0] = {
 			  uri: image.path,
 			  type: image.mime,
 			  name: pathParts[pathParts.length - 1]
 		  }
 		  fileNames.push(image.path.substring(image.path.lastIndexOf("/")+1, image.path.length));			
-
-		 /* 
+*/
+		 
 		  images.map((image, idx) => {
 			let pathParts = image.path.split('/');
 			files[idx] = {
@@ -262,16 +262,13 @@ export default class MaintainenceRecord extends Component {
 			}
 			fileNames.push(image.path.substring(image.path.lastIndexOf("/")+1, image.path.length));			
 		  });
-		*/
+
 			this.setState({fileNames: fileNames});
 	    	this.setState({otherWorkDocuments : files});				
 		});	
 		
 	}
-
-
 	render() {
-
 		return(
 			<View style={styles.container}>			  
 				<ScrollView>
