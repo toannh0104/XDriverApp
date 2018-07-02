@@ -5,6 +5,7 @@ import { Dropdown } from 'react-native-material-dropdown';
 import {Card, Button, FormInput, FormLabel} from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
 var ImagePicker = require('react-native-image-picker');
+import ImageCropPicker from 'react-native-image-crop-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import { setSession, getSession} from './HelperFunctions';
@@ -80,7 +81,10 @@ export default class WorksheetEntry extends Component {
             title: 'Select Document',
             allowsEditing: false,
             cameraType: 'back',
-            quality: 0.5,
+			quality: 0.5,
+			customButtons: [
+				{name: 'imagecrop', title: 'Take Photo & edit'},
+			  ],
             storageOptions: {
                 skipBackup: true,
                 path: 'images',
@@ -89,12 +93,25 @@ export default class WorksheetEntry extends Component {
             }
         };
 		  
+
+		
 		  ImagePicker.showImagePicker(options, (response) => {
 			console.log('Response = ', response);
 			if (response.didCancel) {
 				console.log('User cancelled photo picker');
 			}else if (response.error) {
 				console.log('ImagePicker Error: ', response.error);
+			}else if(response.customButton){
+				ImageCropPicker.openCamera({
+					width: 300,
+					height: 400,
+					cropping: true
+				  }).then(response => {
+					type = "image/"+response.path.substring(response.path.lastIndexOf(".") + 1, response.path.length);
+                				
+					this.setState({file : { uri: response.path, name: response.path.substring(response.path.lastIndexOf("/") + 1, response.path.length), type: type }});
+					this.setState({fileName: response.path.substring(response.path.lastIndexOf("/") + 1, response.path.length)});
+				  });
 			}
 			else if (response != null && response.uri != undefined && response.uri != '') {				
 				
