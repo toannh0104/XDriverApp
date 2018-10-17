@@ -1,0 +1,406 @@
+import React, { Component } from 'react';
+import {
+	View,
+	ScrollView,
+	StyleSheet,
+	Text,
+	Image, ActivityIndicator, Alert, Modal
+} from 'react-native';
+
+import {
+	Card,
+	FormLabel,
+	FormInput,
+	Button
+} from 'react-native-elements';
+
+import DatePicker from 'react-native-datepicker';
+import ImagePicker from 'react-native-image-crop-picker';
+
+import { getSession} from './HelperFunctions';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+export default class FuelScreen extends Component {
+	constructor(props) {
+	  super(props);
+	  var date = new Date();
+	  this.state = {	  
+	  	otherWork: '',
+	  	otherWorkDocuments: [],
+		fileNames: [],
+	  	myDate: 'select date',
+	  	driverName: '',
+		truckid:'',
+		truckname:'',
+		truckmodel:'',
+		truckRegNo:'',
+		truckimage:'',
+		userId: '',
+		logId:'',
+	    isModalVisible: false,
+		action:'Next',
+		comment: '',
+		amount:0,
+		date: date.getDate() + "-"+(date.getMonth()+ 1) + "-"+date.getFullYear(),
+	  };	
+		this.onOtherWorkDocumentsPress = this.onOtherWorkDocumentsPress.bind(this);
+		this.doPost = this.doPost.bind(this);
+	}
+	
+
+	  onDateChange(date) {
+			this.setState({
+			  date: date
+			});		
+	  }
+	  
+	onCloseModal(){}
+	componentWillMount() {
+		
+		getSession("@spt:userid").then((value) => {
+			this.setState({"userid": value});
+		});
+		
+		getSession("@spt:truckid").then((value) => {
+			this.setState({truckid: value});
+		});
+
+		getSession("@spt:name").then((value) => {
+			this.setState({"driverName": value});
+		});
+		
+		getSession("@spt:truckname").then((value) => {
+			this.setState({truckname: value});
+		});
+
+		getSession("@spt:truckmodel").then((value) => {
+			this.setState({truckmodel: value});
+		});
+		getSession("@spt:truckRegNo").then((value) => {
+			this.setState({truckRegNo: value});
+		});
+		
+		getSession("@spt:truckimage").then((value) => {
+			this.setState({truckimage: value});
+		});
+	}
+	componentDidMount (){
+	}
+
+	doPost(url, formData){
+		console.log("posting....")
+		console.log(formData);		
+		fetch(url, {
+			method: 'POST',
+			timeout: 20*1000,
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'multipart/form-data'
+			},
+			body: formData
+		}).then(res => res.json())
+		.catch(error => {console.log('Error: ', error)})
+		.then(response => {
+			this.setState({isModalVisible: false});
+			var resData = response;
+			if (resData != null) {			
+				alert(resData['message']);
+			}
+		});	
+	}
+
+	doNext(){		
+		if(this.state.comment == ""){
+			alert("Comment is required!");
+			return;
+		}
+
+		this.setState({isModalVisible: true});
+
+		let userId = this.props.navigation.state.params.userId;
+		let truckId = this.props.navigation.state.params.truckId;
+		//let logidkey = "@spt:logid"+userId+','+truckId+','+this.state.date;
+		/*getSession(logidkey).then((value) => {
+			console.log("get from sessioin");
+		});*/
+	
+		var url = api_url+"/updates";
+		let formData = new FormData();
+		formData.append('user_id', userId);
+		formData.append('truck_id', truckId);
+		formData.append('log_date', this.state.date);
+		formData.append('comment', this.state.comment);
+		console.log(formData);
+
+		fetch(url, {
+				method: 'POST',
+				timeout: 20*1000,
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'multipart/form-data'
+				},
+				body: formData
+			}).then(res => res.json())
+			.catch(error => {this.setState({isModalVisible: false});console.log('Error: ', error)})
+			.then(response => {
+				var resData = response;
+				this.setState({isModalVisible: false});	
+				if (resData != null && resData.status == 1000) {
+					this.setState({logId : resData.data});
+					this.setState({action : "Submit"});					
+					//setSession(logidkey, resData.data);
+				}
+				else{
+					alert(resData['message']);
+					this.props.navigation.navigate("Trucks");
+				}
+				
+		});
+		
+	}
+	doSave(){
+		console.log("do save");
+		var x = this.state.otherWorkDocuments.length;
+		if(x == 0 || this.state.otherWorkDocuments == undefined){			
+			alert("Select file to upload!"); 			
+			return;
+		}
+		if(this.state.otherWorkDocuments.length == 0){
+			alert("Select a file!");
+			return;
+		}
+		
+		this.setState({isModalVisible: true});
+		var self = this;
+		var userId = this.state.userid;
+		var truckId = this.state.truckid;
+		var amount = this.state.amount;
+		var comment = this.state.comment;
+		var dateTime = this.state.myDate;
+		var message = "";
+		
+		var y =1;
+		for(var i = 0; i <= this.state.otherWorkDocuments.length -1; i++){
+			var url = api_url+"/fuelslog";
+			let formData = new FormData();
+			formData.append('user_id', userId);
+			formData.append('truck_id', truckId);
+			formData.append('comment', comment);
+			formData.append('amount', amount);
+			formData.append('date_time', dateTime);
+			formData.append('receipt', this.state.otherWorkDocuments[i]);		
+			
+			console.log("posting....")
+			console.log(formData);		
+			fetch(url, {
+				method: 'POST',
+				timeout: 20*1000,
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'multipart/form-data'
+				},
+				body: formData
+			}).then(res => {return res.json()})
+			.catch(error => {				
+				console.log('Error: ', error);
+				self.setState({isModalVisible: false});
+				alert(error.message);
+			})
+			.then(response => {
+				
+				var resData = response;					
+				if(resData != null && resData != undefined && message == "") {
+					message = resData['message'];
+				}
+				
+				if(response !== undefined && response.status === 1001) {
+					alert(resData['message']);
+                  self.setState({isModalVisible: false});
+					return;
+				}
+
+                  if(x === y) {
+                  Alert.alert(
+                              '',
+                              message,
+                              [
+                               {text: 'OK', onPress: () => {
+								console.log('OK Pressed');
+								this.props.navigation.navigate("Trucks");
+                               }
+                               },
+                               ],
+                              { cancelable: false }
+                              )
+                  }
+				y++;
+				
+			});	
+		};
+		
+	}
+
+	onOtherWorkDocumentsPress() {			
+		ImagePicker.openPicker({
+		  multiple: true,
+		  cropping: false,
+		  includeBase64: false,
+		  includeExif: true,
+		  freeStyleCropEnabled :false,
+		  compressImageQuality: 0.8,
+		  loadingLabelText : 'Processing...'
+		}).then(images => {
+		  console.log(images);
+		  let files = [];
+		  var fileNames=[];
+		  /*let pathParts = image.path.split('/');
+		  files[0] = {
+			  uri: image.path,
+			  type: image.mime,
+			  name: pathParts[pathParts.length - 1]
+		  }
+		  fileNames.push(image.path.substring(image.path.lastIndexOf("/")+1, image.path.length));			
+*/
+		 
+		  images.map((image, idx) => {
+			let pathParts = image.path.split('/');
+			files[idx] = {
+			  data: 'data:'+image.mime+";base64,"+ image.data,
+			  uri: image.path,
+			  type: image.mime,
+			  name: pathParts[pathParts.length - 1]
+			}
+			fileNames.push(image.path.substring(image.path.lastIndexOf("/")+1, image.path.length));			
+		  });
+
+			this.setState({fileNames: fileNames});
+	    	this.setState({otherWorkDocuments : files});				
+		});	
+		
+	}
+	render() {
+		return(
+			<View style={styles.container}>			  
+				<ScrollView>
+					<Card title="Truck Info">
+						<View style={{flex: 1, flexDirection: 'row'}}>						
+							<Modal transparent={true} visible = {this.state.isModalVisible} onRequestClose={this.onCloseModal} >
+								<View style={styles.modalBackground}>
+									<View style={styles.activityIndicatorWrapper}>
+									<ActivityIndicator visible={this.state.isModalVisible}
+										animating={this.state.isModalVisible} />
+									</View>
+								</View>
+							</Modal>
+							<View>
+								<Image source={{uri: this.state.truckimage}} style={{ width: 80, height: 70 }} />
+							</View>
+
+							<View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }}>
+								<View style={{ flex: 1, flexDirection: 'row' }}>
+									<Text style={{ marginLeft: 20, }}>Make: </Text>
+									<Text style={{ fontWeight: 'bold' }}>{this.state.truckname}</Text>
+								</View>
+								<View style={{ flex: 1, flexDirection: 'row' }}>
+									<Text style={{ marginLeft: 20}}>Model: </Text>
+									<Text style={{ fontWeight: 'bold' }}>{this.state.truckmodel}</Text>
+								</View>
+								<View style={{ flex: 1, flexDirection: 'row' }}>
+									<Text style={{ marginLeft: 20}}>Reg No: </Text>
+									<Text style={{ fontWeight: 'bold' }}>{this.state.truckRegNo}</Text>
+								</View>
+								<View style={{ flex: 1, flexDirection: 'row', marginBottom: 5 }}>
+									<Text style={{ marginLeft: 20}}>Driver Name: </Text>
+									<Text style={{ fontWeight: 'bold' }}>{this.state.driverName}</Text>
+								</View>							
+							</View>							
+						</View>
+					</Card>
+					<Card title="Fuel Log">
+						<View style={{ flex: 1, flexDirection: 'row' }}>
+							<DatePicker
+								style={{width: 200}}
+								date={this.state.date}
+								mode="datetime"
+								placeholder={this.state.myDate}
+								format="DD-MM-YYYY hh:mm:ss"
+								minDate="01-04-2017"
+								maxDate="01-12-2030"
+								confirmBtnText="Confirm"
+								cancelBtnText="Cancel"
+								customStyles={{
+									dateIcon: {
+									height: 0,
+									width: 0
+									},
+									dateInput: {
+									height: 40,
+									marginLeft: 20,
+									borderLeftWidth: 0,
+									borderRightWidth: 0,
+									borderTopWidth: 0,
+									}
+								}}
+								onDateChange={(date) => this.onDateChange(date)}
+								/>
+						</View>
+						<View>
+							<FormInput 
+								onChangeText={(text) => this.setState({ amount: text })}
+								placeholder="Amount" keyboardType='numeric' maxLength={10}
+								value={this.state.amount}
+							/>
+							<FormInput 
+								onChangeText={(text) => this.setState({ comment: text })}
+								placeholder="Comment" 
+								value={this.state.comment}
+							/>
+							<FormLabel style={{ marginBottom: 10 }}>Receipt</FormLabel>
+							{this.state.fileNames.map((fileSelected, i) =>
+								<FormLabel style={{ marginBottom: 10 }}>{fileSelected}</FormLabel>
+							)}						
+							<Ionicons.Button name="md-attach" backgroundColor="#FF7F00" style={styles.uploadFileButton} onPress={this.onOtherWorkDocumentsPress}s>
+								<Text>Upload a file</Text>
+							</Ionicons.Button>
+						</View>
+						<Button
+							buttonStyle={{ marginTop: 20 }}
+							backgroundColor="#000000"
+							title="Save"
+							onPress={() => this.doSave()}
+						/>
+					</Card>
+				</ScrollView>
+			</View>
+		);
+	}
+}
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 6,
+		backgroundColor: '#FF7F00'
+	},
+	informationCard: {
+		marginTop: 30
+	},
+	infoCard: {
+		marginTop: 20
+	},
+	modalBackground: {
+		flex: 1,
+		alignItems: 'center',
+		flexDirection: 'column',
+		justifyContent: 'space-around',
+		backgroundColor: '#00000040'
+	  },
+	  activityIndicatorWrapper: {
+		backgroundColor: '#FFFFFF',
+		height: 100,
+		width: 100,
+		borderRadius: 10,
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'space-around'
+	  }
+});

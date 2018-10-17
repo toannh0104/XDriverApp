@@ -1,0 +1,52 @@
+{
+  "name": "SptDriverApp",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react-native-stage-0": "^1.0.1",
+    "jest-react-native": "^18.0.0",
+    "react-native-cli": "^2.0.1",
+    "react-test-renderer": "16.2.0"
+  },
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start --reset-cache",
+    "builda": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
+    "android": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && node node_modules/react-native/local-cli/cli.js run-android",
+    "buildandroid": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
+    "newandroid": "node node_modules/react-native/local-cli/cli.js bundle run-android",
+    "ios": "react-native run-ios",
+    "test": "node node_modules/jest/bin/jest.js",
+    "link": "node node_modules/react-native/local-cli/cli.js link",
+    "eject": "node node_modules/react-native/local-cli/cli.js eject",
+    "cache": "node node_modules/react-native/local-cli/cli.js --reset-cache"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "dependencies": {
+    "react": "16.0.0",
+    "react-native": "0.51.0",
+    "react-native-auto-height-image": "^1.0.0",
+    "react-native-datepicker": "^1.7.1",
+    "react-native-document-scanner": "^1.4.2",
+    "react-native-elements": "^0.19.1",
+    "react-native-flexi-radio-button": "^0.2.2",
+    "react-native-fontawesome": "^5.7.0",
+    "react-native-image-crop-picker": "^0.20.3",
+    "react-native-image-picker": "^0.26.10",
+    "react-native-material-dropdown": "^0.11.1",
+    "react-native-modal": "^6.0.0",
+    "react-native-modal-datetime-picker": "^5.1.0",
+    "react-native-modal-dropdown": "^0.6.2",
+    "react-native-permissions": "^1.1.1",
+    "react-native-perspective-image-cropper": "^0.1.2",
+    "react-native-progress-bar-animated": "^1.0.6",
+    "react-native-simple-radio-button": "^2.7.1",
+    "react-native-simple-time-picker": "^0.2.0",
+    "react-native-storage": "^0.2.2",
+    "react-native-svg": "^6.5.2",
+    "react-native-vector-icons": "^4.6.0",
+    "react-navigation": "^2.0.1"
+  }
+}

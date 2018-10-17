@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\27.1.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="705378853cb9f264315d7a0a8edb6743d72efe9b">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-27.1.0_7a73b51382879551c60797e95b30095994f26606.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\android.arch.lifecycle\livedata-core\1.1.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="8a9fd7c97f1d13f97f3b52f9d2e54cd857d5acf9">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\android.arch.lifecycle-livedata-core-1.1.0_fcadc4d2c4d20822a12cf24d0a1ae629797454a2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\toannh\.gradle\caches\modules-2\files-2.1\android.arch.core\common\1.1.0\8007981f7d7540d89cd18471b8e5dcd2b4f99167\common-1.1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="8007981f7d7540d89cd18471b8e5dcd2b4f99167">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\common-1.1.0_7f56913862ccf386eba4d65e9552c3c33215b6c8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\toannh\.gradle\caches\modules-2\files-2.1\com.facebook.fbui.textlayoutbuilder\staticlayout-proxy\1.0\f162442a19fff13995fbd51ba414d9ee05579080\staticlayout-proxy-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="f162442a19fff13995fbd51ba414d9ee05579080">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\staticlayout-proxy-1.0_d650a8fe4140401bd3bc8fcab4b2847c9353c9d1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\com.facebook.fresco\imagepipeline-base\1.3.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="72128af126ddd7d6252da9357fe560d3abcdfb0c">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\com.facebook.fresco-imagepipeline-base-1.3.0_4695c884d93fc848e93997020b39d243a53b511f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\com.facebook.react\react-native\0.51.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="99941aaaf86dc5e525cd9208c2f7c9a624f4f004">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\com.facebook.react-react-native-0.51.0_c1432da31cc1bc532d4975288f71bb834f6e6626.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\com.facebook.fresco\imagepipeline\1.3.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="48c7f54c2515a2312d3a4481d10c43fbb807f3af">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\com.facebook.fresco-imagepipeline-1.3.0_227448881af573fb9564ffd45a1105b58c3cc12b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\SptDriverApp\react-native-image-picker\unspecified\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="5e6570156a5a06abc6990fe34cd577d9fb0172c6">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\SptDriverApp-react-native-image-picker-unspecified_56bd4ec83c649bc752a41d8eb6a6e8fb302c0034.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\com.facebook.soloader\soloader\0.1.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="8f615bca00639150c9eb6175d4b5471193f70794">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\com.facebook.soloader-soloader-0.1.0_11a35d17555a5e5964b7114249be1ebd09622151.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\com.facebook.react\react-native\0.51.0\jars\libs\infer-annotations-4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="9809e90be788acdb479b2b44e2112f3295a03068">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\infer-annotations-4.0_d9d54c9b669594f611bf05d257235f8256c9e84d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\SptDriverApp\react-native-image-crop-picker\unspecified\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="efe752ed2644b7af85df8d5fbc19788dd01e27de">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\SptDriverApp-react-native-image-crop-picker-unspecified_5a866f8e53487a6297affb0bf6490b64410c09d0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\com.facebook.fresco\fbcore\1.3.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="37345de2ed2772f385eaeec37a9c2ff0fea99ad7">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\com.facebook.fresco-fbcore-1.3.0_b900e73090d00845b9cc0673e56f8bdedb76dfe1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\SptDriverApp\react-native-vector-icons\unspecified\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="f2cf527de8d0bd35d72088fafea02395ba4a9eec">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\SptDriverApp-react-native-vector-icons-unspecified_9ced363ff71c8de5644e48d06e99de8844ee1dcd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\27.1.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="755c70a5a4e439030f67311dbafaa67b111377a6">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-27.1.0_5184241e436d3f843d5d4586eb2f2df27b957a5c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\com.github.yalantis\ucrop\2.2.2-native\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="3bed41dc3164f618b7c22f37116f60b2017046e7">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\com.github.yalantis-ucrop-2.2.2-native_6f59707b06d187d31cb1e194704e9962f335ef9e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\toannh\.gradle\caches\modules-2\files-2.1\io.reactivex.rxjava2\rxjava\2.1.0\2fdf84dedcaaeabb9d70cde9dbb8aad4eccb80a1\rxjava-2.1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="2fdf84dedcaaeabb9d70cde9dbb8aad4eccb80a1">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\rxjava-2.1.0_898ae39cee522eb0b8a1686bdea0d5948a35f28c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\com.facebook.fresco\imagepipeline-okhttp3\1.3.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="c03c08c9934b23c8c09c803345ec51a74119127b">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\com.facebook.fresco-imagepipeline-okhttp3-1.3.0_3ec97e0ec39341133268926ea412967ca9b34e5f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\toannh\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-tasks\1.4.0\d85884acf6810a3bbbecb587f239005cbc846dc4\bolts-tasks-1.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\bolts-tasks-1.4.0_8f5f24b079c454831d9e3e676ed23b60ab1d17f5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\SptDriverApp\react-native-document-scanner\unspecified\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="c92d3066ed9bbb7df149158d72944ac591da3e5c">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\SptDriverApp-react-native-document-scanner-unspecified_123f9bd75ca988f766d4cfb3f5d21793f5aab33a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\toannh\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.8.1\4d060ca3190df0eda4dc13415532a12e15ca5f11\okhttp-3.8.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="4d060ca3190df0eda4dc13415532a12e15ca5f11">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\okhttp-3.8.1_c179791850f7074e7478761cfc2af91b8e2f1e4b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\com.facebook.fbui.textlayoutbuilder\textlayoutbuilder\1.0.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="f90b593491e4044903f0bbf68dc3fa2790b151b9">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\com.facebook.fbui.textlayoutbuilder-textlayoutbuilder-1.0.0_4c7f877849bd7d07f5a4cfd5e55a7faf85cf0ad5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\SptDriverApp\react-native-svg\unspecified\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="b7b67760efc5bd6115bc40c13fef48f6f4e6c872">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\SptDriverApp-react-native-svg-unspecified_a571a32d92203988fd0ab209242daca1d5c449d3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\com.android.support\support-compat\27.1.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="3d46095629eedbd5b79b4d129428fc499473a73b">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\com.android.support-support-compat-27.1.0_c40baba50e4f1360999eb9f7fd29b54ca4d16870.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\com.facebook.fresco\fresco\1.3.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="fe85b87215e405f5917d40ae4960488ac9224b74">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\com.facebook.fresco-fresco-1.3.0_8d753101b44cbd1418688fbc86d3b70fea564a99.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\toannh\.gradle\caches\modules-2\files-2.1\android.arch.lifecycle\common\1.1.0\edf3f7bfb84a7521d0599efa3b0113a0ee90f85\common-1.1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="0edf3f7bfb84a7521d0599efa3b0113a0ee90f85">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\common-1.1.0_acbf31a5edee9cfad511c6ad141d473a7aeeab21.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\toannh\.m2\repository\javax\inject\javax.inject\1\javax.inject-1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="6975da39a7040257bd51d21a231b76c915872d38">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\javax.inject-1_a76cdf81290b7d8747195b86e129525c1084b1c6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\android.arch.lifecycle\viewmodel\1.1.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="1fd3ceac7f415975323d52c6c6057db409a907f6">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\android.arch.lifecycle-viewmodel-1.1.0_bc3da8e023c4ad652e01b0e4e3aa82b90d3869ad.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\27.1.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="5c66801c7ac6def4ffef7859925b12ce7940438e">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-27.1.0_be25757b6d43ad41aa5b79fe36d86044c185d153.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\android.arch.core\runtime\1.1.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="71d380aeac037e63bab7bda2ba211777e16a2f42">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\android.arch.core-runtime-1.1.0_71008e0df010e0b61a769db60f547d163c7a7525.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\android.arch.lifecycle\runtime\1.1.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="e2bbe48deed35056023eed2cdc0cc92e5c7d3617">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\android.arch.lifecycle-runtime-1.1.0_0b5b05e9d330461e7af985322de58c57b692d0a9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\toannh\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.13.0\a9283170b7305c8d92d25aff02a6ab7e45d06cbe\okio-1.13.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="a9283170b7305c8d92d25aff02a6ab7e45d06cbe">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\okio-1.13.0_4bc5e6e3a0a6ba48356720aec82b483484812777.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\toannh\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp-urlconnection\3.6.0\3f9b16b774f2c36cfd86dd2053d0b3059531dacc\okhttp-urlconnection-3.6.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="3f9b16b774f2c36cfd86dd2053d0b3059531dacc">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\okhttp-urlconnection-3.6.0_01b9d4c6a136ee62b296e9763d2ff2e6a11a95f4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\com.android.support\support-fragment\27.1.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="fe6c8fbfeeb1454c3eb605c9b66662991681fd55">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\com.android.support-support-fragment-27.1.0_f5281eb35010ff165aa803f98feff1a05e32e300.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\toannh\.gradle\caches\modules-2\files-2.1\org.reactivestreams\reactive-streams\1.0.0\14b8c877d98005ba3941c9257cfe09f6ed0e0d74\reactive-streams-1.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="14b8c877d98005ba3941c9257cfe09f6ed0e0d74">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\reactive-streams-1.0.0_7ad91306e96eda84cc50bc2b7e9af3e04fd1158d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\toannh\.gradle\caches\modules-2\files-2.1\com.android.support\support-annotations\27.1.0\39ded76b5e1ce1c5b2688e1d25cdc20ecee32007\support-annotations-27.1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="39ded76b5e1ce1c5b2688e1d25cdc20ecee32007">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\support-annotations-27.1.0_e3213b2ffa1a410a16596d274872436b519f4be5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\id.zelory\compressor\2.1.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="6b1555196d65ffa1174f6f49efb2f278905f537a">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\id.zelory-compressor-2.1.0_356b44ddfe34c3f0c6a3c886ff776cbd4ec10f52.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\27.1.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="9a2ea9818b2f556b6663c0e7376bd664ee6c7550">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-utils-27.1.0_4b584204fd88291375aa42be524f62f5a39f54bd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\toannh\.gradle\caches\modules-2\files-2.1\com.google.code.findbugs\jsr305\3.0.0\5871fb60dc68d67da54a663c3fd636a10a532948\jsr305-3.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="5871fb60dc68d67da54a663c3fd636a10a532948">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\jsr305-3.0.0_109f1427a9b298f19b04562c711b0a620a030a91.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\com.facebook.fresco\drawee\1.3.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="c65a2e39d54023bac3aef64a2f0cff89289c7ff6">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\com.facebook.fresco-drawee-1.3.0_90ae12df503bf92769cfbc2c83db25d16f161180.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\27.1.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="6f209b73a488f358673f39317df394bd7a99c05e">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-ui-27.1.0_bc76c360f7d4593f3042336d23736b9d46f036ef.jar" />
+    </item>
+
+</items>
