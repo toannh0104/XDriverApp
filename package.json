@@ -25,9 +25,11 @@
     "preset": "react-native"
   },
   "dependencies": {
+    "lodash": "^4.17.11",
     "react": "16.0.0",
     "react-native": "0.51.0",
     "react-native-auto-height-image": "^1.0.0",
+    "react-native-camera-kit": "^6.2.6",
     "react-native-datepicker": "^1.7.1",
     "react-native-document-scanner": "^1.4.2",
     "react-native-elements": "^0.19.1",

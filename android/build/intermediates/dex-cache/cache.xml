@@ -12,12 +12,39 @@
     </item>
     <item
         is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.0.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="297d4bcf6ed4e747a1bf7d0d094a2d911a8d3a8e">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-25.0.1_d78ce217b31edfb58eca1c166be90ba71f532281.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\android.arch.lifecycle\livedata-core\1.1.0\jars\classes.jar"
         jumboMode="false"
         optimize="true"
         revision="27.0.3"
         sha1="8a9fd7c97f1d13f97f3b52f9d2e54cd857d5acf9">
         <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\android.arch.lifecycle-livedata-core-1.1.0_fcadc4d2c4d20822a12cf24d0a1ae629797454a2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\toannh\.gradle\caches\modules-2\files-2.1\com.adobe.xmp\xmpcore\5.1.2\55615fa2582424e38705487d1d3969af8554f637\xmpcore-5.1.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="55615fa2582424e38705487d1d3969af8554f637">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\xmpcore-5.1.2_1430a6678d1d9ecb9b59ead4285f24ed37e76d66.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\toannh\.gradle\caches\modules-2\files-2.1\com.drewnoakes\metadata-extractor\2.9.1\53fdf22be10c9d426ec63431c7342895bc642261\metadata-extractor-2.9.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="53fdf22be10c9d426ec63431c7342895bc642261">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\metadata-extractor-2.9.1_82d702a0845a5a3998c253afb33136fdabf77ee9.jar" />
     </item>
     <item
         is-multidex="false"
@@ -129,6 +156,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\SptDriverApp\rncamerakit\unspecified\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="3a6870fba4b0cabd2354aceb0c3f84767efc57cf">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\SptDriverApp-rncamerakit-unspecified_50aec5aaac52899f85d35da160f45740df3ff33c.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\exploded-aar\com.github.yalantis\ucrop\2.2.2-native\jars\classes.jar"
         jumboMode="false"
         optimize="true"
@@ -171,6 +207,15 @@
         revision="27.0.3"
         sha1="c92d3066ed9bbb7df149158d72944ac591da3e5c">
         <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\SptDriverApp-react-native-document-scanner-unspecified_123f9bd75ca988f766d4cfb3f5d21793f5aab33a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\toannh\.gradle\caches\modules-2\files-2.1\com.google.zxing\core\3.3.0\73c49077166faa4c3c0059c5f583d1d7bd1475fe\core-3.3.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="73c49077166faa4c3c0059c5f583d1d7bd1475fe">
+        <dex dex="D:\work\freelancer\working\XDriver_Code\XDriver_Code\android\app\build\intermediates\pre-dexed\debug\core-3.3.0_d143d23ccf54d702d485b74b59768d47af8cac98.jar" />
     </item>
     <item
         is-multidex="false"

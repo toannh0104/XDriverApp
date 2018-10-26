@@ -1,0 +1,4 @@
+#Thu Oct 25 21:01:42 ICT 2018
+base.0=D\:\\work\\freelancer\\working\\XDriver_Code\\XDriver_Code\\android\\app\\build\\intermediates\\transforms\\dex\\release\\folders\\1000\\1f\\main
+renamed.0=classes.dex
+file.0=D\:\\work\\freelancer\\working\\XDriver_Code\\XDriver_Code\\android\\app\\build\\intermediates\\transforms\\dex\\release\\folders\\1000\\1f\\main\\classes.dex

@@ -109,7 +109,7 @@ export const TrucksStack = createStackNavigator({
 	FuelScreen: {
 		screen: FuelScreen,
 		navigationOptions: {
-			title: "Fuels Log"
+			title: "Fuel Log"
 		},
 	}
 },

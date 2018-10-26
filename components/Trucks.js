@@ -186,7 +186,7 @@ export default class Trucks extends Component {
 											</View>
 											<View>
 												<TouchableOpacity onPress={() => this.loadFuel(truck.id, truck.truck_name,truck.truck_number, truck.registration_number, truck.image) } style={styles.editButton}>
-													<Text style={{ color: 'white' }}>Fuels</Text>
+													<Text style={{ color: 'white' }}>Fuel</Text>
 												</TouchableOpacity>
 
 											</View>

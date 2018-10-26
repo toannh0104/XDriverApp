@@ -4,7 +4,10 @@ import {
 	ScrollView,
 	StyleSheet,
 	Text,
-	Image, ActivityIndicator, Alert, Modal
+	Image, ActivityIndicator, Alert, Modal,
+	requireNativeComponent,
+	NativeModules,
+	processColor
 } from 'react-native';
 
 import {
@@ -20,6 +23,15 @@ import ImagePicker from 'react-native-image-crop-picker';
 import { getSession} from './HelperFunctions';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+function formatDate(date) {
+	var hours = date.getHours();
+	var minutes = date.getMinutes();
+	var seconds = date.getSeconds();
+	minutes = minutes < 10 ? '0'+minutes : minutes;
+	var strTime = hours + ':' + minutes + ":" + seconds;
+	return date.getFullYear() + "-" + date.getMonth()+1 + "-" + date.getDate() +  " " + strTime;
+  }
+
 export default class FuelScreen extends Component {
 	constructor(props) {
 	  super(props);
@@ -27,8 +39,8 @@ export default class FuelScreen extends Component {
 	  this.state = {	  
 	  	otherWork: '',
 	  	otherWorkDocuments: [],
-		fileNames: [],
-	  	myDate: 'select date',
+		fileNames: [], 
+	  	myDate: formatDate(date),
 	  	driverName: '',
 		truckid:'',
 		truckname:'',
@@ -187,7 +199,7 @@ export default class FuelScreen extends Component {
 			formData.append('truck_id', truckId);
 			formData.append('comment', comment);
 			formData.append('amount', amount);
-			formData.append('date_time', dateTime);
+			formData.append('log_date', dateTime);
 			formData.append('receipt', this.state.otherWorkDocuments[i]);		
 			
 			console.log("posting....")
@@ -265,7 +277,7 @@ export default class FuelScreen extends Component {
 		  images.map((image, idx) => {
 			let pathParts = image.path.split('/');
 			files[idx] = {
-			  data: 'data:'+image.mime+";base64,"+ image.data,
+			  data: 'data:'+image.mime,
 			  uri: image.path,
 			  type: image.mime,
 			  name: pathParts[pathParts.length - 1]
@@ -278,6 +290,37 @@ export default class FuelScreen extends Component {
 		});	
 		
 	}
+
+	async logData() {
+		console.log('front Camera?', await NativeCameraModule.hasFrontCamera());
+		console.log('hasFlash?', await NativeCameraModule.hasFlashForCurrentCamera());
+		console.log('flashMode?', await NativeCameraModule.getFlashMode());
+	  }
+	
+	  static async requestDeviceCameraAuthorization() {
+		return await NativeCameraModule.requestDeviceCameraAuthorization();
+	  }
+	
+	  async capture(saveToCameraRoll = true) {
+		return await NativeCameraModule.capture(saveToCameraRoll);
+	  }
+	
+	  async changeCamera() {
+		return await NativeCameraModule.changeCamera();
+	  }
+	
+	  async setFlashMode(flashMode = 'auto') {
+		return await NativeCameraModule.setFlashMode(flashMode);
+	  }
+	
+	  static async checkDeviceCameraAuthorizationStatus() {
+		return await NativeCameraModule.checkDeviceCameraAuthorizationStatus();
+	  }
+	
+	  static async hasCameraPermission() {
+		return await NativeCameraModule.hasCameraPermission();
+	  }
+	  
 	render() {
 		return(
 			<View style={styles.container}>			  

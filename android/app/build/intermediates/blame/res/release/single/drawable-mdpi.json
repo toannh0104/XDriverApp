@@ -8,12 +8,12 @@
         "source": "D:\\work\\freelancer\\working\\XDriver_Code\\XDriver_Code\\android\\app\\src\\main\\res\\drawable-mdpi\\truckassets_lg.png"
     },
     {
-        "merged": "D:\\work\\freelancer\\working\\XDriver_Code\\XDriver_Code\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable-mdpi\\node_modules_reactnativeelements_src_rating_images_rocket.png",
-        "source": "D:\\work\\freelancer\\working\\XDriver_Code\\XDriver_Code\\android\\app\\src\\main\\res\\drawable-mdpi\\node_modules_reactnativeelements_src_rating_images_rocket.png"
-    },
-    {
         "merged": "D:\\work\\freelancer\\working\\XDriver_Code\\XDriver_Code\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable-mdpi\\node_modules_reactnavigation_src_views_assets_backiconmask.png",
         "source": "D:\\work\\freelancer\\working\\XDriver_Code\\XDriver_Code\\android\\app\\src\\main\\res\\drawable-mdpi\\node_modules_reactnavigation_src_views_assets_backiconmask.png"
+    },
+    {
+        "merged": "D:\\work\\freelancer\\working\\XDriver_Code\\XDriver_Code\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable-mdpi\\node_modules_reactnativeelements_src_rating_images_rocket.png",
+        "source": "D:\\work\\freelancer\\working\\XDriver_Code\\XDriver_Code\\android\\app\\src\\main\\res\\drawable-mdpi\\node_modules_reactnativeelements_src_rating_images_rocket.png"
     },
     {
         "merged": "D:\\work\\freelancer\\working\\XDriver_Code\\XDriver_Code\\android\\app\\build\\intermediates\\res\\merged\\release\\drawable-mdpi\\truckassets_signin.png",
